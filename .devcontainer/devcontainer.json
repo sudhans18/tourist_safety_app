@@ -1,0 +1,21 @@
+{
+  "name": "Smart Tourist Dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Dart-Code.flutter",
+        "Dart-Code.dart-code",
+        "firebase.firebase-tools",
+        "ms-vscode.vscode-typescript-next",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "forwardPorts": [8080, 3000, 5000, 9000],
+  "remoteUser": "vscode"
+}
+
+  
