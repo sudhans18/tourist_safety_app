@@ -65,7 +65,7 @@ class _FamilyScreenState extends State<FamilyScreen> {
                     ),
                     Switch(
                       value: shareLocation,
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                       activeTrackColor: const Color(0xFFD93F34),
                       onChanged: (v) => setState(() => shareLocation = v),
                     )

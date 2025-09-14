@@ -5,14 +5,16 @@ class LanguageSelectionScreen extends StatefulWidget {
   const LanguageSelectionScreen({Key? key}) : super(key: key);
 
   @override
-  _LanguageSelectionScreenState createState() => _LanguageSelectionScreenState();
+  _LanguageSelectionScreenState createState() =>
+      _LanguageSelectionScreenState();
 }
 
 class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   String? _selectedLanguage;
-  final List<Map<String, String>> _languages = [
+  final List<Map<String, String>> _languages = const [
+    // Added const to fix the warning
     {'code': 'en', 'name': 'English'},
-    {'code': 'hi', 'name': 'हिंदी'}, // Hindi
+    {'code': 'hi', 'name': 'เคนเคฟเค เคฆเฅ€'}, // Hindi
   ];
 
   @override
@@ -69,7 +71,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   List<Widget> _buildLanguageOptions() {
     return _languages.map((language) {
       return ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         leading: Radio<String>(
           value: language['code']!,
           groupValue: _selectedLanguage,

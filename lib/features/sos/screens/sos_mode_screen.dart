@@ -26,8 +26,8 @@ class SosModeScreen extends StatelessWidget {
                   color: const Color(0xFFFFF3CD),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.wifi_off, color: Color(0xFFB7791F)),
                     SizedBox(width: 8),
                     Expanded(
@@ -42,8 +42,8 @@ class SosModeScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               // SOS Header
-              Column(
-                children: const [
+              const Column(
+                children: [
                   CircleAvatar(radius: 36, backgroundColor: Color(0xFFFEEBEA), child: Text('SOS', style: TextStyle(color: Color(0xFFD93F34), fontWeight: FontWeight.w800))),
                   SizedBox(height: 16),
                   Text('EMERGENCY MODE', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: Color(0xFFB91C1C))),
@@ -54,10 +54,10 @@ class SosModeScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // ETA Card
-              _sosCard(
+              const _sosCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text('RESPONDER ETA', style: TextStyle(color: Color(0xFF6B7280))),
                     SizedBox(height: 8),
                     Text('5 MIN', style: TextStyle(fontSize: 42, fontWeight: FontWeight.w900)),
@@ -69,10 +69,10 @@ class SosModeScreen extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Contacts Card
-              _sosCard(
+              const _sosCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text('Notifying Emergency Contacts', style: TextStyle(fontWeight: FontWeight.w700)),
                     SizedBox(height: 12),
                     _contactRow(name: 'Jane Doe'),
@@ -84,9 +84,9 @@ class SosModeScreen extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Live Audio Stream
-              _sosCard(
+              const _sosCard(
                 child: Row(
-                  children: const [
+                  children: [
                     Icon(Icons.mic_off, color: Color(0xFF9CA3AF)),
                     SizedBox(width: 12),
                     Expanded(child: Text('Connecting to audio stream...')),
@@ -133,8 +133,8 @@ class _contactRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: const [
+    return const Row(
+      children: [
         Icon(Icons.person_outline),
         SizedBox(width: 8),
         Expanded(child: Text('Jane Doe')),

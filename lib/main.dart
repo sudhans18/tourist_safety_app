@@ -10,17 +10,19 @@ import 'features/band_integration/screens/band_pairing_screen.dart';
 import 'features/dashboard/screens/dashboard_screen.dart';
 import 'features/sos/screens/sos_mode_screen.dart';
 import 'features/family/screens/family_screen.dart';
+import 'features/alerts/screens/alerts_screen.dart';
+import 'features/settings/screens/settings_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   // App now starts at combined onboarding screen; authentication is mocked for MVP.
 
-  runApp(MyApp(
+  runApp(const MyApp(
     initialRoute: '/',
   ));
 }
@@ -97,8 +99,9 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => const DashboardScreen(),
         '/sos': (context) => const SosModeScreen(),
         '/family': (context) => const FamilyScreen(),
+        '/alerts': (context) => const AlertsScreen(),
+        '/settings': (context) => const SettingsScreen(),
       },
     );
   }
 }
-

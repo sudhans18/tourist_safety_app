@@ -5,14 +5,16 @@ class OnboardingVerificationScreen extends StatefulWidget {
   const OnboardingVerificationScreen({Key? key}) : super(key: key);
 
   @override
-  State<OnboardingVerificationScreen> createState() => _OnboardingVerificationScreenState();
+  State<OnboardingVerificationScreen> createState() =>
+      _OnboardingVerificationScreenState();
 }
 
-class _OnboardingVerificationScreenState extends State<OnboardingVerificationScreen> {
+class _OnboardingVerificationScreenState
+    extends State<OnboardingVerificationScreen> {
   String? _selectedLanguage;
   final List<Map<String, String>> _languages = const [
     {'code': 'en', 'name': 'English'},
-    {'code': 'hi', 'name': 'हिंदी'},
+    {'code': 'hi', 'name': 'เคนเคฟเค เคฆเฅ€'},
   ];
 
   final _phoneController = TextEditingController();
@@ -47,7 +49,10 @@ class _OnboardingVerificationScreenState extends State<OnboardingVerificationScr
               // Language selection card
               Text(
                 'Language',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 12),
               Card(
@@ -63,19 +68,27 @@ class _OnboardingVerificationScreenState extends State<OnboardingVerificationScr
               // Phone verification
               Text(
                 'Mobile Verification',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 12),
-              if (!_codeSent) ..._buildPhoneInput(context) else ..._buildOtpInput(context),
+              if (!_codeSent)
+                ..._buildPhoneInput(context)
+              else
+                ..._buildOtpInput(context),
 
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _onPrimaryAction,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
-                child: Text(_codeSent ? 'Verify OTP' : 'Send Verification Code'),
+                child:
+                    Text(_codeSent ? 'Verify OTP' : 'Send Verification Code'),
               ),
 
               if (_codeSent) ...[
@@ -92,10 +105,10 @@ class _OnboardingVerificationScreenState extends State<OnboardingVerificationScr
               ],
 
               const SizedBox(height: 24),
-              Text(
+              const Text(
                 'By continuing, you agree to the Terms and Privacy Policy.',
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFF6B7280), fontSize: 12),
+                style: TextStyle(color: Color(0xFF6B7280), fontSize: 12),
               ),
             ],
           ),
@@ -114,7 +127,8 @@ class _OnboardingVerificationScreenState extends State<OnboardingVerificationScr
           onChanged: (val) => setState(() => _selectedLanguage = val),
           activeColor: const Color(0xFFD93F34),
         ),
-        title: Text(language['name']!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        title: Text(language['name']!,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
         onTap: () => setState(() => _selectedLanguage = language['code']!),
       );
     }).toList();
@@ -158,9 +172,12 @@ class _OnboardingVerificationScreenState extends State<OnboardingVerificationScr
   Future<void> _onPrimaryAction() async {
     // Enforce language selection first
     if (_selectedLanguage == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a language')),
-      );
+      // Use a mounted check before using the context after an async gap (though it's an immediate call here, it's good practice)
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select a language')),
+        );
+      }
       return;
     }
 
@@ -170,16 +187,23 @@ class _OnboardingVerificationScreenState extends State<OnboardingVerificationScr
     if (!_codeSent) {
       // Mock send code
       if (_phoneController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please enter a phone number')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please enter a phone number')),
+          );
+        }
         return;
       }
 
       setState(() => _codeSent = true);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Verification code sent (mocked). Enter any 6 digits.')),
-      );
+      if (mounted) {
+        // Added mounted check
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content:
+                  Text('Verification code sent (mocked). Enter any 6 digits.')),
+        );
+      }
       return;
     }
 
@@ -189,9 +213,12 @@ class _OnboardingVerificationScreenState extends State<OnboardingVerificationScr
         Navigator.pushReplacementNamed(context, '/kyc');
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid OTP. Please enter 6 digits.')),
-      );
+      if (mounted) {
+        // Added mounted check
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid OTP. Please enter 6 digits.')),
+        );
+      }
     }
   }
 }

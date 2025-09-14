@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class BandPairingScreen extends StatefulWidget {
   const BandPairingScreen({Key? key}) : super(key: key);
@@ -91,6 +92,24 @@ class _BandPairingScreenState extends State<BandPairingScreen> with SingleTicker
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: const Text('Connect'),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton(
+                onPressed: () async {
+                  // Request location permissions to allow map and other features
+                  LocationPermission permission = await Geolocator.checkPermission();
+                  if (permission == LocationPermission.denied) {
+                    permission = await Geolocator.requestPermission();
+                  }
+                  // Proceed regardless (mock) — app can fall back to manual input if denied
+                  if (!mounted) return;
+                  Navigator.pushReplacementNamed(context, '/dashboard');
+                },
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text('Skip for now'),
               ),
             ],
           ),

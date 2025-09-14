@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:tourist_safety_app/utils/theme/colors.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -68,13 +70,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFD93F34),
+        backgroundColor: AppColors.primaryRed,
         onPressed: _confirmSOS,
         child: const Icon(Icons.warning_amber_rounded, color: Colors.white),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentTab,
-        onDestinationSelected: (i) => setState(() => _currentTab = i),
+        onDestinationSelected: (i) {
+          setState(() => _currentTab = i);
+          if (i == 0) return; // Dashboard
+          if (i == 1) Navigator.pushNamed(context, '/alerts');
+          if (i == 2) Navigator.pushNamed(context, '/family');
+          if (i == 3) Navigator.pushNamed(context, '/settings');
+        },
         destinations: const [
           NavigationDestination(icon: Icon(Icons.dashboard_outlined), selectedIcon: Icon(Icons.dashboard), label: 'Dashboard'),
           NavigationDestination(icon: Icon(Icons.notifications_outlined), selectedIcon: Icon(Icons.notifications), label: 'Alerts'),
@@ -101,8 +109,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           CircleAvatar(
             radius: 28,
-            backgroundColor: const Color(0xFFFEEBEA),
-            child: Text(touristName[0], style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFFD93F34), fontSize: 24)),
+            backgroundColor: AppColors.redLight,
+            child: Text(touristName[0], style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.primaryRed, fontSize: 24)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -142,17 +150,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildSafetyScoreCard(ThemeData theme) {
-    // Green aesthetic
+    // Green aesthetic from tokens
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF22C55E),
+        color: AppColors.success,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [BoxShadow(color: Color(0x3322C55E), blurRadius: 18, offset: Offset(0, 10))],
       ),
       padding: const EdgeInsets.all(20),
-      child: Row(
+      child: const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Icon(Icons.verified_user, color: Colors.white, size: 28),
           SizedBox(width: 12),
           Expanded(
@@ -182,7 +190,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(icon, color: const Color(0xFFD93F34), size: 24),
+          Icon(icon, color: AppColors.primaryRed, size: 24),
           const SizedBox(height: 8),
           Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
           if (label != null) ...[
@@ -221,14 +229,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildMapSection(ThemeData theme) {
-    // Note: Using a styled container to mock Mapbox map. Replace with Mapbox widget later.
+    // Mapbox map centered at Guwahati with a center marker
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Location & Risk Zone', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
         Container(
-          height: 200,
+          height: 220,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
@@ -236,17 +244,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
           clipBehavior: Clip.antiAlias,
           child: Stack(
             children: [
-              Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFDBEAFE), Color(0xFFE5E7EB)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+              MapboxMap(
+                accessToken: 'sk.eyJ1Ijoic3VkaGFuMTgiLCJhIjoiY21mam1ucHVtMHptcTJqc2ZqenIydnJjNCJ9.mXsqTTK79pYDubxVf9rQrw',
+                compassEnabled: false,
+                myLocationEnabled: false,
+                myLocationRenderMode: MyLocationRenderMode.NORMAL,
+                styleString: MapboxStyles.MAPBOX_STREETS,
+                initialCameraPosition: const CameraPosition(
+                  target: LatLng(26.2006, 92.9376),
+                  zoom: 13,
                 ),
+                onMapCreated: (controller) {},
               ),
               const Center(
-                child: Icon(Icons.location_pin, color: Color(0xFFD93F34), size: 40),
+                child: Icon(Icons.location_pin, color: AppColors.primaryRed, size: 36),
               ),
               Positioned(
                 bottom: 8,
@@ -268,9 +279,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildRiskBanner(ThemeData theme) {
-    final color = insideRestrictedZone
-        ? const Color(0xFFF59E0B) // amber aesthetic
-        : const Color(0xFF22C55E); // green
+    final color = insideRestrictedZone ? AppColors.warning : AppColors.success;
     final text = insideRestrictedZone ? 'Restricted Zone' : 'Low-Risk Zone';
 
     return Container(
