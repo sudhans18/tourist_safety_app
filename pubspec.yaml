@@ -22,6 +22,7 @@ dependencies:
   provider: ^6.1.1
   cupertino_icons: ^1.0.2
   qr_flutter: ^4.1.0
+  mapbox_maps_flutter: 2.10.0
 
 dev_dependencies:
   flutter_test:

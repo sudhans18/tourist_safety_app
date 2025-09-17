@@ -41,12 +41,12 @@ class MyApp extends StatelessWidget {
       title: 'Tourist Safety App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFFF3F4F6),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFD93F34),
           primary: const Color(0xFFD93F34),
           secondary: const Color(0xFFFEEBEA),
           surface: Colors.white,
-          background: const Color(0xFFF3F4F6),
         ).copyWith(
           error: const Color(0xFFD93F34),
         ),

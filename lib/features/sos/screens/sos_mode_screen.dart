@@ -54,7 +54,7 @@ class SosModeScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // ETA Card
-              const _sosCard(
+              const _SosCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -69,22 +69,22 @@ class SosModeScreen extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Contacts Card
-              const _sosCard(
+              const _SosCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Notifying Emergency Contacts', style: TextStyle(fontWeight: FontWeight.w700)),
                     SizedBox(height: 12),
-                    _contactRow(name: 'Jane Doe'),
+                    _ContactRow(name: 'Jane Doe'),
                     SizedBox(height: 8),
-                    _contactRow(name: 'Family Group'),
+                    _ContactRow(name: 'Family Group'),
                   ],
                 ),
               ),
               const SizedBox(height: 12),
 
               // Live Audio Stream
-              const _sosCard(
+              const _SosCard(
                 child: Row(
                   children: [
                     Icon(Icons.mic_off, color: Color(0xFF9CA3AF)),
@@ -108,9 +108,9 @@ class SosModeScreen extends StatelessWidget {
   }
 }
 
-class _sosCard extends StatelessWidget {
+class _SosCard extends StatelessWidget {
   final Widget child;
-  const _sosCard({required this.child});
+  const _SosCard({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -127,9 +127,9 @@ class _sosCard extends StatelessWidget {
   }
 }
 
-class _contactRow extends StatelessWidget {
+class _ContactRow extends StatelessWidget {
   final String name;
-  const _contactRow({required this.name});
+  const _ContactRow({required this.name});
 
   @override
   Widget build(BuildContext context) {

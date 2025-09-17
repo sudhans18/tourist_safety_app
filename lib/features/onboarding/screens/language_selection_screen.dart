@@ -14,7 +14,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   final List<Map<String, String>> _languages = const [
     // Added const to fix the warning
     {'code': 'en', 'name': 'English'},
-    {'code': 'hi', 'name': 'เคนเคฟเค เคฆเฅ€'}, // Hindi
+    {'code': 'hi', 'name': 'Hindi'}, // Hindi
   ];
 
   @override

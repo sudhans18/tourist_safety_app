@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:tourist_safety_app/utils/theme/colors.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -84,24 +84,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
           if (i == 3) Navigator.pushNamed(context, '/settings');
         },
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.dashboard_outlined), selectedIcon: Icon(Icons.dashboard), label: 'Dashboard'),
-          NavigationDestination(icon: Icon(Icons.notifications_outlined), selectedIcon: Icon(Icons.notifications), label: 'Alerts'),
-          NavigationDestination(icon: Icon(Icons.family_restroom_outlined), selectedIcon: Icon(Icons.family_restroom), label: 'Family'),
-          NavigationDestination(icon: Icon(Icons.shield_outlined), selectedIcon: Icon(Icons.shield), label: 'Safety'),
+          NavigationDestination(
+              icon: Icon(Icons.dashboard_outlined),
+              selectedIcon: Icon(Icons.dashboard),
+              label: 'Dashboard'),
+          NavigationDestination(
+              icon: Icon(Icons.notifications_outlined),
+              selectedIcon: Icon(Icons.notifications),
+              label: 'Alerts'),
+          NavigationDestination(
+              icon: Icon(Icons.family_restroom_outlined),
+              selectedIcon: Icon(Icons.family_restroom),
+              label: 'Family'),
+          NavigationDestination(
+              icon: Icon(Icons.shield_outlined),
+              selectedIcon: Icon(Icons.shield),
+              label: 'Safety'),
         ],
       ),
     );
   }
 
   Widget _buildTouristCard(ThemeData theme) {
-    final statusColor = bandConnected ? const Color(0xFF22C55E) : const Color(0xFFEF4444);
+    final statusColor =
+        bandConnected ? const Color(0xFF22C55E) : const Color(0xFFEF4444);
     final statusText = bandConnected ? 'Connected' : 'Disconnected';
 
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
+        ],
       ),
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -110,22 +126,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
           CircleAvatar(
             radius: 28,
             backgroundColor: AppColors.redLight,
-            child: Text(touristName[0], style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.primaryRed, fontSize: 24)),
+            child: Text(touristName[0],
+                style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryRed,
+                    fontSize: 24)),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(touristName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                Text(touristName,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w700)),
                 const SizedBox(height: 4),
-                Text('ID: $touristId', style: const TextStyle(color: Color(0xFF6B7280))),
+                Text('ID: $touristId',
+                    style: const TextStyle(color: Color(0xFF6B7280))),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Container(width: 8, height: 8, decoration: BoxDecoration(color: statusColor, shape: BoxShape.circle)),
+                    Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                            color: statusColor, shape: BoxShape.circle)),
                     const SizedBox(width: 6),
-                    Text('Band: $statusText', style: TextStyle(color: statusColor, fontWeight: FontWeight.w600)),
+                    Text('Band: $statusText',
+                        style: TextStyle(
+                            color: statusColor, fontWeight: FontWeight.w600)),
                   ],
                 ),
               ],
@@ -155,7 +184,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       decoration: BoxDecoration(
         color: AppColors.success,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x3322C55E), blurRadius: 18, offset: Offset(0, 10))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x3322C55E), blurRadius: 18, offset: Offset(0, 10))
+        ],
       ),
       padding: const EdgeInsets.all(20),
       child: const Row(
@@ -167,9 +199,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Safe', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 20)),
+                Text('Safe',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20)),
                 SizedBox(height: 6),
-                Text('Your current safety score is excellent. Keep it up!', style: TextStyle(color: Colors.white)),
+                Text('Your current safety score is excellent. Keep it up!',
+                    style: TextStyle(color: Colors.white)),
               ],
             ),
           )
@@ -178,12 +215,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _metricCard({required IconData icon, required String value, String? label}) {
+  Widget _metricCard(
+      {required IconData icon, required String value, String? label}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
+        ],
       ),
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -192,10 +233,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Icon(icon, color: AppColors.primaryRed, size: 24),
           const SizedBox(height: 8),
-          Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          Text(value,
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
           if (label != null) ...[
             const SizedBox(height: 2),
-            Text(label, style: const TextStyle(color: Color(0xFF6B7280), fontSize: 12)),
+            Text(label,
+                style: const TextStyle(color: Color(0xFF6B7280), fontSize: 12)),
           ],
         ],
       ),
@@ -206,7 +250,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Live Vitals', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+        Text('Live Vitals',
+            style: theme.textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
         GridView(
           shrinkWrap: true,
@@ -220,7 +266,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             _metricCard(icon: Icons.favorite_border, value: '$heartRate bpm'),
             _metricCard(icon: Icons.water_drop_outlined, value: '$spo2%'),
-            _metricCard(icon: Icons.device_thermostat, value: '${tempF.toStringAsFixed(1)}°F'),
+            _metricCard(
+                icon: Icons.device_thermostat,
+                value: '${tempF.toStringAsFixed(1)}°F'),
             _metricCard(icon: Icons.directions_walk, value: activity),
           ],
         ),
@@ -233,42 +281,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Location & Risk Zone', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+        Text('Location & Risk Zone',
+            style: theme.textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
         Container(
           height: 220,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+            boxShadow: const [
+              BoxShadow(
+                  color: Color(0x14000000),
+                  blurRadius: 12,
+                  offset: Offset(0, 4))
+            ],
           ),
           clipBehavior: Clip.antiAlias,
           child: Stack(
             children: [
-              MapboxMap(
-                accessToken: 'sk.eyJ1Ijoic3VkaGFuMTgiLCJhIjoiY21mam1ucHVtMHptcTJqc2ZqenIydnJjNCJ9.mXsqTTK79pYDubxVf9rQrw',
-                compassEnabled: false,
-                myLocationEnabled: false,
-                myLocationRenderMode: MyLocationRenderMode.NORMAL,
-                styleString: MapboxStyles.MAPBOX_STREETS,
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(26.2006, 92.9376),
-                  zoom: 13,
+              MapWidget(
+                // Access token is provided via AndroidManifest meta-data (MAPBOX_ACCESS_TOKEN)
+                styleUri: MapboxStyles.MAPBOX_STREETS,
+                cameraOptions: CameraOptions(
+                  center: Point(
+                      coordinates: Position(92.9376, 26.2006)), // lng, lat
+                  zoom: 13.0,
                 ),
-                onMapCreated: (controller) {},
+                onMapCreated: (mapboxMap) {},
               ),
               const Center(
-                child: Icon(Icons.location_pin, color: AppColors.primaryRed, size: 36),
+                child: Icon(Icons.location_pin,
+                    color: AppColors.primaryRed, size: 36),
               ),
               Positioned(
                 bottom: 8,
                 right: 8,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Text('Guwahati • 26.2006, 92.9376', style: TextStyle(fontSize: 12)),
+                  child: const Text('Guwahati • 26.2006, 92.9376',
+                      style: TextStyle(fontSize: 12)),
                 ),
               ),
             ],
@@ -286,12 +342,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
+        ],
       ),
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          CircleAvatar(radius: 18, backgroundColor: color.withOpacity(0.12), child: Icon(Icons.shield, color: color)),
+          CircleAvatar(
+              radius: 18,
+              backgroundColor: color.withOpacity(0.12),
+              child: Icon(Icons.shield, color: color)),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
@@ -308,7 +370,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Recent Alerts', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+        Text('Recent Alerts',
+            style: theme.textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
         ...[
           _alertTile(icon: '⚠️', title: 'Geofence Alert', timeAgo: '2h ago'),
@@ -317,13 +381,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _alertTile({required String icon, required String title, required String timeAgo}) {
+  Widget _alertTile(
+      {required String icon, required String title, required String timeAgo}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
+        ],
       ),
       child: ListTile(
         leading: Text(icon, style: const TextStyle(fontSize: 24)),
@@ -340,13 +408,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: const Text('Send Emergency Alert?'),
-          content: const Text('This will notify authorities and your emergency contacts.'),
+          content: const Text(
+              'This will notify authorities and your emergency contacts.'),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+            TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel')),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD93F34)),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFD93F34)),
               onPressed: () => Navigator.pop(context, true),
               child: const Text('Send SOS'),
             ),
@@ -378,24 +451,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(width: 40, height: 5, decoration: BoxDecoration(color: const Color(0xFFE5E7EB), borderRadius: BorderRadius.circular(3))),
+                  Container(
+                      width: 40,
+                      height: 5,
+                      decoration: BoxDecoration(
+                          color: const Color(0xFFE5E7EB),
+                          borderRadius: BorderRadius.circular(3))),
                 ],
               ),
               const SizedBox(height: 16),
-              const CircleAvatar(radius: 28, backgroundColor: Color(0xFFFEEBEA), child: Icon(Icons.warning_amber_rounded, color: Color(0xFFD93F34), size: 28)),
+              const CircleAvatar(
+                  radius: 28,
+                  backgroundColor: Color(0xFFFEEBEA),
+                  child: Icon(Icons.warning_amber_rounded,
+                      color: Color(0xFFD93F34), size: 28)),
               const SizedBox(height: 12),
-              const Text('Geo-fence Alert', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+              const Text('Geo-fence Alert',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 8),
-              const Text('You are approaching a restricted area. Please turn back or proceed with caution.', textAlign: TextAlign.center, style: TextStyle(color: Color(0xFF6B7280))),
+              const Text(
+                  'You are approaching a restricted area. Please turn back or proceed with caution.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Color(0xFF6B7280))),
               const SizedBox(height: 20),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD93F34), padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFD93F34),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12))),
                 onPressed: () => Navigator.pop(context),
                 child: const Text('Return to Safety'),
               ),
               const SizedBox(height: 10),
               OutlinedButton(
-                style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12))),
                 onPressed: () => Navigator.pop(context),
                 child: const Text('Proceed with Caution'),
               ),
