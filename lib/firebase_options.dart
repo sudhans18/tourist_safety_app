@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'tourist-safety-app-7791d.firebasestorage.app',
     measurementId: 'G-GMQHGCKQ3C',
   );
+
 }

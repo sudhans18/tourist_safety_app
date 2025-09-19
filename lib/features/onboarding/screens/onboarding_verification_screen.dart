@@ -14,7 +14,7 @@ class _OnboardingVerificationScreenState
   String? _selectedLanguage;
   final List<Map<String, String>> _languages = const [
     {'code': 'en', 'name': 'English'},
-    {'code': 'hi', 'name': 'เคนเคฟเค เคฆเฅ€'},
+    {'code': 'hi', 'name': 'Hindi'},
   ];
 
   final _phoneController = TextEditingController();

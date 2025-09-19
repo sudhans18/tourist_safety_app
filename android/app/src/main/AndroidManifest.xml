@@ -5,6 +5,7 @@
     <application
         android:label="tourist_safety_app"
         android:name="${applicationName}"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -33,9 +34,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <meta-data
-            android:name="MAPBOX_ACCESS_TOKEN"
-            android:value="pk.eyJ1Ijoic3VkaGFuMTgiLCJhIjoiY21mam05ZGI5MDhlaTJsc2hucGcydnZrMSJ9.JNYrclluN4FbGvBrZXH-4g" />
+            
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

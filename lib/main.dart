@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 
 import 'firebase_options.dart';
 import 'features/onboarding/screens/onboarding_verification_screen.dart';
@@ -12,8 +15,23 @@ import 'features/sos/screens/sos_mode_screen.dart';
 import 'features/family/screens/family_screen.dart';
 import 'features/alerts/screens/alerts_screen.dart';
 import 'features/settings/screens/settings_screen.dart';
+import 'features/zones/providers/geofence_provider.dart';
+import 'features/zones/screens/map_fullscreen_screen.dart';
+
+void _initializeMapbox() {
+  try {
+    // Load the token from the .env file
+    mapbox.MapboxOptions.setAccessToken(dotenv.env['MAPBOX_PUBLIC_TOKEN']!);
+  } catch (e) {
+    debugPrint('Failed to initialize Mapbox: $e');
+  }
+}
 
 Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+
+  _initializeMapbox();
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -37,71 +55,77 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tourist Safety App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFD93F34),
-          primary: const Color(0xFFD93F34),
-          secondary: const Color(0xFFFEEBEA),
-          surface: Colors.white,
-        ).copyWith(
-          error: const Color(0xFFD93F34),
-        ),
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Color(0xFF111827),
-          elevation: 0,
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFD93F34),
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => GeofenceProvider()..init()),
+      ],
+      child: MaterialApp(
+        title: 'Tourist Safety App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: const Color(0xFFF3F4F6),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFD93F34),
+            primary: const Color(0xFFD93F34),
+            secondary: const Color(0xFFFEEBEA),
+            surface: Colors.white,
+          ).copyWith(
+            error: const Color(0xFFD93F34),
+          ),
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            foregroundColor: Color(0xFF111827),
+            elevation: 0,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFD93F34),
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderSide: BorderSide(color: Color(0xFFD1D5DB)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderSide: BorderSide(color: Color(0xFFD1D5DB)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderSide: BorderSide(color: Color(0xFFD93F34), width: 2),
             ),
           ),
         ),
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(color: Color(0xFFD1D5DB)),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(color: Color(0xFFD1D5DB)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(color: Color(0xFFD93F34), width: 2),
-          ),
-        ),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', ''), // English
+          Locale('hi', ''), // Hindi
+        ],
+        initialRoute: initialRoute,
+        routes: {
+          '/': (context) => const OnboardingVerificationScreen(),
+          '/kyc': (context) => const KycVerificationScreen(),
+          '/id-qr': (context) => const IdQrScreen(),
+          '/band-pairing': (context) => const BandPairingScreen(),
+          '/dashboard': (context) => const DashboardScreen(),
+          '/sos': (context) => const SosModeScreen(),
+          '/family': (context) => const FamilyScreen(),
+          '/alerts': (context) => const AlertsScreen(),
+          '/settings': (context) => const SettingsScreen(),
+          '/map-fullscreen': (context) => const MapFullscreenScreen(),
+        },
       ),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', ''), // English
-        Locale('hi', ''), // Hindi
-      ],
-      initialRoute: initialRoute,
-      routes: {
-        '/': (context) => const OnboardingVerificationScreen(),
-        '/kyc': (context) => const KycVerificationScreen(),
-        '/id-qr': (context) => const IdQrScreen(),
-        '/band-pairing': (context) => const BandPairingScreen(),
-        '/dashboard': (context) => const DashboardScreen(),
-        '/sos': (context) => const SosModeScreen(),
-        '/family': (context) => const FamilyScreen(),
-        '/alerts': (context) => const AlertsScreen(),
-        '/settings': (context) => const SettingsScreen(),
-      },
     );
   }
 }

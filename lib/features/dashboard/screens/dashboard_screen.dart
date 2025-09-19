@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:tourist_safety_app/utils/theme/colors.dart';
+import 'package:tourist_safety_app/features/zones/widgets/dashboard_mini_map.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -277,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildMapSection(ThemeData theme) {
-    // Mapbox map centered at Guwahati with a center marker
+    // Mapbox mini map with zones and user puck
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -285,51 +285,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
-        Container(
-          height: 220,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: const [
-              BoxShadow(
-                  color: Color(0x14000000),
-                  blurRadius: 12,
-                  offset: Offset(0, 4))
-            ],
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: Stack(
-            children: [
-              MapWidget(
-                // Access token is provided via AndroidManifest meta-data (MAPBOX_ACCESS_TOKEN)
-                styleUri: MapboxStyles.MAPBOX_STREETS,
-                cameraOptions: CameraOptions(
-                  center: Point(
-                      coordinates: Position(92.9376, 26.2006)), // lng, lat
-                  zoom: 13.0,
-                ),
-                onMapCreated: (mapboxMap) {},
-              ),
-              const Center(
-                child: Icon(Icons.location_pin,
-                    color: AppColors.primaryRed, size: 36),
-              ),
-              Positioned(
-                bottom: 8,
-                right: 8,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text('Guwahati • 26.2006, 92.9376',
-                      style: TextStyle(fontSize: 12)),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const DashboardMiniMap(),
       ],
     );
   }
@@ -352,7 +308,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           CircleAvatar(
               radius: 18,
-              backgroundColor: color.withOpacity(0.12),
+              backgroundColor: color.withAlpha((255 * 0.12).round()), // Fix applied here
               child: Icon(Icons.shield, color: color)),
           const SizedBox(width: 12),
           Expanded(

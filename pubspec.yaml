@@ -23,6 +23,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   qr_flutter: ^4.1.0
   mapbox_maps_flutter: 2.10.0
+  cloud_firestore: ^4.15.8
+  flutter_dotenv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +39,7 @@ flutter:
   
   assets:
     - assets/images/
+    - .env
     
   fonts:
     - family: Manrope
