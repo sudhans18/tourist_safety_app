@@ -104,10 +104,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Mapbox for mapping solutions
 - All open-source contributors
 
-## 🤝 Contributing
-
-Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) before submitting pull requests.
-
 ## 📬 Contact
 
-For any queries or support, please contact [your-email@example.com](mailto:your-email@example.com)
+For any queries or support, please contact [sudhan4843@gmail.com](mailto:sudhan4843@gmail.com)
