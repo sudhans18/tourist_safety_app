@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tourist_safety_app/core/providers/settings_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
+    final themeSubtitle = settings.themeMode == ThemeMode.system
+        ? 'System'
+        : settings.themeMode == ThemeMode.light
+            ? 'Light'
+            : 'Dark';
+    final languageSubtitle = settings.locale.languageCode == 'hi' ? 'Hindi' : 'English';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -20,8 +29,15 @@ class SettingsScreen extends StatelessWidget {
             _settingsTile(
               icon: Icons.palette_outlined,
               title: 'Theme',
-              subtitle: 'Light',
-              onTap: () {},
+              subtitle: themeSubtitle,
+              onTap: () => _showThemeDialog(context),
+            ),
+            const SizedBox(height: 12),
+            _settingsTile(
+              icon: Icons.language_outlined,
+              title: 'Language',
+              subtitle: languageSubtitle,
+              onTap: () => _showLanguageDialog(context),
             ),
             const SizedBox(height: 12),
             _settingsTile(
@@ -55,6 +71,82 @@ class SettingsScreen extends StatelessWidget {
           NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
+    );
+  }
+
+  void _showThemeDialog(BuildContext context) {
+    final settings = context.read<SettingsProvider>();
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (_) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.brightness_auto_outlined),
+              title: const Text('System default'),
+              onTap: () {
+                settings.setThemeMode(ThemeMode.system);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.light_mode_outlined),
+              title: const Text('Light'),
+              onTap: () {
+                settings.setThemeMode(ThemeMode.light);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.dark_mode_outlined),
+              title: const Text('Dark'),
+              onTap: () {
+                settings.setThemeMode(ThemeMode.dark);
+                Navigator.pop(context);
+              },
+            ),
+            const SizedBox(height: 8),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context) {
+    final settings = context.read<SettingsProvider>();
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (_) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.translate),
+              title: const Text('English'),
+              onTap: () {
+                settings.setLanguageCode('en');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.translate),
+              title: const Text('हिंदी (Hindi)'),
+              onTap: () {
+                settings.setLanguageCode('hi');
+                Navigator.pop(context);
+              },
+            ),
+            const SizedBox(height: 8),
+          ],
+        );
+      },
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tourist_safety_app/utils/theme/colors.dart';
 import 'package:tourist_safety_app/features/zones/widgets/dashboard_mini_map.dart';
+import 'package:tourist_safety_app/l10n/app_localizations.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -39,11 +40,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Safety Dashboard'),
+        title: Text(AppLocalizations.of(context)!.safetyDashboard),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {},
+            onPressed: () => Navigator.pushNamed(context, '/settings'),
           ),
         ],
       ),
@@ -83,23 +84,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
           if (i == 2) Navigator.pushNamed(context, '/family');
           if (i == 3) Navigator.pushNamed(context, '/settings');
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-              icon: Icon(Icons.dashboard_outlined),
-              selectedIcon: Icon(Icons.dashboard),
-              label: 'Dashboard'),
+              icon: const Icon(Icons.dashboard_outlined),
+              selectedIcon: const Icon(Icons.dashboard),
+              label: AppLocalizations.of(context)!.dashboard),
           NavigationDestination(
-              icon: Icon(Icons.notifications_outlined),
-              selectedIcon: Icon(Icons.notifications),
-              label: 'Alerts'),
+              icon: const Icon(Icons.notifications_outlined),
+              selectedIcon: const Icon(Icons.notifications),
+              label: AppLocalizations.of(context)!.alerts),
           NavigationDestination(
-              icon: Icon(Icons.family_restroom_outlined),
-              selectedIcon: Icon(Icons.family_restroom),
-              label: 'Family'),
+              icon: const Icon(Icons.family_restroom_outlined),
+              selectedIcon: const Icon(Icons.family_restroom),
+              label: AppLocalizations.of(context)!.family),
           NavigationDestination(
-              icon: Icon(Icons.shield_outlined),
-              selectedIcon: Icon(Icons.shield),
-              label: 'Safety'),
+              icon: const Icon(Icons.settings_outlined),
+              selectedIcon: const Icon(Icons.settings),
+              label: AppLocalizations.of(context)!.settings),
         ],
       ),
     );
@@ -250,7 +251,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Live Vitals',
+        Text(AppLocalizations.of(context)!.liveVitals,
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
@@ -281,7 +282,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Location & Risk Zone',
+        Text(AppLocalizations.of(context)!.locationAndRisk,
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
@@ -292,7 +293,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _buildRiskBanner(ThemeData theme) {
     final color = insideRestrictedZone ? AppColors.warning : AppColors.success;
-    final text = insideRestrictedZone ? 'Restricted Zone' : 'Low-Risk Zone';
+    final text = insideRestrictedZone
+        ? AppLocalizations.of(context)!.restrictedZone
+        : AppLocalizations.of(context)!.lowRiskZone;
 
     return Container(
       decoration: BoxDecoration(
@@ -313,7 +316,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'You are in a $text. Stay aware of your surroundings.',
+              AppLocalizations.of(context)!.youAreInZone(text),
               style: const TextStyle(color: Color(0xFF111827)),
             ),
           ),
@@ -326,7 +329,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Recent Alerts',
+        Text(AppLocalizations.of(context)!.recentAlerts,
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),

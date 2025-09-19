@@ -34,6 +34,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.mapbox.TextureMode"
+            android:value="true" />
             
     </application>
     <!-- Required to query activities that can process text, see:

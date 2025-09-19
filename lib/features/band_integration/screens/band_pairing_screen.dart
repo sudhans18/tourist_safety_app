@@ -9,7 +9,8 @@ class BandPairingScreen extends StatefulWidget {
   State<BandPairingScreen> createState() => _BandPairingScreenState();
 }
 
-class _BandPairingScreenState extends State<BandPairingScreen> with SingleTickerProviderStateMixin {
+class _BandPairingScreenState extends State<BandPairingScreen>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   bool _foundDevice = false;
   bool _selected = false;
@@ -17,7 +18,9 @@ class _BandPairingScreenState extends State<BandPairingScreen> with SingleTicker
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat(reverse: true);
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(seconds: 2))
+      ..repeat(reverse: true);
 
     // Mock scanning and finding a device after 2 seconds
     Timer(const Duration(seconds: 2), () {
@@ -49,7 +52,10 @@ class _BandPairingScreenState extends State<BandPairingScreen> with SingleTicker
             children: [
               Text(
                 'Searching for your band',
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.w700),
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall
+                    ?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -59,7 +65,9 @@ class _BandPairingScreenState extends State<BandPairingScreen> with SingleTicker
               const SizedBox(height: 24),
               Center(
                 child: ScaleTransition(
-                  scale: Tween(begin: 0.95, end: 1.05).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut)),
+                  scale: Tween(begin: 0.95, end: 1.05).animate(
+                      CurvedAnimation(
+                          parent: _controller, curve: Curves.easeInOut)),
                   child: Container(
                     width: 160,
                     height: 160,
@@ -67,7 +75,8 @@ class _BandPairingScreenState extends State<BandPairingScreen> with SingleTicker
                       color: Color(0xFFFEEBEA),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.bluetooth, color: Color(0xFFD93F34), size: 72),
+                    child: const Icon(Icons.bluetooth,
+                        color: Color(0xFFD93F34), size: 72),
                   ),
                 ),
               ),
@@ -89,25 +98,35 @@ class _BandPairingScreenState extends State<BandPairingScreen> with SingleTicker
                       },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
                 child: const Text('Connect'),
               ),
               const SizedBox(height: 12),
               OutlinedButton(
                 onPressed: () async {
-                  // Request location permissions to allow map and other features
-                  LocationPermission permission = await Geolocator.checkPermission();
+                  // --- FIX ---
+                  // Get the Navigator from the context *before* the await calls.
+                  final navigator = Navigator.of(context);
+
+                  // These 'await' calls create the async gap.
+                  LocationPermission permission =
+                      await Geolocator.checkPermission();
                   if (permission == LocationPermission.denied) {
                     permission = await Geolocator.requestPermission();
                   }
+                  
                   // Proceed regardless (mock) — app can fall back to manual input if denied
                   if (!mounted) return;
-                  Navigator.pushReplacementNamed(context, '/dashboard');
+
+                  // Use the 'navigator' variable instead of 'context'.
+                  navigator.pushReplacementNamed('/dashboard');
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
                 child: const Text('Skip for now'),
               ),
@@ -155,13 +174,20 @@ class _BandListTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text(title,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 4),
-                  Text(subtitle, style: const TextStyle(color: Color(0xFF6B7280))),
+                  Text(subtitle,
+                      style: const TextStyle(color: Color(0xFF6B7280))),
                 ],
               ),
             ),
-            Icon(selected ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: const Color(0xFFD93F34)),
+            Icon(
+                selected
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_unchecked,
+                color: const Color(0xFFD93F34)),
           ],
         ),
       ),

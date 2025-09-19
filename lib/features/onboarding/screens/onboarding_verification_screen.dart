@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:tourist_safety_app/core/providers/settings_provider.dart';
 
 class OnboardingVerificationScreen extends StatefulWidget {
   const OnboardingVerificationScreen({Key? key}) : super(key: key);
@@ -183,6 +185,10 @@ class _OnboardingVerificationScreenState
 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('language_code', _selectedLanguage!);
+    // Also update global settings provider to reflect immediately
+    if (mounted) {
+      context.read<SettingsProvider>().setLanguageCode(_selectedLanguage!);
+    }
 
     if (!_codeSent) {
       // Mock send code

@@ -4,6 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
+import 'package:tourist_safety_app/l10n/app_localizations.dart';
+import 'core/providers/settings_provider.dart';
 
 import 'firebase_options.dart';
 import 'features/onboarding/screens/onboarding_verification_screen.dart';
@@ -58,8 +60,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => GeofenceProvider()..init()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()..load()),
       ],
-      child: MaterialApp(
+      child: Builder(
+        builder: (context) => MaterialApp(
         title: 'Tourist Safety App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -103,15 +107,23 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFD93F34),
+            brightness: Brightness.dark,
+          ),
+          useMaterial3: true,
+        ),
+        themeMode: context.watch<SettingsProvider>().themeMode,
         localizationsDelegates: const [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('en', ''), // English
-          Locale('hi', ''), // Hindi
-        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: context.watch<SettingsProvider>().locale,
         initialRoute: initialRoute,
         routes: {
           '/': (context) => const OnboardingVerificationScreen(),
@@ -125,6 +137,7 @@ class MyApp extends StatelessWidget {
           '/settings': (context) => const SettingsScreen(),
           '/map-fullscreen': (context) => const MapFullscreenScreen(),
         },
+      ),
       ),
     );
   }

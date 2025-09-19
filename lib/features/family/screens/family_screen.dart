@@ -24,9 +24,9 @@ class _FamilyScreenState extends State<FamilyScreen> {
         selectedIndex: 2,
         onDestinationSelected: (i) {
           if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
-          if (i == 1) {/* Alerts screen placeholder */}
+          if (i == 1) Navigator.pushReplacementNamed(context, '/alerts');
           if (i == 2) {/* already on Family */}
-          if (i == 3) {/* Settings placeholder */}
+          if (i == 3) Navigator.pushReplacementNamed(context, '/settings');
         },
         destinations: const [
           NavigationDestination(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),

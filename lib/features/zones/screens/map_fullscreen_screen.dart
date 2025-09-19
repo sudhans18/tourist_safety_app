@@ -33,6 +33,7 @@ class _MapFullscreenScreenState extends State<MapFullscreenScreen> {
               zoom: prov.hasLocation ? 15 : 13,
             ),
             onMapCreated: (map) async {
+              // This 'await' creates the async gap.
               await map.location.updateSettings(
                 LocationComponentSettings(
                   enabled: true,
@@ -40,7 +41,14 @@ class _MapFullscreenScreenState extends State<MapFullscreenScreen> {
                   puckBearing: PuckBearing.HEADING,
                 ),
               );
-              await context.read<GeofenceProvider>().attachMap(map);
+
+              // --- FIX ---
+              // Use the 'prov' variable from the Consumer's builder
+              // instead of calling context.read().
+              // Also, add the 'mounted' check for safety.
+              if (mounted) {
+                await prov.attachMap(map);
+              }
             },
           );
         },
