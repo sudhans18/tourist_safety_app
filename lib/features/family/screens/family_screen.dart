@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tourist_safety_app/l10n/app_localizations.dart';
 
 class FamilyScreen extends StatefulWidget {
   const FamilyScreen({Key? key}) : super(key: key);
@@ -8,93 +9,142 @@ class FamilyScreen extends StatefulWidget {
 }
 
 class _FamilyScreenState extends State<FamilyScreen> {
-  bool shareLocation = true;
+  bool shareEnabled = true;
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Share Location'),
+        title: Text(t.familyTracking),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 2,
-        onDestinationSelected: (i) {
-          if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
-          if (i == 1) Navigator.pushReplacementNamed(context, '/alerts');
-          if (i == 2) {/* already on Family */}
-          if (i == 3) Navigator.pushReplacementNamed(context, '/settings');
-        },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
-          NavigationDestination(icon: Icon(Icons.notifications_outlined), label: 'Alerts'),
-          NavigationDestination(icon: Icon(Icons.family_restroom), label: 'Family'),
-          NavigationDestination(icon: Icon(Icons.settings_outlined), label: 'Settings'),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Share My Location toggle card
+              // Master toggle card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Color(0x14000000),
+                        blurRadius: 12,
+                        offset: Offset(0, 4)),
+                  ],
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.location_on_outlined, color: Color(0xFFD93F34)),
+                    const Icon(Icons.share_location, color: Color(0xFFD93F34)),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Share My Location', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-                          SizedBox(height: 4),
-                          Text('Allow family members to see your live location.', style: TextStyle(color: Color(0xFF6B7280))),
+                          Text(t.shareLocationVitals,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 16)),
+                          const SizedBox(height: 4),
+                          Text(t.enableToShare,
+                              style: const TextStyle(color: Color(0xFF6B7280))),
                         ],
                       ),
                     ),
                     Switch(
-                      value: shareLocation,
+                      value: shareEnabled,
                       activeThumbColor: Colors.white,
                       activeTrackColor: const Color(0xFFD93F34),
-                      onChanged: (v) => setState(() => shareLocation = v),
+                      onChanged: (v) => setState(() => shareEnabled = v),
                     )
                   ],
                 ),
               ),
+              const SizedBox(height: 16),
+
+              // SOS info card
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFEEBEA),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.notifications_active, color: Color(0xFFD93F34)),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(t.sosAlerts, style: const TextStyle(fontWeight: FontWeight.w700)),
+                          const SizedBox(height: 6),
+                          Text(t.sosAlertsDesc,
+                              style: const TextStyle(color: Color(0xFF6B7280))),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              Text(t.sharingWith, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+              const SizedBox(height: 12),
+
+              _memberTile('Sarah Miller', 'Mother',
+                  status: 'Active', color: const Color(0xFF10B981)),
+              const SizedBox(height: 10),
+              _memberTile('John Miller', 'Father',
+                  status: 'Active', color: const Color(0xFF10B981)),
+              const SizedBox(height: 10),
+              _memberTile('Emily Carter', 'Friend',
+                  status: 'Paused',
+                  color: const Color(0xFFF59E0B),
+                  muted: true),
 
               const SizedBox(height: 24),
-              const Text('Sharing Options', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-              const SizedBox(height: 12),
-
-              _optionTile(
-                icon: Icons.qr_code_2,
-                title: 'Generate Sharing QR / Token',
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Generate sharing token (mock)')),
-                  );
-                },
-              ),
-              const SizedBox(height: 12),
-              _optionTile(
-                icon: Icons.block,
-                title: 'Revoke Access',
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Access revoked for all family (mock)')),
-                  );
-                },
+              // Revoke all sharing button
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFEEBEA),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFD93F34),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(t.accessRevokedMsg)),
+                        );
+                      },
+                      icon: const Icon(Icons.shield),
+                      label: Text(t.revokeAllSharing),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      t.revokeAllSharingDesc,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Color(0xFF6B7280)),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -103,18 +153,41 @@ class _FamilyScreenState extends State<FamilyScreen> {
     );
   }
 
-  Widget _optionTile({required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _memberTile(String name, String relation,
+      {required String status, required Color color, bool muted = false}) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF9FAFB),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
+        ],
       ),
       child: ListTile(
-        leading: CircleAvatar(radius: 20, backgroundColor: const Color(0xFFFEEBEA), child: Icon(icon, color: const Color(0xFFD93F34))),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
+        leading: CircleAvatar(
+          backgroundColor: const Color(0xFFF3F4F6),
+          child: Text(name[0],
+              style: const TextStyle(
+                  color: Color(0xFF111827), fontWeight: FontWeight.w700)),
+        ),
+        title: Text(name, style: const TextStyle(fontWeight: FontWeight.w700)),
+        subtitle: Row(
+          children: [
+            Container(
+              width: 8,
+              height: 8,
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            ),
+            const SizedBox(width: 6),
+            Text(status, style: TextStyle(color: color)),
+            const SizedBox(width: 12),
+            Text(relation, style: const TextStyle(color: Color(0xFF6B7280))),
+          ],
+        ),
+        trailing: Icon(muted ? Icons.volume_off : Icons.volume_up,
+            color: const Color(0xFF9CA3AF)),
+        onTap: () {},
       ),
     );
   }

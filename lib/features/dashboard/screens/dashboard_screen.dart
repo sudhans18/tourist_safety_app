@@ -58,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 16),
               _buildSafetyScoreCard(theme),
               const SizedBox(height: 16),
-              _buildVitalsSection(theme),
+              _buildQuickActions(theme),
               const SizedBox(height: 16),
               _buildMapSection(theme),
               const SizedBox(height: 12),
@@ -80,8 +80,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         onDestinationSelected: (i) {
           setState(() => _currentTab = i);
           if (i == 0) return; // Dashboard
-          if (i == 1) Navigator.pushNamed(context, '/alerts');
-          if (i == 2) Navigator.pushNamed(context, '/family');
+          if (i == 1) Navigator.pushNamed(context, '/tour-plan');
+          if (i == 2) Navigator.pushNamed(context, '/alerts');
           if (i == 3) Navigator.pushNamed(context, '/settings');
         },
         destinations: [
@@ -90,13 +90,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               selectedIcon: const Icon(Icons.dashboard),
               label: AppLocalizations.of(context)!.dashboard),
           NavigationDestination(
+              icon: const Icon(Icons.event_note_outlined),
+              selectedIcon: const Icon(Icons.event_note),
+              label: AppLocalizations.of(context)!.tourPlan),
+          NavigationDestination(
               icon: const Icon(Icons.notifications_outlined),
               selectedIcon: const Icon(Icons.notifications),
               label: AppLocalizations.of(context)!.alerts),
-          NavigationDestination(
-              icon: const Icon(Icons.family_restroom_outlined),
-              selectedIcon: const Icon(Icons.family_restroom),
-              label: AppLocalizations.of(context)!.family),
           NavigationDestination(
               icon: const Icon(Icons.settings_outlined),
               selectedIcon: const Icon(Icons.settings),
@@ -216,64 +216,78 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _metricCard(
-      {required IconData icon, required String value, String? label}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
-        ],
-      ),
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(icon, color: AppColors.primaryRed, size: 24),
-          const SizedBox(height: 8),
-          Text(value,
-              style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-          if (label != null) ...[
-            const SizedBox(height: 2),
-            Text(label,
-                style: const TextStyle(color: Color(0xFF6B7280), fontSize: 12)),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildVitalsSection(ThemeData theme) {
+  Widget _buildQuickActions(ThemeData theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context)!.liveVitals,
+        Text(AppLocalizations.of(context)!.quickActions,
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
-        GridView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            childAspectRatio: 1,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: const [
+              BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4)),
+            ],
           ),
-          children: [
-            _metricCard(icon: Icons.favorite_border, value: '$heartRate bpm'),
-            _metricCard(icon: Icons.water_drop_outlined, value: '$spo2%'),
-            _metricCard(
-                icon: Icons.device_thermostat,
-                value: '${tempF.toStringAsFixed(1)}°F'),
-            _metricCard(icon: Icons.directions_walk, value: activity),
-          ],
+          padding: const EdgeInsets.all(12),
+          child: GridView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 0.95,
+            ),
+            children: [
+              _actionTile(Icons.monitor_heart_outlined, AppLocalizations.of(context)!.liveVitals,
+                  onTap: () => Navigator.pushNamed(context, '/live-vitals')),
+              _actionTile(Icons.family_restroom, AppLocalizations.of(context)!.familyTracking,
+                  onTap: () => Navigator.pushNamed(context, '/family')),
+              _actionTile(Icons.park_outlined, AppLocalizations.of(context)!.nearbyAttractions,
+                  onTap: () => Navigator.pushNamed(context, '/nearby-attractions')),
+              _actionTile(Icons.cloudy_snowing, AppLocalizations.of(context)!.weatherAlerts,
+                  onTap: () => Navigator.pushNamed(context, '/weather-alerts')),
+            ],
+          ),
         ),
       ],
+    );
+  }
+
+  Widget _actionTile(IconData icon, String label, {VoidCallback? onTap}) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFF9FAFB),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFFE5E7EB)),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: AppColors.primaryRed, size: 22),
+            const SizedBox(height: 6),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 10,
+                height: 1.1,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -311,7 +325,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           CircleAvatar(
               radius: 18,
-              backgroundColor: color.withAlpha((255 * 0.12).round()), // Fix applied here
+              backgroundColor:
+                  color.withAlpha((255 * 0.12).round()), // Fix applied here
               child: Icon(Icons.shield, color: color)),
           const SizedBox(width: 12),
           Expanded(

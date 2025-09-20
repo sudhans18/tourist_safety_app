@@ -92,6 +92,138 @@ class AppLocalizationsHi extends AppLocalizations {
       'आपका वर्तमान सुरक्षा स्कोर उत्कृष्ट है। ऐसे ही जारी रखें!';
 
   @override
+  String get tourPlan => 'टूर प्लान';
+
+  @override
+  String get quickActions => 'त्वरित क्रियाएँ';
+
+  @override
+  String get familyTracking => 'परिवार ट्रैकिंग';
+
+  @override
+  String get nearbyAttractions => 'नज़दीकी आकर्षण';
+
+  @override
+  String get weatherAlerts => 'मौसम';
+
+  @override
+  String get offlineModeCached => 'ऑफ़लाइन मोड - कैश्ड डेटा दिखाया जा रहा है';
+
+  @override
+  String get bandConnected => 'बैंड कनेक्टेड';
+
+  @override
+  String lastUpdatedMins(Object mins) {
+    return 'अंतिम अपडेट: $mins मिनट पहले';
+  }
+
+  @override
+  String get heartRate => 'हार्ट रेट';
+
+  @override
+  String get spo2 => 'SpO₂';
+
+  @override
+  String get temperature => 'तापमान';
+
+  @override
+  String get activity => 'गतिविधि';
+
+  @override
+  String get normal => 'सामान्य';
+
+  @override
+  String get last1hHeartRate => 'पिछले 1 घंटे का हार्ट रेट';
+
+  @override
+  String get tourPlanComingSoon => 'टूर प्लान स्क्रीन जल्द उपलब्ध होगी';
+
+  @override
+  String comingSoon(Object feature) {
+    return '$feature जल्द उपलब्ध होगा';
+  }
+
+  @override
+  String get shareLocationVitals => 'मेरी लोकेशन और वाइटल्स शेयर करें';
+
+  @override
+  String get enableToShare => 'परिवार के साथ साझा करने के लिए सक्षम करें';
+
+  @override
+  String get sosAlerts => 'SOS अलर्ट';
+
+  @override
+  String get sosAlertsDesc =>
+      'यदि आप SOS अलर्ट ट्रिगर करते हैं तो परिवार के सदस्यों को तुरंत सूचित किया जाएगा।';
+
+  @override
+  String get sharingWith => 'साझा किया जा रहा है';
+
+  @override
+  String get revokeAllSharing => 'सभी शेयरिंग रद्द करें';
+
+  @override
+  String get revokeAllSharingDesc =>
+      'यह सभी के साथ आपकी लोकेशन और वाइटल्स साझा करना बंद कर देगा।';
+
+  @override
+  String get severeWeatherWarning => 'गंभीर मौसम चेतावनी';
+
+  @override
+  String get severeWeatherDesc =>
+      'राष्ट्रीय मौसम सेवा ने आपके क्षेत्र के लिए गंभीर तूफान की चेतावनी जारी की है। तुरंत सुरक्षित स्थान पर जाएँ।';
+
+  @override
+  String get noInternetCached =>
+      'इंटरनेट कनेक्शन नहीं है। कैश्ड अलर्ट दिखाए जा रहे हैं।';
+
+  @override
+  String get appAlert => 'ऐप अलर्ट';
+
+  @override
+  String get governmentAlert => 'सरकारी अलर्ट';
+
+  @override
+  String get acknowledge => 'स्वीकार करें';
+
+  @override
+  String get moreInfo => 'अधिक जानकारी';
+
+  @override
+  String get dismiss => 'खारिज करें';
+
+  @override
+  String get viewDetails => 'विवरण देखें';
+
+  @override
+  String get viewMap => 'मानचित्र देखें';
+
+  @override
+  String get checkVitals => 'वाइटल्स देखें';
+
+  @override
+  String get dismissed => 'खारिज किया गया';
+
+  @override
+  String get geoFenceWarning => 'जियो-फेंस चेतावनी';
+
+  @override
+  String get geoFenceWarningDesc =>
+      'एमिली होटल के पास \'सेफ ज़ोन\' से बाहर निकल गई।';
+
+  @override
+  String get fallDetected => 'गिरावट का पता चला';
+
+  @override
+  String get fallDetectedDesc => 'डेविड के लिए संभावित गिरावट का पता चला।';
+
+  @override
+  String get lowBattery => 'कम बैटरी';
+
+  @override
+  String get lowBatteryDesc => 'सारा का सेफ्टी बैंड 20% बैटरी पर है।';
+
+  @override
   String get geoFenceAlert => 'जियो-फेंस अलर्ट';
 
   @override

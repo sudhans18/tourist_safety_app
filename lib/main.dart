@@ -13,6 +13,10 @@ import 'features/kyc/screens/kyc_verification_screen.dart';
 import 'features/id/screens/id_qr_screen.dart';
 import 'features/band_integration/screens/band_pairing_screen.dart';
 import 'features/dashboard/screens/dashboard_screen.dart';
+import 'features/dashboard/screens/live_vitals_screen.dart';
+import 'features/dashboard/screens/tour_plan_screen.dart';
+import 'features/attractions/screens/nearby_attractions_screen.dart';
+import 'features/weather/screens/weather_alerts_screen.dart';
 import 'features/sos/screens/sos_mode_screen.dart';
 import 'features/family/screens/family_screen.dart';
 import 'features/alerts/screens/alerts_screen.dart';
@@ -64,80 +68,85 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) => MaterialApp(
-        title: 'Tourist Safety App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFD93F34),
-            primary: const Color(0xFFD93F34),
-            secondary: const Color(0xFFFEEBEA),
-            surface: Colors.white,
-          ).copyWith(
-            error: const Color(0xFFD93F34),
-          ),
-          useMaterial3: true,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            foregroundColor: Color(0xFF111827),
-            elevation: 0,
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFD93F34),
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          title: 'Tourist Safety App',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            scaffoldBackgroundColor: const Color(0xFFF3F4F6),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFFD93F34),
+              primary: const Color(0xFFD93F34),
+              secondary: const Color(0xFFFEEBEA),
+              surface: Colors.white,
+            ).copyWith(
+              error: const Color(0xFFD93F34),
+            ),
+            useMaterial3: true,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+              foregroundColor: Color(0xFF111827),
+              elevation: 0,
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFD93F34),
+                foregroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            inputDecorationTheme: const InputDecorationTheme(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Color(0xFFD1D5DB)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Color(0xFFD1D5DB)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Color(0xFFD93F34), width: 2),
               ),
             ),
           ),
-          inputDecorationTheme: const InputDecorationTheme(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              borderSide: BorderSide(color: Color(0xFFD1D5DB)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              borderSide: BorderSide(color: Color(0xFFD1D5DB)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              borderSide: BorderSide(color: Color(0xFFD93F34), width: 2),
-            ),
-          ),
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFD93F34),
+          darkTheme: ThemeData(
             brightness: Brightness.dark,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFFD93F34),
+              brightness: Brightness.dark,
+            ),
+            useMaterial3: true,
           ),
-          useMaterial3: true,
+          themeMode: context.watch<SettingsProvider>().themeMode,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: context.watch<SettingsProvider>().locale,
+          initialRoute: initialRoute,
+          routes: {
+            '/': (context) => const OnboardingVerificationScreen(),
+            '/kyc': (context) => const KycVerificationScreen(),
+            '/id-qr': (context) => const IdQrScreen(),
+            '/band-pairing': (context) => const BandPairingScreen(),
+            '/dashboard': (context) => const DashboardScreen(),
+            '/live-vitals': (context) => const LiveVitalsScreen(),
+            '/tour-plan': (context) => const TourPlanScreen(),
+            '/nearby-attractions': (context) => const NearbyAttractionsScreen(),
+            '/weather-alerts': (context) => const WeatherAlertsScreen(),
+            '/sos': (context) => const SosModeScreen(),
+            '/family': (context) => const FamilyScreen(),
+            '/alerts': (context) => const AlertsScreen(),
+            '/settings': (context) => const SettingsScreen(),
+            '/map-fullscreen': (context) => const MapFullscreenScreen(),
+          },
         ),
-        themeMode: context.watch<SettingsProvider>().themeMode,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: context.watch<SettingsProvider>().locale,
-        initialRoute: initialRoute,
-        routes: {
-          '/': (context) => const OnboardingVerificationScreen(),
-          '/kyc': (context) => const KycVerificationScreen(),
-          '/id-qr': (context) => const IdQrScreen(),
-          '/band-pairing': (context) => const BandPairingScreen(),
-          '/dashboard': (context) => const DashboardScreen(),
-          '/sos': (context) => const SosModeScreen(),
-          '/family': (context) => const FamilyScreen(),
-          '/alerts': (context) => const AlertsScreen(),
-          '/settings': (context) => const SettingsScreen(),
-          '/map-fullscreen': (context) => const MapFullscreenScreen(),
-        },
-      ),
       ),
     );
   }

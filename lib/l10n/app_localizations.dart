@@ -254,6 +254,252 @@ abstract class AppLocalizations {
   /// **'Your current safety score is excellent. Keep it up!'**
   String get safeCardDesc;
 
+  /// No description provided for @tourPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour plan'**
+  String get tourPlan;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// No description provided for @familyTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Tracking'**
+  String get familyTracking;
+
+  /// No description provided for @nearbyAttractions.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Attractions'**
+  String get nearbyAttractions;
+
+  /// No description provided for @weatherAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get weatherAlerts;
+
+  /// No description provided for @offlineModeCached.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Mode - Showing cached data'**
+  String get offlineModeCached;
+
+  /// No description provided for @bandConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Band Connected'**
+  String get bandConnected;
+
+  /// No description provided for @lastUpdatedMins.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {mins} mins ago'**
+  String lastUpdatedMins(Object mins);
+
+  /// No description provided for @heartRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart Rate'**
+  String get heartRate;
+
+  /// No description provided for @spo2.
+  ///
+  /// In en, this message translates to:
+  /// **'SpO₂'**
+  String get spo2;
+
+  /// No description provided for @temperature.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get temperature;
+
+  /// No description provided for @activity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get activity;
+
+  /// No description provided for @normal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get normal;
+
+  /// No description provided for @last1hHeartRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 1h Heart Rate'**
+  String get last1hHeartRate;
+
+  /// No description provided for @tourPlanComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour plan screen coming soon'**
+  String get tourPlanComingSoon;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'{feature} coming soon'**
+  String comingSoon(Object feature);
+
+  /// No description provided for @shareLocationVitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Share My Location & Vitals'**
+  String get shareLocationVitals;
+
+  /// No description provided for @enableToShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable to share with family'**
+  String get enableToShare;
+
+  /// No description provided for @sosAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS Alerts'**
+  String get sosAlerts;
+
+  /// No description provided for @sosAlertsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Family members will be notified immediately if you trigger an SOS alert.'**
+  String get sosAlertsDesc;
+
+  /// No description provided for @sharingWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing With'**
+  String get sharingWith;
+
+  /// No description provided for @revokeAllSharing.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke All Sharing'**
+  String get revokeAllSharing;
+
+  /// No description provided for @revokeAllSharingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This will stop sharing your location and vitals with everyone.'**
+  String get revokeAllSharingDesc;
+
+  /// No description provided for @severeWeatherWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Severe Weather Warning'**
+  String get severeWeatherWarning;
+
+  /// No description provided for @severeWeatherDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The National Weather Service has issued a severe thunderstorm warning for your area. Seek shelter immediately.'**
+  String get severeWeatherDesc;
+
+  /// No description provided for @noInternetCached.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Showing cached alerts.'**
+  String get noInternetCached;
+
+  /// No description provided for @appAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'App Alert'**
+  String get appAlert;
+
+  /// No description provided for @governmentAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Government Alert'**
+  String get governmentAlert;
+
+  /// No description provided for @acknowledge.
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledge'**
+  String get acknowledge;
+
+  /// No description provided for @moreInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'More Info'**
+  String get moreInfo;
+
+  /// No description provided for @dismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get dismiss;
+
+  /// No description provided for @viewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get viewDetails;
+
+  /// No description provided for @viewMap.
+  ///
+  /// In en, this message translates to:
+  /// **'View Map'**
+  String get viewMap;
+
+  /// No description provided for @checkVitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Vitals'**
+  String get checkVitals;
+
+  /// No description provided for @dismissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismissed'**
+  String get dismissed;
+
+  /// No description provided for @geoFenceWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Geo–Fence Warning'**
+  String get geoFenceWarning;
+
+  /// No description provided for @geoFenceWarningDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Emily left the \'Safe Zone\' near the hotel.'**
+  String get geoFenceWarningDesc;
+
+  /// No description provided for @fallDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Fall Detected'**
+  String get fallDetected;
+
+  /// No description provided for @fallDetectedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A potential fall was detected for David.'**
+  String get fallDetectedDesc;
+
+  /// No description provided for @lowBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Battery'**
+  String get lowBattery;
+
+  /// No description provided for @lowBatteryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Sarah\'s safety band is at 20% battery.'**
+  String get lowBatteryDesc;
+
   /// No description provided for @geoFenceAlert.
   ///
   /// In en, this message translates to:

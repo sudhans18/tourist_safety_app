@@ -92,6 +92,138 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your current safety score is excellent. Keep it up!';
 
   @override
+  String get tourPlan => 'Tour plan';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get familyTracking => 'Family Tracking';
+
+  @override
+  String get nearbyAttractions => 'Nearby Attractions';
+
+  @override
+  String get weatherAlerts => 'Weather';
+
+  @override
+  String get offlineModeCached => 'Offline Mode - Showing cached data';
+
+  @override
+  String get bandConnected => 'Band Connected';
+
+  @override
+  String lastUpdatedMins(Object mins) {
+    return 'Last updated: $mins mins ago';
+  }
+
+  @override
+  String get heartRate => 'Heart Rate';
+
+  @override
+  String get spo2 => 'SpO₂';
+
+  @override
+  String get temperature => 'Temperature';
+
+  @override
+  String get activity => 'Activity';
+
+  @override
+  String get normal => 'Normal';
+
+  @override
+  String get last1hHeartRate => 'Last 1h Heart Rate';
+
+  @override
+  String get tourPlanComingSoon => 'Tour plan screen coming soon';
+
+  @override
+  String comingSoon(Object feature) {
+    return '$feature coming soon';
+  }
+
+  @override
+  String get shareLocationVitals => 'Share My Location & Vitals';
+
+  @override
+  String get enableToShare => 'Enable to share with family';
+
+  @override
+  String get sosAlerts => 'SOS Alerts';
+
+  @override
+  String get sosAlertsDesc =>
+      'Family members will be notified immediately if you trigger an SOS alert.';
+
+  @override
+  String get sharingWith => 'Sharing With';
+
+  @override
+  String get revokeAllSharing => 'Revoke All Sharing';
+
+  @override
+  String get revokeAllSharingDesc =>
+      'This will stop sharing your location and vitals with everyone.';
+
+  @override
+  String get severeWeatherWarning => 'Severe Weather Warning';
+
+  @override
+  String get severeWeatherDesc =>
+      'The National Weather Service has issued a severe thunderstorm warning for your area. Seek shelter immediately.';
+
+  @override
+  String get noInternetCached =>
+      'No internet connection. Showing cached alerts.';
+
+  @override
+  String get appAlert => 'App Alert';
+
+  @override
+  String get governmentAlert => 'Government Alert';
+
+  @override
+  String get acknowledge => 'Acknowledge';
+
+  @override
+  String get moreInfo => 'More Info';
+
+  @override
+  String get dismiss => 'Dismiss';
+
+  @override
+  String get viewDetails => 'View Details';
+
+  @override
+  String get viewMap => 'View Map';
+
+  @override
+  String get checkVitals => 'Check Vitals';
+
+  @override
+  String get dismissed => 'Dismissed';
+
+  @override
+  String get geoFenceWarning => 'Geo–Fence Warning';
+
+  @override
+  String get geoFenceWarningDesc =>
+      'Emily left the \'Safe Zone\' near the hotel.';
+
+  @override
+  String get fallDetected => 'Fall Detected';
+
+  @override
+  String get fallDetectedDesc => 'A potential fall was detected for David.';
+
+  @override
+  String get lowBattery => 'Low Battery';
+
+  @override
+  String get lowBatteryDesc => 'Sarah\'s safety band is at 20% battery.';
+
+  @override
   String get geoFenceAlert => 'Geo-fence Alert';
 
   @override
