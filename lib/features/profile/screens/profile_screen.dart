@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tourist_safety_app/l10n/app_localizations.dart';
+import 'package:tourist_safety_app/core/providers/settings_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -29,50 +31,75 @@ class ProfileScreen extends StatelessWidget {
                   child: Icon(Icons.person, size: 40, color: Color(0xFF6B7280)),
                 ),
                 const SizedBox(height: 10),
-                const Text('Sophia Clark',
+                const Text('Rohith Kanna',
                     style:
                         TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
                 const SizedBox(height: 4),
-                Text(t.verifiedMember + ' ✅',
+                Text('${t.verifiedMember} ✅',
                     style: const TextStyle(color: Color(0xFF22C55E))),
               ],
             ),
           ),
           const SizedBox(height: 18),
 
-          _sectionTitle(t.securityVerification),
-          _cardList([
-            _rowTile(Icons.card_travel, t.passport),
-            _rowTile(Icons.account_balance_wallet_outlined, t.wallet),
-          ]),
-
           _sectionTitle(t.personalTravelDetails),
           _cardList([
-            _rowTile(Icons.flag_outlined, t.nationality),
-            _rowTile(Icons.cake_outlined, t.dateOfBirth),
-            _rowTile(Icons.event_note_outlined, t.itinerary),
+            _valueRowTile(Icons.flag_outlined, t.nationality, 'Indian'),
+            _valueRowTile(Icons.cake_outlined, t.dateOfBirth, '21 Dec 2005'),
+            _valueRowTileWithChevron(
+                Icons.event_note_outlined, t.itinerary, 'Chennai → BLR'),
           ]),
 
           _sectionTitle(t.emergencyContacts),
           _cardList([
-            _contactTile('John Doe', '+1123 456 7890'),
-            _contactTile('Jane Smith', '+1987 654 3210'),
+            _contactTile('Sudhan S', '+91 63746 33390'),
+            _contactTile('Lohith Ashwa', '+91 97910 10503'),
             _rowTile(Icons.person_add_alt_1_outlined, t.addContact),
           ]),
 
           _sectionTitle(t.appSettings),
           _cardList([
             _rowTile(Icons.notifications_none_outlined, t.notifications),
-            _rowTile(Icons.palette_outlined, t.theme),
-            _rowTile(Icons.language_outlined, t.language),
+            Consumer<SettingsProvider>(
+              builder: (context, settings, child) {
+                return _themeToggleTile(context, t.theme, settings.themeMode);
+              },
+            ),
+            Consumer<SettingsProvider>(
+              builder: (context, settings, child) {
+                return _languageRowTile(
+                    context, t.language, settings.locale.languageCode);
+              },
+            ),
           ]),
 
           _sectionTitle(t.supportLegal),
           _cardList([
             _rowTile(Icons.help_center_outlined, t.helpCenter),
             _rowTile(Icons.privacy_tip_outlined, t.privacyPolicy),
-            _rowTile(Icons.logout, t.logOut, color: const Color(0xFFD93F34)),
           ]),
+
+          // Full width logout button
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 20),
+            child: ElevatedButton(
+              onPressed: () => _showLogoutDialog(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFD93F34),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                t.logOut,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -116,11 +143,33 @@ class ProfileScreen extends StatelessWidget {
         child: Column(children: children),
       );
 
-  static Widget _rowTile(IconData icon, String title, {Color? color}) =>
-      ListTile(
-        leading: Icon(icon, color: color),
+  static Widget _rowTile(IconData icon, String title) => ListTile(
+        leading: Icon(icon),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         trailing: const Icon(Icons.chevron_right),
+        onTap: () {},
+      );
+
+  static Widget _valueRowTile(IconData icon, String title, String value) =>
+      ListTile(
+        leading: Icon(icon),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+        trailing: Text(value, style: const TextStyle(color: Color(0xFF6B7280))),
+      );
+
+  static Widget _valueRowTileWithChevron(
+          IconData icon, String title, String value) =>
+      ListTile(
+        leading: Icon(icon),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(value, style: const TextStyle(color: Color(0xFF6B7280))),
+            const SizedBox(width: 8),
+            const Icon(Icons.chevron_right, color: Color(0xFF6B7280)),
+          ],
+        ),
         onTap: () {},
       );
 
@@ -131,4 +180,107 @@ class ProfileScreen extends StatelessWidget {
         trailing: const Icon(Icons.chevron_right),
         onTap: () {},
       );
+
+  Widget _themeToggleTile(
+          BuildContext context, String title, ThemeMode currentMode) =>
+      ListTile(
+        leading: const Icon(Icons.palette_outlined),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+        trailing: Switch(
+          value: currentMode == ThemeMode.dark,
+          onChanged: (value) {
+            final settingsProvider =
+                Provider.of<SettingsProvider>(context, listen: false);
+            settingsProvider
+                .setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
+          },
+        ),
+        onTap: () {
+          final settingsProvider =
+              Provider.of<SettingsProvider>(context, listen: false);
+          final newMode =
+              currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+          settingsProvider.setThemeMode(newMode);
+        },
+      );
+
+  Widget _languageRowTile(
+          BuildContext context, String title, String currentLanguage) =>
+      ListTile(
+        leading: const Icon(Icons.language_outlined),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              currentLanguage == 'en' ? 'English' : 'हिंदी',
+              style: const TextStyle(color: Color(0xFF6B7280)),
+            ),
+            const SizedBox(width: 8),
+            const Icon(Icons.chevron_right, color: Color(0xFF6B7280)),
+          ],
+        ),
+        onTap: () => _showLanguageDialog(context),
+      );
+
+  void _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.language),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text('English'),
+                onTap: () {
+                  Provider.of<SettingsProvider>(context, listen: false)
+                      .setLanguageCode('en');
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: const Text('हिंदी'),
+                onTap: () {
+                  Provider.of<SettingsProvider>(context, listen: false)
+                      .setLanguageCode('hi');
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.logOut),
+          content: const Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.cancel),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text(
+                AppLocalizations.of(context)!.logOut,
+                style: const TextStyle(color: Color(0xFFD93F34)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
