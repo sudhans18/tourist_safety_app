@@ -240,6 +240,143 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locating => 'Locating...';
 
   @override
+  String get weather => 'Weather';
+
+  @override
+  String get currentWeather => 'Current Weather';
+
+  @override
+  String get feelsLike => 'Feels like';
+
+  @override
+  String get humidity => 'Humidity';
+
+  @override
+  String get wind => 'Wind';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String inXDays(Object days) {
+    return 'In $days days';
+  }
+
+  @override
+  String get nextDaysTrend => 'Next days temperature trend';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get verifiedMember => 'Verified Member';
+
+  @override
+  String get securityVerification => 'Security & Verification';
+
+  @override
+  String get passport => 'Passport';
+
+  @override
+  String get wallet => 'Wallet';
+
+  @override
+  String get personalTravelDetails => 'Personal & Travel Details';
+
+  @override
+  String get nationality => 'Nationality';
+
+  @override
+  String get dateOfBirth => 'Date of Birth';
+
+  @override
+  String get itinerary => 'Itinerary';
+
+  @override
+  String get emergencyContacts => 'Emergency Contacts';
+
+  @override
+  String get addContact => 'Add Contact';
+
+  @override
+  String get appSettings => 'App Settings';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get supportLegal => 'Support & Legal';
+
+  @override
+  String get helpCenter => 'Help Center';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get logOut => 'Log Out';
+
+  @override
+  String get connected => 'Connected';
+
+  @override
+  String get disconnected => 'Disconnected';
+
+  @override
+  String get idLabel => 'ID';
+
+  @override
+  String get band => 'Band';
+
+  @override
+  String get sendEmergencyAlert => 'Send Emergency Alert?';
+
+  @override
+  String get sosDialogBody =>
+      'This will notify authorities and your emergency contacts.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get sendSOS => 'Send SOS';
+
+  @override
+  String get geofenceAlertShort => 'Geofence Alert';
+
+  @override
+  String hoursAgo(Object hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String get tagFamily => 'Family';
+
+  @override
+  String get tagOpenAir => 'Open Air';
+
+  @override
+  String get tagTickets => 'Tickets';
+
+  @override
+  String get tagHistory => 'History';
+
+  @override
+  String get tagScenic => 'Scenic';
+
+  @override
+  String get tagFree => 'Free';
+
+  @override
   String get shareLocation => 'Share Location';
 
   @override

@@ -240,6 +240,143 @@ class AppLocalizationsHi extends AppLocalizations {
   String get locating => 'स्थान निर्धारित किया जा रहा है...';
 
   @override
+  String get weather => 'मौसम';
+
+  @override
+  String get currentWeather => 'वर्तमान मौसम';
+
+  @override
+  String get feelsLike => 'महसूस होता है';
+
+  @override
+  String get humidity => 'आर्द्रता';
+
+  @override
+  String get wind => 'वायु';
+
+  @override
+  String get today => 'आज';
+
+  @override
+  String get tomorrow => 'कल';
+
+  @override
+  String inXDays(Object days) {
+    return '$days दिनों में';
+  }
+
+  @override
+  String get nextDaysTrend => 'आने वाले दिनों का तापमान रुझान';
+
+  @override
+  String get profile => 'प्रोफ़ाइल';
+
+  @override
+  String get verifiedMember => 'सत्यापित सदस्य';
+
+  @override
+  String get securityVerification => 'सुरक्षा और सत्यापन';
+
+  @override
+  String get passport => 'पासपोर्ट';
+
+  @override
+  String get wallet => 'वॉलेट';
+
+  @override
+  String get personalTravelDetails => 'व्यक्तिगत और यात्रा विवरण';
+
+  @override
+  String get nationality => 'राष्ट्रीयता';
+
+  @override
+  String get dateOfBirth => 'जन्म तिथि';
+
+  @override
+  String get itinerary => 'यात्रा कार्यक्रम';
+
+  @override
+  String get emergencyContacts => 'आपातकालीन संपर्क';
+
+  @override
+  String get addContact => 'संपर्क जोड़ें';
+
+  @override
+  String get appSettings => 'ऐप सेटिंग्स';
+
+  @override
+  String get notifications => 'सूचनाएँ';
+
+  @override
+  String get theme => 'थीम';
+
+  @override
+  String get language => 'भाषा';
+
+  @override
+  String get supportLegal => 'सपोर्ट और कानूनी';
+
+  @override
+  String get helpCenter => 'सहायता केंद्र';
+
+  @override
+  String get privacyPolicy => 'गोपनीयता नीति';
+
+  @override
+  String get logOut => 'लॉग आउट';
+
+  @override
+  String get connected => 'कनेक्टेड';
+
+  @override
+  String get disconnected => 'डिस्कनेक्टेड';
+
+  @override
+  String get idLabel => 'आईडी';
+
+  @override
+  String get band => 'बैंड';
+
+  @override
+  String get sendEmergencyAlert => 'आपातकालीन अलर्ट भेजें?';
+
+  @override
+  String get sosDialogBody =>
+      'यह अधिकारियों और आपके आपातकालीन संपर्कों को सूचित करेगा।';
+
+  @override
+  String get cancel => 'रद्द करें';
+
+  @override
+  String get sendSOS => 'SOS भेजें';
+
+  @override
+  String get geofenceAlertShort => 'जियोफेंस अलर्ट';
+
+  @override
+  String hoursAgo(Object hours) {
+    return '$hours घंटे पहले';
+  }
+
+  @override
+  String get tagFamily => 'परिवार';
+
+  @override
+  String get tagOpenAir => 'खुला स्थान';
+
+  @override
+  String get tagTickets => 'टिकट';
+
+  @override
+  String get tagHistory => 'इतिहास';
+
+  @override
+  String get tagScenic => 'सुंदर';
+
+  @override
+  String get tagFree => 'निःशुल्क';
+
+  @override
   String get shareLocation => 'लोकेशन शेयर करें';
 
   @override

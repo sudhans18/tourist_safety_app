@@ -530,6 +530,270 @@ abstract class AppLocalizations {
   /// **'Locating...'**
   String get locating;
 
+  /// No description provided for @weather.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get weather;
+
+  /// No description provided for @currentWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Weather'**
+  String get currentWeather;
+
+  /// No description provided for @feelsLike.
+  ///
+  /// In en, this message translates to:
+  /// **'Feels like'**
+  String get feelsLike;
+
+  /// No description provided for @humidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get humidity;
+
+  /// No description provided for @wind.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind'**
+  String get wind;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrow;
+
+  /// No description provided for @inXDays.
+  ///
+  /// In en, this message translates to:
+  /// **'In {days} days'**
+  String inXDays(Object days);
+
+  /// No description provided for @nextDaysTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Next days temperature trend'**
+  String get nextDaysTrend;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @verifiedMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified Member'**
+  String get verifiedMember;
+
+  /// No description provided for @securityVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Security & Verification'**
+  String get securityVerification;
+
+  /// No description provided for @passport.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get passport;
+
+  /// No description provided for @wallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get wallet;
+
+  /// No description provided for @personalTravelDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal & Travel Details'**
+  String get personalTravelDetails;
+
+  /// No description provided for @nationality.
+  ///
+  /// In en, this message translates to:
+  /// **'Nationality'**
+  String get nationality;
+
+  /// No description provided for @dateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirth;
+
+  /// No description provided for @itinerary.
+  ///
+  /// In en, this message translates to:
+  /// **'Itinerary'**
+  String get itinerary;
+
+  /// No description provided for @emergencyContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Contacts'**
+  String get emergencyContacts;
+
+  /// No description provided for @addContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact'**
+  String get addContact;
+
+  /// No description provided for @appSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'App Settings'**
+  String get appSettings;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @supportLegal.
+  ///
+  /// In en, this message translates to:
+  /// **'Support & Legal'**
+  String get supportLegal;
+
+  /// No description provided for @helpCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center'**
+  String get helpCenter;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @logOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get logOut;
+
+  /// No description provided for @connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connected;
+
+  /// No description provided for @disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get disconnected;
+
+  /// No description provided for @idLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get idLabel;
+
+  /// No description provided for @band.
+  ///
+  /// In en, this message translates to:
+  /// **'Band'**
+  String get band;
+
+  /// No description provided for @sendEmergencyAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Emergency Alert?'**
+  String get sendEmergencyAlert;
+
+  /// No description provided for @sosDialogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will notify authorities and your emergency contacts.'**
+  String get sosDialogBody;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @sendSOS.
+  ///
+  /// In en, this message translates to:
+  /// **'Send SOS'**
+  String get sendSOS;
+
+  /// No description provided for @geofenceAlertShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence Alert'**
+  String get geofenceAlertShort;
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String hoursAgo(Object hours);
+
+  /// No description provided for @tagFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get tagFamily;
+
+  /// No description provided for @tagOpenAir.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Air'**
+  String get tagOpenAir;
+
+  /// No description provided for @tagTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Tickets'**
+  String get tagTickets;
+
+  /// No description provided for @tagHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get tagHistory;
+
+  /// No description provided for @tagScenic.
+  ///
+  /// In en, this message translates to:
+  /// **'Scenic'**
+  String get tagScenic;
+
+  /// No description provided for @tagFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get tagFree;
+
   /// No description provided for @shareLocation.
   ///
   /// In en, this message translates to:

@@ -16,11 +16,11 @@ import 'features/dashboard/screens/dashboard_screen.dart';
 import 'features/dashboard/screens/live_vitals_screen.dart';
 import 'features/dashboard/screens/tour_plan_screen.dart';
 import 'features/attractions/screens/nearby_attractions_screen.dart';
-import 'features/weather/screens/weather_alerts_screen.dart';
+import 'features/weather/screens/weather_screen.dart';
 import 'features/sos/screens/sos_mode_screen.dart';
 import 'features/family/screens/family_screen.dart';
 import 'features/alerts/screens/alerts_screen.dart';
-import 'features/settings/screens/settings_screen.dart';
+import 'features/profile/screens/profile_screen.dart';
 import 'features/zones/providers/geofence_provider.dart';
 import 'features/zones/screens/map_fullscreen_screen.dart';
 
@@ -139,11 +139,11 @@ class MyApp extends StatelessWidget {
             '/live-vitals': (context) => const LiveVitalsScreen(),
             '/tour-plan': (context) => const TourPlanScreen(),
             '/nearby-attractions': (context) => const NearbyAttractionsScreen(),
-            '/weather-alerts': (context) => const WeatherAlertsScreen(),
+            '/weather': (context) => const WeatherScreen(),
             '/sos': (context) => const SosModeScreen(),
             '/family': (context) => const FamilyScreen(),
             '/alerts': (context) => const AlertsScreen(),
-            '/settings': (context) => const SettingsScreen(),
+            '/profile': (context) => const ProfileScreen(),
             '/map-fullscreen': (context) => const MapFullscreenScreen(),
           },
         ),

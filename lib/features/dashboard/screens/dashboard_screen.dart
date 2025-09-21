@@ -43,8 +43,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: Text(AppLocalizations.of(context)!.safetyDashboard),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => Navigator.pushNamed(context, '/settings'),
+            icon: const Icon(Icons.person_outline),
+            onPressed: () => Navigator.pushNamed(context, '/profile'),
           ),
         ],
       ),
@@ -82,7 +82,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           if (i == 0) return; // Dashboard
           if (i == 1) Navigator.pushNamed(context, '/tour-plan');
           if (i == 2) Navigator.pushNamed(context, '/alerts');
-          if (i == 3) Navigator.pushNamed(context, '/settings');
+          if (i == 3) Navigator.pushNamed(context, '/profile');
         },
         destinations: [
           NavigationDestination(
@@ -98,18 +98,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
               selectedIcon: const Icon(Icons.notifications),
               label: AppLocalizations.of(context)!.alerts),
           NavigationDestination(
-              icon: const Icon(Icons.settings_outlined),
-              selectedIcon: const Icon(Icons.settings),
-              label: AppLocalizations.of(context)!.settings),
+              icon: const Icon(Icons.person_outline),
+              selectedIcon: const Icon(Icons.person),
+              label: AppLocalizations.of(context)!.profile),
         ],
       ),
     );
   }
 
   Widget _buildTouristCard(ThemeData theme) {
+    final t = AppLocalizations.of(context)!;
     final statusColor =
         bandConnected ? const Color(0xFF22C55E) : const Color(0xFFEF4444);
-    final statusText = bandConnected ? 'Connected' : 'Disconnected';
+    final statusText = bandConnected ? t.connected : t.disconnected;
 
     return Container(
       decoration: BoxDecoration(
@@ -142,7 +143,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w700)),
                 const SizedBox(height: 4),
-                Text('ID: $touristId',
+                Text('${t.idLabel}: $touristId',
                     style: const TextStyle(color: Color(0xFF6B7280))),
                 const SizedBox(height: 8),
                 Row(
@@ -153,7 +154,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         decoration: BoxDecoration(
                             color: statusColor, shape: BoxShape.circle)),
                     const SizedBox(width: 6),
-                    Text('Band: $statusText',
+                    Text('${t.band}: $statusText',
                         style: TextStyle(
                             color: statusColor, fontWeight: FontWeight.w600)),
                   ],
@@ -191,23 +192,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       padding: const EdgeInsets.all(20),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.verified_user, color: Colors.white, size: 28),
-          SizedBox(width: 12),
+          const Icon(Icons.verified_user, color: Colors.white, size: 28),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Safe',
-                    style: TextStyle(
+                Text(AppLocalizations.of(context)!.safeCardTitle,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
                         fontSize: 20)),
-                SizedBox(height: 6),
-                Text('Your current safety score is excellent. Keep it up!',
-                    style: TextStyle(color: Colors.white)),
+                const SizedBox(height: 6),
+                Text(AppLocalizations.of(context)!.safeCardDesc,
+                    style: const TextStyle(color: Colors.white)),
               ],
             ),
           )
@@ -249,8 +250,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   onTap: () => Navigator.pushNamed(context, '/family')),
               _actionTile(Icons.park_outlined, AppLocalizations.of(context)!.nearbyAttractions,
                   onTap: () => Navigator.pushNamed(context, '/nearby-attractions')),
-              _actionTile(Icons.cloudy_snowing, AppLocalizations.of(context)!.weatherAlerts,
-                  onTap: () => Navigator.pushNamed(context, '/weather-alerts')),
+              _actionTile(Icons.wb_sunny_outlined, AppLocalizations.of(context)!.weather,
+                  onTap: () => Navigator.pushNamed(context, '/weather')),
             ],
           ),
         ),
@@ -349,7 +350,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
         ...[
-          _alertTile(icon: '⚠️', title: 'Geofence Alert', timeAgo: '2h ago'),
+          _alertTile(icon: '⚠️', title: AppLocalizations.of(context)!.geofenceAlertShort, timeAgo: AppLocalizations.of(context)!.hoursAgo(2)),
         ],
       ],
     );
@@ -384,18 +385,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          title: const Text('Send Emergency Alert?'),
-          content: const Text(
-              'This will notify authorities and your emergency contacts.'),
+          title: Text(AppLocalizations.of(context)!.sendEmergencyAlert),
+          content: Text(AppLocalizations.of(context)!.sosDialogBody),
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel')),
+                child: Text(AppLocalizations.of(context)!.cancel)),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD93F34)),
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Send SOS'),
+              child: Text(AppLocalizations.of(context)!.sendSOS),
             ),
           ],
         );
@@ -440,14 +440,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Icon(Icons.warning_amber_rounded,
                       color: Color(0xFFD93F34), size: 28)),
               const SizedBox(height: 12),
-              const Text('Geo-fence Alert',
+              Text(AppLocalizations.of(context)!.geoFenceAlert,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 8),
-              const Text(
-                  'You are approaching a restricted area. Please turn back or proceed with caution.',
+              Text(
+                  AppLocalizations.of(context)!.geoFenceAlertDesc,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Color(0xFF6B7280))),
+                  style: const TextStyle(color: Color(0xFF6B7280))),
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -456,7 +456,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12))),
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Return to Safety'),
+                child: Text(AppLocalizations.of(context)!.returnToSafety),
               ),
               const SizedBox(height: 10),
               OutlinedButton(
@@ -465,7 +465,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12))),
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Proceed with Caution'),
+                child: Text(AppLocalizations.of(context)!.proceedWithCaution),
               ),
             ],
           ),

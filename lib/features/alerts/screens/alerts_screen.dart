@@ -134,13 +134,13 @@ class AlertsScreen extends StatelessWidget {
           if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
           if (i == 1) Navigator.pushReplacementNamed(context, '/tour-plan');
           if (i == 2) return; // Alerts
-          if (i == 3) Navigator.pushReplacementNamed(context, '/settings');
+          if (i == 3) Navigator.pushReplacementNamed(context, '/profile');
         },
         destinations: [
           NavigationDestination(icon: const Icon(Icons.dashboard_outlined), label: AppLocalizations.of(context)!.dashboard),
           NavigationDestination(icon: const Icon(Icons.event_note_outlined), label: AppLocalizations.of(context)!.tourPlan),
           NavigationDestination(icon: const Icon(Icons.notifications), label: AppLocalizations.of(context)!.alerts),
-          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: AppLocalizations.of(context)!.settings),
+          NavigationDestination(icon: const Icon(Icons.person_outline), label: AppLocalizations.of(context)!.profile),
         ],
       ),
     );
