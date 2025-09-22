@@ -448,4 +448,16 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get sendVerificationCode => 'सत्यापन कोड भेजें';
+
+  @override
+  String get error => 'त्रुटि';
+
+  @override
+  String get noData => 'कोई डेटा नहीं';
+
+  @override
+  String get noDataDesc => 'इस समय कोई डेटा उपलब्ध नहीं है';
+
+  @override
+  String get refresh => 'रीफ्रेश करें';
 }

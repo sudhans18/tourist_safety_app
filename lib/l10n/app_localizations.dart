@@ -937,6 +937,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send Verification Code'**
   String get sendVerificationCode;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No Data'**
+  String get noData;
+
+  /// No description provided for @noDataDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'No data available at the moment'**
+  String get noDataDesc;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
 }
 
 class _AppLocalizationsDelegate

@@ -37,6 +37,15 @@
         <meta-data
             android:name="com.mapbox.TextureMode"
             android:value="true" />
+        <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="${applicationId}.firebaseinitprovider"
+            android:exported="false"
+            android:initOrder="100" />
             
     </application>
     <!-- Required to query activities that can process text, see:

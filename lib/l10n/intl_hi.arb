@@ -142,5 +142,9 @@
   "changePhoneNumber": "फोन नंबर बदलें",
   "enterOtpPrompt": "अपने फोन पर भेजा गया 6-अंकीय कोड दर्ज करें",
   "invalidOtp6": "अमान्य OTP. कृपया 6 अंक दर्ज करें।",
-  "sendVerificationCode": "सत्यापन कोड भेजें"
+  "sendVerificationCode": "सत्यापन कोड भेजें",
+  "error": "त्रुटि",
+  "noData": "कोई डेटा नहीं",
+  "noDataDesc": "इस समय कोई डेटा उपलब्ध नहीं है",
+  "refresh": "रीफ्रेश करें"
 }

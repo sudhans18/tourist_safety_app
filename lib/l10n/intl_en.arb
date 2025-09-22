@@ -146,5 +146,9 @@
   "changePhoneNumber": "Change phone number",
   "enterOtpPrompt": "Enter the 6-digit code sent to your phone",
   "invalidOtp6": "Invalid OTP. Please enter 6 digits.",
-  "sendVerificationCode": "Send Verification Code"
+  "sendVerificationCode": "Send Verification Code",
+  "error": "Error",
+  "noData": "No Data",
+  "noDataDesc": "No data available at the moment",
+  "refresh": "Refresh"
 }

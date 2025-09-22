@@ -3,6 +3,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tourist_safety_app/utils/theme/colors.dart';
 import 'package:tourist_safety_app/features/zones/widgets/dashboard_mini_map.dart';
 import 'package:tourist_safety_app/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:tourist_safety_app/core/providers/user_provider.dart';
+import 'package:tourist_safety_app/features/common/widgets/state_widgets.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -12,9 +15,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // Mock data
-  final String touristName = 'Ethan Carter';
-  final String touristId = '1234567890';
+  // Mock vitals for UI placeholder (can be replaced when vitals service is available)
   final bool bandConnected = true;
   final int heartRate = 72;
   final int spo2 = 98;
@@ -49,25 +50,63 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildTouristCard(theme),
-              const SizedBox(height: 16),
-              _buildSafetyScoreCard(theme),
-              const SizedBox(height: 16),
-              _buildQuickActions(theme),
-              const SizedBox(height: 16),
-              _buildMapSection(theme),
-              const SizedBox(height: 12),
-              _buildRiskBanner(theme),
-              const SizedBox(height: 16),
-              _buildRecentAlerts(theme),
-              const SizedBox(height: 24),
-            ],
-          ),
+        child: Consumer<UserProvider>(
+          builder: (context, userProvider, _) {
+            // Loading state (initial)
+            if (userProvider.isLoading && userProvider.userData == null) {
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: DashboardSkeleton(),
+              );
+            }
+
+            // Error state (no cached data)
+            if (userProvider.error != null && userProvider.userData == null) {
+              return ErrorView(
+                title: AppLocalizations.of(context)!.error,
+                message: userProvider.error!,
+                onRetry: () => userProvider.retry(),
+              );
+            }
+
+            // Empty state
+            if (userProvider.userData == null) {
+              return EmptyView(
+                title: AppLocalizations.of(context)!.noData,
+                message: AppLocalizations.of(context)!.noDataDesc,
+                action: ElevatedButton(
+                  onPressed: () => userProvider.refresh(),
+                  child: Text(AppLocalizations.of(context)!.refresh),
+                ),
+              );
+            }
+
+            // Content with pull-to-refresh; keep cached while refreshing
+            return RefreshIndicator(
+              onRefresh: () => userProvider.refresh(),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildTouristCard(theme, userProvider),
+                    const SizedBox(height: 16),
+                    _buildSafetyScoreCard(theme),
+                    const SizedBox(height: 16),
+                    _buildQuickActions(theme),
+                    const SizedBox(height: 16),
+                    _buildMapSection(theme),
+                    const SizedBox(height: 12),
+                    _buildRiskBanner(theme),
+                    const SizedBox(height: 16),
+                    _buildRecentAlerts(theme),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -106,11 +145,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildTouristCard(ThemeData theme) {
+  Widget _buildTouristCard(ThemeData theme, UserProvider userProvider) {
     final t = AppLocalizations.of(context)!;
     final statusColor =
         bandConnected ? const Color(0xFF22C55E) : const Color(0xFFEF4444);
     final statusText = bandConnected ? t.connected : t.disconnected;
+    final touristName = userProvider.userName;
+    final touristId = userProvider.walletAddress;
 
     return Container(
       decoration: BoxDecoration(
@@ -128,7 +169,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           CircleAvatar(
             radius: 28,
             backgroundColor: AppColors.redLight,
-            child: Text(touristName[0],
+            child: Text(touristName.isNotEmpty ? touristName[0] : '?',
                 style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     color: AppColors.primaryRed,

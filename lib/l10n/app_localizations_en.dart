@@ -449,4 +449,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendVerificationCode => 'Send Verification Code';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get noData => 'No Data';
+
+  @override
+  String get noDataDesc => 'No data available at the moment';
+
+  @override
+  String get refresh => 'Refresh';
 }

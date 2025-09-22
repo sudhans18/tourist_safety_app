@@ -4,10 +4,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
-import 'package:tourist_safety_app/l10n/app_localizations.dart';
-import 'core/providers/settings_provider.dart';
 
 import 'firebase_options.dart';
+import 'package:tourist_safety_app/core/providers/settings_provider.dart';
+import 'package:tourist_safety_app/core/providers/user_provider.dart';
+import 'package:tourist_safety_app/l10n/app_localizations.dart';
 import 'features/onboarding/screens/onboarding_verification_screen.dart';
 import 'features/kyc/screens/kyc_verification_screen.dart';
 import 'features/id/screens/id_qr_screen.dart';
@@ -65,6 +66,13 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => GeofenceProvider()..init()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()..load()),
+        // Initialize with document ID for MVP
+        ChangeNotifierProvider(
+          create: (_) => UserProvider()
+            ..initialize(
+              documentId: 'LoFJIhJzHSLwajqZqHdv',
+            ),
+        ),
       ],
       child: Builder(
         builder: (context) => MaterialApp(
@@ -121,7 +129,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           themeMode: context.watch<SettingsProvider>().themeMode,
-          localizationsDelegates: const [
+          localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

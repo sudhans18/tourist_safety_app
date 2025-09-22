@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourist_safety_app/l10n/app_localizations.dart';
 import 'package:tourist_safety_app/core/providers/settings_provider.dart';
+import 'package:tourist_safety_app/core/providers/user_provider.dart';
+import 'package:tourist_safety_app/core/services/firestore_helper.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -31,31 +33,47 @@ class ProfileScreen extends StatelessWidget {
                   child: Icon(Icons.person, size: 40, color: Color(0xFF6B7280)),
                 ),
                 const SizedBox(height: 10),
-                const Text('Rohith Kanna',
-                    style:
-                        TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
+                Text(
+                  Provider.of<UserProvider>(context).userName,
+                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                ),
                 const SizedBox(height: 4),
-                Text('${t.verifiedMember} ✅',
-                    style: const TextStyle(color: Color(0xFF22C55E))),
+                Consumer<UserProvider>(
+                  builder: (context, userProvider, child) {
+                    final isVerified = userProvider.isUserVerified;
+                    return Text(
+                      '${t.verifiedMember} ${isVerified ? '✅' : '❌'}',
+                      style: TextStyle(color: isVerified ? const Color(0xFF22C55E) : const Color(0xFFE74C3C)),
+                    );
+                  },
+                ),
               ],
             ),
           ),
           const SizedBox(height: 18),
 
           _sectionTitle(t.personalTravelDetails),
-          _cardList([
-            _valueRowTile(Icons.flag_outlined, t.nationality, 'Indian'),
-            _valueRowTile(Icons.cake_outlined, t.dateOfBirth, '21 Dec 2005'),
-            _valueRowTileWithChevron(
-                Icons.event_note_outlined, t.itinerary, 'Chennai → BLR'),
-          ]),
+          Consumer<UserProvider>(
+            builder: (context, userProvider, child) {
+              return _cardList([
+                _valueRowTile(Icons.flag_outlined, t.nationality, userProvider.userNationality),
+                _valueRowTile(Icons.cake_outlined, t.dateOfBirth, userProvider.userData?.dob ?? 'Not available'),
+                _valueRowTileWithChevron(
+                    Icons.event_note_outlined, t.itinerary, userProvider.userItinerary),
+              ]);
+            },
+          ),
 
           _sectionTitle(t.emergencyContacts),
-          _cardList([
-            _contactTile('Sudhan S', '+91 63746 33390'),
-            _contactTile('Lohith Ashwa', '+91 97910 10503'),
-            _rowTile(Icons.person_add_alt_1_outlined, t.addContact),
-          ]),
+          Consumer<UserProvider>(
+            builder: (context, userProvider, child) {
+              return _cardList([
+                if (userProvider.emergencyContact != 'Not set')
+                  _contactTile('Emergency Contact', userProvider.emergencyContact),
+                _rowTile(Icons.person_add_alt_1_outlined, t.addContact),
+              ]);
+            },
+          ),
 
           _sectionTitle(t.appSettings),
           _cardList([
@@ -78,6 +96,10 @@ class ProfileScreen extends StatelessWidget {
             _rowTile(Icons.help_center_outlined, t.helpCenter),
             _rowTile(Icons.privacy_tip_outlined, t.privacyPolicy),
           ]),
+
+          // Debug section - remove in production
+          _sectionTitle('Debug Tools'),
+          _debugCard(context),
 
           // Full width logout button
           Container(
@@ -143,11 +165,11 @@ class ProfileScreen extends StatelessWidget {
         child: Column(children: children),
       );
 
-  static Widget _rowTile(IconData icon, String title) => ListTile(
+  static Widget _rowTile(IconData icon, String title, {VoidCallback? onTap}) => ListTile(
         leading: Icon(icon),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         trailing: const Icon(Icons.chevron_right),
-        onTap: () {},
+        onTap: onTap ?? () {},
       );
 
   static Widget _valueRowTile(IconData icon, String title, String value) =>
@@ -283,4 +305,34 @@ class ProfileScreen extends StatelessWidget {
       },
     );
   }
+
+  // Debug methods - remove in production
+  Widget _debugCard(BuildContext context) => _cardList([
+        _rowTile(Icons.bug_report, 'Add Test Data', onTap: () async {
+          try {
+            final firestoreHelper = FirestoreHelper();
+            await firestoreHelper.addSampleUserData();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Sample data added to Firestore')),
+            );
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error adding sample data: $e')),
+            );
+          }
+        }),
+        _rowTile(Icons.delete, 'Delete All Users', onTap: () async {
+          try {
+            final firestoreHelper = FirestoreHelper();
+            await firestoreHelper.deleteAllUsers();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('All users deleted from Firestore')),
+            );
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error deleting users: $e')),
+            );
+          }
+        }),
+      ]);
 }
