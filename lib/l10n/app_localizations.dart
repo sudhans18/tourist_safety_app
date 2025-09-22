@@ -961,6 +961,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Refresh'**
   String get refresh;
+
+  /// No description provided for @addNewTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new trip'**
+  String get addNewTrip;
+
+  /// No description provided for @noUpcomingTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming trips. Tap \"Add new trip\" to plan one!'**
+  String get noUpcomingTrips;
+
+  /// No description provided for @noPastTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'No past trips'**
+  String get noPastTrips;
+
+  /// No description provided for @activitiesNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Activities / Notes'**
+  String get activitiesNotes;
 }
 
 class _AppLocalizationsDelegate

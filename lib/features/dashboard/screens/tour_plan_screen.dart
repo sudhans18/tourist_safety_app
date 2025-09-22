@@ -64,7 +64,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
             backgroundColor: const Color(0xFFD93F34),
             foregroundColor: Colors.white,
             icon: const Icon(Icons.add),
-            label: const Text('Add new trip'),
+            label: Text(t.addNewTrip),
             onPressed: () {
               Navigator.of(context).push(
                 PageRouteBuilder(
@@ -99,8 +99,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
           const _AnimatedHeader(title: 'Upcoming'),
           const SizedBox(height: 8),
           if (upcoming.isEmpty)
-            const _EmptyState(
-                message: 'No upcoming trips. Tap "Add new trip" to plan one!')
+            _EmptyState(message: t.noUpcomingTrips)
           else
             ...List.generate(
               upcoming.length,
@@ -113,7 +112,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
           const _AnimatedHeader(title: 'Past'),
           const SizedBox(height: 8),
           if (past.isEmpty)
-            const _EmptyState(message: 'No past trips')
+            _EmptyState(message: t.noPastTrips)
           else
             ...List.generate(
               past.length,
@@ -381,6 +380,7 @@ class _TripDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final dateFormatLong = DateFormat('EEEE, MMM dd, yyyy');
     return Scaffold(
       appBar: AppBar(title: Text(trip.destination)),
@@ -420,8 +420,8 @@ class _TripDetailsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           if (trip.notes.isNotEmpty) ...[
-            const Text('Activities / Notes',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            Text(t.activitiesNotes,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
             const SizedBox(height: 8),
             Text(trip.notes, style: const TextStyle(fontSize: 14, height: 1.4)),
           ],
