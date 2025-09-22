@@ -35,7 +35,8 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   Provider.of<UserProvider>(context).userName,
-                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w800, fontSize: 18),
                 ),
                 const SizedBox(height: 4),
                 Consumer<UserProvider>(
@@ -43,7 +44,10 @@ class ProfileScreen extends StatelessWidget {
                     final isVerified = userProvider.isUserVerified;
                     return Text(
                       '${t.verifiedMember} ${isVerified ? '✅' : '❌'}',
-                      style: TextStyle(color: isVerified ? const Color(0xFF22C55E) : const Color(0xFFE74C3C)),
+                      style: TextStyle(
+                          color: isVerified
+                              ? const Color(0xFF22C55E)
+                              : const Color(0xFFE74C3C)),
                     );
                   },
                 ),
@@ -56,10 +60,12 @@ class ProfileScreen extends StatelessWidget {
           Consumer<UserProvider>(
             builder: (context, userProvider, child) {
               return _cardList([
-                _valueRowTile(Icons.flag_outlined, t.nationality, userProvider.userNationality),
-                _valueRowTile(Icons.cake_outlined, t.dateOfBirth, userProvider.userData?.dob ?? 'Not available'),
-                _valueRowTileWithChevron(
-                    Icons.event_note_outlined, t.itinerary, userProvider.userItinerary),
+                _valueRowTile(Icons.flag_outlined, t.nationality,
+                    userProvider.userNationality),
+                _valueRowTile(Icons.cake_outlined, t.dateOfBirth,
+                    userProvider.userData?.dob ?? 'Not available'),
+                _valueRowTileWithChevron(Icons.event_note_outlined, t.itinerary,
+                    userProvider.userItinerary),
               ]);
             },
           ),
@@ -69,7 +75,8 @@ class ProfileScreen extends StatelessWidget {
             builder: (context, userProvider, child) {
               return _cardList([
                 if (userProvider.emergencyContact != 'Not set')
-                  _contactTile('Emergency Contact', userProvider.emergencyContact),
+                  _contactTile(
+                      'Emergency Contact', userProvider.emergencyContact),
                 _rowTile(Icons.person_add_alt_1_outlined, t.addContact),
               ]);
             },
@@ -165,7 +172,8 @@ class ProfileScreen extends StatelessWidget {
         child: Column(children: children),
       );
 
-  static Widget _rowTile(IconData icon, String title, {VoidCallback? onTap}) => ListTile(
+  static Widget _rowTile(IconData icon, String title, {VoidCallback? onTap}) =>
+      ListTile(
         leading: Icon(icon),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         trailing: const Icon(Icons.chevron_right),
@@ -312,10 +320,13 @@ class ProfileScreen extends StatelessWidget {
           try {
             final firestoreHelper = FirestoreHelper();
             await firestoreHelper.addSampleUserData();
+
+            if (!context.mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Sample data added to Firestore')),
             );
           } catch (e) {
+            if (!context.mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error adding sample data: $e')),
             );
@@ -325,10 +336,13 @@ class ProfileScreen extends StatelessWidget {
           try {
             final firestoreHelper = FirestoreHelper();
             await firestoreHelper.deleteAllUsers();
+
+            if (!context.mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('All users deleted from Firestore')),
             );
           } catch (e) {
+            if (!context.mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error deleting users: $e')),
             );

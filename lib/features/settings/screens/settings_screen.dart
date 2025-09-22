@@ -13,13 +13,15 @@ class SettingsScreen extends StatelessWidget {
         : settings.themeMode == ThemeMode.light
             ? 'Light'
             : 'Dark';
-    final languageSubtitle = settings.locale.languageCode == 'hi' ? 'Hindi' : 'English';
+    final languageSubtitle =
+        settings.locale.languageCode == 'hi' ? 'Hindi' : 'English';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pushReplacementNamed(context, '/dashboard'),
+          onPressed: () =>
+              Navigator.pushReplacementNamed(context, '/dashboard'),
         ),
       ),
       body: SafeArea(
@@ -65,9 +67,12 @@ class SettingsScreen extends StatelessWidget {
           if (i == 3) return;
         },
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
-          NavigationDestination(icon: Icon(Icons.notifications_outlined), label: 'Alerts'),
-          NavigationDestination(icon: Icon(Icons.family_restroom_outlined), label: 'Family'),
+          NavigationDestination(
+              icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
+          NavigationDestination(
+              icon: Icon(Icons.notifications_outlined), label: 'Alerts'),
+          NavigationDestination(
+              icon: Icon(Icons.family_restroom_outlined), label: 'Family'),
           NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
@@ -160,7 +165,10 @@ class SettingsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
+        ],
       ),
       child: ListTile(
         leading: Icon(icon),

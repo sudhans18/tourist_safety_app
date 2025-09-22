@@ -54,41 +54,28 @@ class UserVerificationData {
   factory UserVerificationData.fromFirestore(DocumentSnapshot doc) {
     final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-    // Debug logging for raw data
-    print('UserVerificationData: DEBUG - Raw Firestore data:');
-    data.forEach((key, value) {
-      print('  $key: $value (type: ${value.runtimeType})');
-    });
-
-    DateTime? _parseDate(dynamic v) {
+    DateTime? parseDate(dynamic v) {
       if (v == null) return null;
       if (v is Timestamp) return v.toDate();
       if (v is String) {
         try {
           return DateTime.parse(v);
         } catch (_) {
-          print('UserVerificationData: Failed to parse date string: $v');
-          return null;
+          return null; // silently fail
         }
       }
-      print('UserVerificationData: Unsupported date type: ${v.runtimeType}');
-      return null;
+      return null; // unsupported type
     }
 
-    int? _parseInt(dynamic v) {
+    int? parseInt(dynamic v) {
       if (v == null) return null;
       if (v is int) return v;
       if (v is double) return v.toInt();
-      if (v is String) {
-        final parsed = int.tryParse(v);
-        if (parsed == null) print('UserVerificationData: Failed to parse int string: $v');
-        return parsed;
-      }
-      print('UserVerificationData: Unsupported int type: ${v.runtimeType}');
+      if (v is String) return int.tryParse(v);
       return null;
     }
 
-    bool? _parseBool(dynamic v) {
+    bool? parseBool(dynamic v) {
       if (v == null) return null;
       if (v is bool) return v;
       if (v is num) return v != 0;
@@ -96,43 +83,41 @@ class UserVerificationData {
         final s = v.toLowerCase();
         if (s == 'true' || s == '1' || s == 'yes') return true;
         if (s == 'false' || s == '0' || s == 'no') return false;
-        print('UserVerificationData: Failed to parse bool string: $v');
         return null;
       }
-      print('UserVerificationData: Unsupported bool type: ${v.runtimeType}');
       return null;
     }
 
-    String? _parseString(dynamic v) {
+    String? parseString(dynamic v) {
       if (v == null) return null;
       if (v is String) return v;
       return v.toString();
     }
 
     return UserVerificationData(
-      address: _parseString(data['address']),
-      contractAddress: _parseString(data['contractAddress']),
-      createdAt: _parseDate(data['createdAt']),
-      dob: _parseString(data['dob']),
-      documentHash: _parseString(data['documentHash']),
-      documentNumber: _parseString(data['documentNumber']),
-      documentType: _parseString(data['documentType']),
-      eKYCStatus: _parseString(data['eKYCStatus']),
-      emergencyContact: _parseString(data['emergencyContact']),
-      expiryDate: _parseDate(data['expiryDate']),
-      isActive: _parseBool(data['isActive']),
-      itinerary: _parseString(data['itinerary']),
-      itineraryHash: _parseString(data['itineraryHash']),
-      name: _parseString(data['name']),
-      nationality: _parseString(data['nationality']),
-      nftMintStatus: _parseString(data['nftMintStatus']),
-      nftTokenId: _parseString(data['nftTokenId']),
-      profilePhotoHash: _parseString(data['profilePhotoHash']),
-      registrationStatus: _parseString(data['registrationStatus']),
-      transactionHash: _parseString(data['transactionHash']),
-      verificationTimestamp: _parseDate(data['verificationTimestamp']),
-      visitDurationDays: _parseInt(data['visitDurationDays']),
-      walletAddress: _parseString(data['walletAddress']),
+      address: parseString(data['address']),
+      contractAddress: parseString(data['contractAddress']),
+      createdAt: parseDate(data['createdAt']),
+      dob: parseString(data['dob']),
+      documentHash: parseString(data['documentHash']),
+      documentNumber: parseString(data['documentNumber']),
+      documentType: parseString(data['documentType']),
+      eKYCStatus: parseString(data['eKYCStatus']),
+      emergencyContact: parseString(data['emergencyContact']),
+      expiryDate: parseDate(data['expiryDate']),
+      isActive: parseBool(data['isActive']),
+      itinerary: parseString(data['itinerary']),
+      itineraryHash: parseString(data['itineraryHash']),
+      name: parseString(data['name']),
+      nationality: parseString(data['nationality']),
+      nftMintStatus: parseString(data['nftMintStatus']),
+      nftTokenId: parseString(data['nftTokenId']),
+      profilePhotoHash: parseString(data['profilePhotoHash']),
+      registrationStatus: parseString(data['registrationStatus']),
+      transactionHash: parseString(data['transactionHash']),
+      verificationTimestamp: parseDate(data['verificationTimestamp']),
+      visitDurationDays: parseInt(data['visitDurationDays']),
+      walletAddress: parseString(data['walletAddress']),
     );
   }
 

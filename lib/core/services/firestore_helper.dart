@@ -4,8 +4,9 @@ import '../models/user_verification_data.dart';
 class FirestoreHelper {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// Add sample user data to Firestore for testing
-  Future<void> addSampleUserData() async {
+  /// Add sample user data to Firestore
+  /// Returns true on success, false on failure
+  Future<bool> addSampleUserData() async {
     final sampleUser = UserVerificationData(
       address: "chennai",
       contractAddress: "0x47147B2DFdD033C2c8941F3C72bE74a8977Fde4a",
@@ -34,42 +35,43 @@ class FirestoreHelper {
 
     try {
       await _firestore
-          .collection('Users')
+          .collection('users')
           .doc('LoFJIhJzHSLwajqZqHdv')
           .set(sampleUser.toMap());
-
-      print('Sample user data added successfully!');
-    } catch (e) {
-      print('Error adding sample data: $e');
+      return true;
+    } catch (_) {
+      return false;
     }
   }
 
-  /// Get all users (for testing purposes)
+  /// Get all users from Firestore
+  /// Returns an empty list if something goes wrong
   Future<List<UserVerificationData>> getAllUsers() async {
     try {
-      QuerySnapshot querySnapshot = await _firestore.collection('Users').get();
+      QuerySnapshot querySnapshot = await _firestore.collection('users').get();
 
       return querySnapshot.docs
           .map((doc) => UserVerificationData.fromFirestore(doc))
           .toList();
-    } catch (e) {
-      print('Error fetching users: $e');
+    } catch (_) {
       return [];
     }
   }
 
-  /// Delete all users (for testing purposes)
-  Future<void> deleteAllUsers() async {
+  /// Delete all users from Firestore
+  /// Returns the count of deleted documents
+  Future<int> deleteAllUsers() async {
     try {
-      QuerySnapshot querySnapshot = await _firestore.collection('Users').get();
+      QuerySnapshot querySnapshot = await _firestore.collection('users').get();
 
+      int deletedCount = 0;
       for (DocumentSnapshot doc in querySnapshot.docs) {
         await doc.reference.delete();
+        deletedCount++;
       }
-
-      print('All users deleted successfully!');
-    } catch (e) {
-      print('Error deleting users: $e');
+      return deletedCount;
+    } catch (_) {
+      return 0;
     }
   }
 }

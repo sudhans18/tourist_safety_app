@@ -16,6 +16,7 @@ import 'features/band_integration/screens/band_pairing_screen.dart';
 import 'features/dashboard/screens/dashboard_screen.dart';
 import 'features/dashboard/screens/live_vitals_screen.dart';
 import 'features/dashboard/screens/tour_plan_screen.dart';
+import 'features/dashboard/screens/add_new_trip_screen.dart';
 import 'features/attractions/screens/nearby_attractions_screen.dart';
 import 'features/weather/screens/weather_screen.dart';
 import 'features/sos/screens/sos_mode_screen.dart';
@@ -24,6 +25,7 @@ import 'features/alerts/screens/alerts_screen.dart';
 import 'features/profile/screens/profile_screen.dart';
 import 'features/zones/providers/geofence_provider.dart';
 import 'features/zones/screens/map_fullscreen_screen.dart';
+import 'core/providers/trip_provider.dart';
 
 void _initializeMapbox() {
   try {
@@ -64,6 +66,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => TripProvider()),
         ChangeNotifierProvider(create: (_) => GeofenceProvider()..init()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()..load()),
         // Initialize with document ID for MVP
@@ -129,7 +132,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           themeMode: context.watch<SettingsProvider>().themeMode,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -146,6 +149,7 @@ class MyApp extends StatelessWidget {
             '/dashboard': (context) => const DashboardScreen(),
             '/live-vitals': (context) => const LiveVitalsScreen(),
             '/tour-plan': (context) => const TourPlanScreen(),
+            '/add-new-trip': (context) => const AddNewTripScreen(),
             '/nearby-attractions': (context) => const NearbyAttractionsScreen(),
             '/weather': (context) => const WeatherScreen(),
             '/sos': (context) => const SosModeScreen(),

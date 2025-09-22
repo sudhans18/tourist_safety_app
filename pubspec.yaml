@@ -26,6 +26,8 @@ dependencies:
   cloud_firestore: ^4.15.8
   flutter_dotenv: ^6.0.0
   fl_chart: ^0.68.0
+  logging: ^1.1.0
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_test:
