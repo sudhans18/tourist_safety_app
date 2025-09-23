@@ -154,5 +154,9 @@
   "addNewTrip": "Add new trip",
   "noUpcomingTrips": "No upcoming trips. Tap \"Add new trip\" to plan one!",
   "noPastTrips": "No past trips",
-  "activitiesNotes": "Activities / Notes"
+  "activitiesNotes": "Activities / Notes",
+  "searchLocation": "Search location",
+  "search": "Search",
+  "searchHint": "Enter location name or address",
+  "noResultsFound": "No results found"
 }
