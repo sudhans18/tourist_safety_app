@@ -474,4 +474,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activitiesNotes => 'Activities / Notes';
+
+  @override
+  String get searchLocation => 'Search location';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get searchHint => 'Enter location name or address';
+
+  @override
+  String get noResultsFound => 'No results found';
 }

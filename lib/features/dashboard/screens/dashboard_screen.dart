@@ -6,6 +6,7 @@ import 'package:tourist_safety_app/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:tourist_safety_app/core/providers/user_provider.dart';
 import 'package:tourist_safety_app/features/common/widgets/state_widgets.dart';
+import 'package:flutter/services.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -435,7 +436,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD93F34)),
-              onPressed: () => Navigator.pop(context, true),
+              onPressed: () async {
+                // Add strong vibration for SOS button press
+                await _triggerStrongVibration();
+                Navigator.pop(context, true);
+              },
               child: Text(AppLocalizations.of(context)!.sendSOS),
             ),
           ],
@@ -448,7 +453,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
-  void _showGeofenceSheet() {
+  Future<void> _triggerStrongVibration() async {
+    try {
+      // Much stronger, longer vibration pattern - like real vibration
+      for (int i = 0; i < 8; i++) {
+        HapticFeedback.heavyImpact();
+        await Future.delayed(const Duration(milliseconds: 80));
+      }
+
+      // Extra strong final burst
+      await Future.delayed(const Duration(milliseconds: 200));
+      for (int i = 0; i < 3; i++) {
+        HapticFeedback.heavyImpact();
+        await Future.delayed(const Duration(milliseconds: 50));
+      }
+    } catch (e) {
+      // Fallback if haptic feedback fails
+      HapticFeedback.heavyImpact();
+    }
+  }
+
+  void _showGeofenceSheet() async {
+    // Strong vibration pattern for geofencing alerts
+    await _triggerStrongVibration();
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: false,

@@ -473,4 +473,16 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get activitiesNotes => 'गतिविधियां / नोट्स';
+
+  @override
+  String get searchLocation => 'स्थान खोजें';
+
+  @override
+  String get search => 'खोजें';
+
+  @override
+  String get searchHint => 'स्थान का नाम या पता दर्ज करें';
+
+  @override
+  String get noResultsFound => 'कोई परिणाम नहीं मिला';
 }

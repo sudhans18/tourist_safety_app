@@ -985,6 +985,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Activities / Notes'**
   String get activitiesNotes;
+
+  /// No description provided for @searchLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Search location'**
+  String get searchLocation;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter location name or address'**
+  String get searchHint;
+
+  /// No description provided for @noResultsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noResultsFound;
 }
 
 class _AppLocalizationsDelegate

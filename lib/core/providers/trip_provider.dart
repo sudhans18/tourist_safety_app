@@ -16,7 +16,8 @@ class TripProvider extends ChangeNotifier {
   List<Trip> get upcomingTrips {
     final now = DateTime.now();
     return _trips
-        .where((t) => !t.endDate.isBefore(DateTime(now.year, now.month, now.day)))
+        .where(
+            (t) => !t.endDate.isBefore(DateTime(now.year, now.month, now.day)))
         .toList()
       ..sort((a, b) => a.startDate.compareTo(b.startDate));
   }
@@ -24,7 +25,8 @@ class TripProvider extends ChangeNotifier {
   List<Trip> get pastTrips {
     final now = DateTime.now();
     return _trips
-        .where((t) => t.endDate.isBefore(DateTime(now.year, now.month, now.day)))
+        .where(
+            (t) => t.endDate.isBefore(DateTime(now.year, now.month, now.day)))
         .toList()
       ..sort((a, b) => b.endDate.compareTo(a.endDate));
   }
@@ -57,12 +59,14 @@ class TripProvider extends ChangeNotifier {
     _trips.addAll([
       Trip(
         id: _uuid.v4(),
-        name: 'Himalayan Escape',
-        destination: 'Manali, India',
+        name: 'Taj Mahal',
+        destination: 'Agra, India',
         startDate: now.add(const Duration(days: 5)),
         endDate: now.add(const Duration(days: 10)),
-        notes: 'Skiing, Solang Valley, Old Manali cafes',
-        imageUrl: 'https://images.unsplash.com/photo-1602488412239-7e0d37afb0db?q=80&w=1600&auto=format&fit=crop',
+        notes:
+            '7 wonders of the world, Mughal architecture, Symbol of eternal love, Guided tours',
+        imageUrl:
+            'http://1.bp.blogspot.com/-3mUa4Z5ria0/ToRV3GwN0GI/AAAAAAAAAQ8/kA71S1kIesE/s1600/Taj+Mahal.jpg',
       ),
       Trip(
         id: _uuid.v4(),
@@ -71,7 +75,8 @@ class TripProvider extends ChangeNotifier {
         startDate: now.add(const Duration(days: 15)),
         endDate: now.add(const Duration(days: 18)),
         notes: 'Camel ride, sand dunes, night camping',
-        imageUrl: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1600&auto=format&fit=crop',
+        imageUrl:
+            'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1600&auto=format&fit=crop',
       ),
       Trip(
         id: _uuid.v4(),
@@ -80,7 +85,8 @@ class TripProvider extends ChangeNotifier {
         startDate: now.subtract(const Duration(days: 20)),
         endDate: now.subtract(const Duration(days: 17)),
         notes: 'Baga beach, water sports, seafood',
-        imageUrl: 'https://images.unsplash.com/photo-1602526202360-1d5c93d3536b?q=80&w=1600&auto=format&fit=crop',
+        imageUrl:
+            'https://tse2.mm.bing.net/th/id/OIP.m6hzwo8RoPPKT6zwK5WbDgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3',
       ),
     ]);
   }
