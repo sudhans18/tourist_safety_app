@@ -9,25 +9,32 @@ class NearbyAttractionsScreen extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     final items = [
       {
-        'title': 'City Park',
-        'distance': '1.2 km',
-        'rating': 4.6,
-        'img': 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800',
+        'title': 'Rajiv Gandhi memorial',
+        'distance': '5.1 km',
+        'rating': 4.8,
+        'img': 'https://images.mid-day.com/images/images/2022/sep/INDIA-POLITICS-RAHUL_GANDHI_13656845_d.jpg',
         'tags': [t.tagFamily, t.tagOpenAir]
       },
       {
-        'title': 'Heritage Museum',
-        'distance': '2.0 km',
+        'title': 'Queensland',
+        'distance': '7.1 km',
         'rating': 4.3,
-        'img': 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=800',
+        'img': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo_eijG5t-Cu_xx9Nvjx_QuoLQrpflr3CqUA&s',
         'tags': [t.tagTickets, t.tagHistory]
       },
       {
-        'title': 'Riverside Walk',
-        'distance': '900 m',
+        'title': 'Adi Kesava Perumal Temple',
+        'distance': '3.5 km',
         'rating': 4.8,
-        'img': 'https://images.unsplash.com/photo-1519817914152-22d216bb9170?q=80&w=800',
-        'tags': [t.tagScenic, t.tagFree]
+        'img': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/9e/39/68/temple.jpg?w=1100&h=600&s=1',
+        'tags': [t.tagTickets, t.tagHistory]
+      },
+      {
+        'title': 'Adi Kesava Perumal Temple',
+        'distance': '3.5 km',
+        'rating': 4.8,
+        'img': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/43/a6/66/vallakkottai-murugan.jpg?w=1400&h=-1&s=1',
+        'tags': [t.tagTickets, t.tagHistory]
       },
     ];
     return Scaffold(
