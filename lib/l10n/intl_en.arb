@@ -150,5 +150,9 @@
   "error": "Error",
   "noData": "No Data",
   "noDataDesc": "No data available at the moment",
-  "refresh": "Refresh"
+  "refresh": "Refresh",
+  "addNewTrip": "Add new trip",
+  "noUpcomingTrips": "No upcoming trips. Tap \"Add new trip\" to plan one!",
+  "noPastTrips": "No past trips",
+  "activitiesNotes": "Activities / Notes"
 }

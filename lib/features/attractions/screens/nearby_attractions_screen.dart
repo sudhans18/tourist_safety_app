@@ -9,24 +9,31 @@ class NearbyAttractionsScreen extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     final items = [
       {
-        'title': 'City Park',
+        'title': 'Rajiv Gandhi memorial',
         'distance': '1.2 km',
         'rating': 4.6,
-        'img': 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800',
+        'img': 'https://images.mid-day.com/images/images/2022/sep/INDIA-POLITICS-RAHUL_GANDHI_13656845_d.jpg',
         'tags': [t.tagFamily, t.tagOpenAir]
       },
       {
         'title': 'Queensland',
         'distance': '7.1 km',
         'rating': 4.3,
-        'img': 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=800',
+        'img': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgfDQ3bvEQpEP_oPVKh_VApDpggfkCWGqAEg&s',
         'tags': [t.tagTickets, t.tagHistory]
       },
       {
-        'title': 'Riverside Walk',
-        'distance': '900 m',
+        'title': 'Vallakkottai Murugan Temple',
+        'distance': '7.8 km',
         'rating': 4.8,
-        'img': 'https://images.unsplash.com/photo-1519817914152-22d216bb9170?q=80&w=800',
+        'img': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/43/a6/66/vallakkottai-murugan.jpg?w=1400&h=-1&s=1',
+        'tags': [t.tagScenic, t.tagFree]
+      },
+      {
+        'title': 'Adi Kesava Perumal Temple',
+        'distance': '9.5 km',
+        'rating': 4.8,
+        'img': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/9e/39/68/temple.jpg?w=1100&h=600&s=1',
         'tags': [t.tagScenic, t.tagFree]
       },
     ];

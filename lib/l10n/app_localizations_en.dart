@@ -461,4 +461,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refresh => 'Refresh';
+
+  @override
+  String get addNewTrip => 'Add new trip';
+
+  @override
+  String get noUpcomingTrips =>
+      'No upcoming trips. Tap \"Add new trip\" to plan one!';
+
+  @override
+  String get noPastTrips => 'No past trips';
+
+  @override
+  String get activitiesNotes => 'Activities / Notes';
 }

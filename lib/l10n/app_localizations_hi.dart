@@ -460,4 +460,17 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get refresh => 'रीफ्रेश करें';
+
+  @override
+  String get addNewTrip => 'नया ट्रिप जोड़ें';
+
+  @override
+  String get noUpcomingTrips =>
+      'कोई आगामी ट्रिप नहीं। नया ट्रिप जोड़ने के लिए \"नया ट्रिप जोड़ें\" पर टैप करें!';
+
+  @override
+  String get noPastTrips => 'कोई पिछली ट्रिप नहीं';
+
+  @override
+  String get activitiesNotes => 'गतिविधियां / नोट्स';
 }
