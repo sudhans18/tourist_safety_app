@@ -9,32 +9,25 @@ class NearbyAttractionsScreen extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     final items = [
       {
-        'title': 'Rajiv Gandhi memorial',
-        'distance': '5.1 km',
-        'rating': 4.8,
-        'img': 'https://images.mid-day.com/images/images/2022/sep/INDIA-POLITICS-RAHUL_GANDHI_13656845_d.jpg',
+        'title': 'City Park',
+        'distance': '1.2 km',
+        'rating': 4.6,
+        'img': 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800',
         'tags': [t.tagFamily, t.tagOpenAir]
       },
       {
         'title': 'Queensland',
         'distance': '7.1 km',
         'rating': 4.3,
-        'img': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo_eijG5t-Cu_xx9Nvjx_QuoLQrpflr3CqUA&s',
+        'img': 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=800',
         'tags': [t.tagTickets, t.tagHistory]
       },
       {
-        'title': 'Adi Kesava Perumal Temple',
-        'distance': '3.5 km',
+        'title': 'Riverside Walk',
+        'distance': '900 m',
         'rating': 4.8,
-        'img': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/9e/39/68/temple.jpg?w=1100&h=600&s=1',
-        'tags': [t.tagTickets, t.tagHistory]
-      },
-      {
-        'title': 'Adi Kesava Perumal Temple',
-        'distance': '3.5 km',
-        'rating': 4.8,
-        'img': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/43/a6/66/vallakkottai-murugan.jpg?w=1400&h=-1&s=1',
-        'tags': [t.tagTickets, t.tagHistory]
+        'img': 'https://images.unsplash.com/photo-1519817914152-22d216bb9170?q=80&w=800',
+        'tags': [t.tagScenic, t.tagFree]
       },
     ];
     return Scaffold(
@@ -62,7 +55,10 @@ class NearbyAttractionsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -81,24 +77,31 @@ class NearbyAttractionsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(it['title']! as String, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                      Text(it['title']! as String,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w800, fontSize: 16)),
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          const Icon(Icons.place_outlined, size: 16, color: Color(0xFF6B7280)),
+                          const Icon(Icons.place_outlined,
+                              size: 16, color: Color(0xFF6B7280)),
                           const SizedBox(width: 4),
-                          Text(it['distance']! as String, style: const TextStyle(color: Color(0xFF6B7280))),
+                          Text(it['distance']! as String,
+                              style: const TextStyle(color: Color(0xFF6B7280))),
                           const SizedBox(width: 10),
-                          const Icon(Icons.star_rounded, size: 16, color: Color(0xFFF59E0B)),
+                          const Icon(Icons.star_rounded,
+                              size: 16, color: Color(0xFFF59E0B)),
                           const SizedBox(width: 2),
-                          Text((it['rating'] as double).toStringAsFixed(1), style: const TextStyle(color: Color(0xFF6B7280))),
+                          Text((it['rating'] as double).toStringAsFixed(1),
+                              style: const TextStyle(color: Color(0xFF6B7280))),
                         ],
                       ),
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
                         runSpacing: -6,
-                        children: (it['tags'] as List<String>).map(_chip).toList(),
+                        children:
+                            (it['tags'] as List<String>).map(_chip).toList(),
                       )
                     ],
                   ),
