@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import '../models/user_verification_data.dart';
 
 class FirebaseService {
@@ -111,25 +112,24 @@ class FirebaseService {
   Future<bool> isUserVerified(String documentId) async {
     try {
       final userData = await getUserData(documentId);
-      return userData != null &&
-          userData.isActive == true &&
-          userData.registrationStatus == 'completed' &&
-          userData.eKYCStatus == 'verified';
-    } catch (_) {
+      return userData?.isActive == true &&
+          userData?.registrationStatus == 'completed' &&
+          userData?.eKYCStatus == 'verified';
+    } catch (e) {
       return false;
     }
   }
 
-  /// Get user display information
-  Map<String, String?> getUserDisplayInfo(UserVerificationData? userData) {
-    return {
-      'name': userData?.name ?? 'Unknown User',
-      'nationality': userData?.nationality ?? 'Unknown',
-      'documentType': userData?.documentType ?? 'Unknown',
-      'itinerary': userData?.itinerary ?? 'Not specified',
-      'emergencyContact': userData?.emergencyContact ?? 'Not set',
-      'visitDuration': userData?.visitDurationDays?.toString() ?? '0',
-      'walletAddress': userData?.walletAddress ?? 'Not available',
-    };
+  /// Update user's profile photo in Firestore
+  Future<void> updateUserProfilePhoto(String documentId, String photoUrl) async {
+    try {
+      await _firestore
+          .collection(_usersCollection)
+          .doc(documentId)
+          .update({'profilePhotoHash': photoUrl});
+    } catch (e) {
+      debugPrint('FirebaseService: updateUserProfilePhoto error: $e');
+      rethrow;
+    }
   }
 }

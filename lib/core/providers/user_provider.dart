@@ -35,6 +35,7 @@ class UserProvider extends ChangeNotifier {
   String get emergencyContact => _userData?.emergencyContact ?? 'Not set';
   int get visitDurationDays => _userData?.visitDurationDays ?? 0;
   String get walletAddress => _userData?.walletAddress ?? 'Not available';
+  String? get profilePhotoHash => _userData?.profilePhotoHash;
 
   /// Load user data by document ID
   Future<void> loadUserData(String documentId) async {
@@ -116,7 +117,15 @@ class UserProvider extends ChangeNotifier {
 
   /// Get user display information
   Map<String, String?> getUserDisplayInfo() {
-    return _firebaseService.getUserDisplayInfo(_userData);
+    return {
+      'name': _userData?.name ?? 'Unknown User',
+      'nationality': _userData?.nationality ?? 'Unknown',
+      'documentType': _userData?.documentType ?? 'Unknown',
+      'itinerary': _userData?.itinerary ?? 'Not specified',
+      'emergencyContact': _userData?.emergencyContact ?? 'Not set',
+      'visitDuration': _userData?.visitDurationDays?.toString() ?? '0',
+      'walletAddress': _userData?.walletAddress ?? 'Not available',
+    };
   }
 
   /// Check if user is verified
@@ -168,6 +177,26 @@ class UserProvider extends ChangeNotifier {
     if (documentId == null) return;
     debugPrint('UserProvider: Retrying load for documentId=$documentId');
     await loadUserData(documentId);
+  }
+
+  /// Update user's profile photo
+  Future<bool> updateProfilePhoto(String photoUrl) async {
+    if (_userData?.walletAddress == null) return false;
+    
+    try {
+      await _firebaseService.updateUserProfilePhoto(
+        _userData!.walletAddress!,
+        photoUrl,
+      );
+      
+      // Update local state
+      _userData = _userData!.copyWith(profilePhotoHash: photoUrl);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      debugPrint('Error updating profile photo: $e');
+      return false;
+    }
   }
 
   @override

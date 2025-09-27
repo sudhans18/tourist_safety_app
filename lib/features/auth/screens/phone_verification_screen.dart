@@ -4,11 +4,9 @@ class PhoneVerificationScreen extends StatefulWidget {
   const PhoneVerificationScreen({Key? key}) : super(key: key);
 
   @override
-  // The return type of this public method is now also public.
   PhoneVerificationScreenState createState() => PhoneVerificationScreenState();
 }
 
-// The State class is now public by removing the leading underscore.
 class PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
   final _phoneController = TextEditingController();
   final _otpController = TextEditingController();
@@ -142,8 +140,6 @@ class PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
   }
 
   Future<void> _verifyPhone() async {
-    // NOTE: This code also has the 'use_build_context_synchronously' warning.
-    // Storing the ScaffoldMessenger before the async gap would fix it.
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     if (_phoneController.text.isEmpty) {
       scaffoldMessenger.showSnackBar(
@@ -165,8 +161,6 @@ class PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
   }
 
   Future<void> _verifyOtp() async {
-    // NOTE: This code also has the 'use_build_context_synchronously' warning.
-    // Storing the Navigator and ScaffoldMessenger before any async gaps is the solution.
     final navigator = Navigator.of(context);
     final scaffoldMessenger = ScaffoldMessenger.of(context);
 

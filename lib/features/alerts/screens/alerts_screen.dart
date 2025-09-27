@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tourist_safety_app/l10n/app_localizations.dart';
 
 class AlertsScreen extends StatelessWidget {
   const AlertsScreen({Key? key}) : super(key: key);
@@ -8,7 +7,7 @@ class AlertsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.alerts),
+        title: const Text('Alerts'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () =>
@@ -27,14 +26,14 @@ class AlertsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: const Color(0xFFF5E8A3)),
               ),
-              child: Row(
+              child: const Row(
                 children: [
-                  const Icon(Icons.wifi_off, color: Color(0xFF856404)),
-                  const SizedBox(width: 8),
+                  Icon(Icons.wifi_off, color: Color(0xFF856404)),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      AppLocalizations.of(context)!.noInternetCached,
-                      style: const TextStyle(color: Color(0xFF856404)),
+                      'No internet connection. Showing cached alerts.',
+                      style: TextStyle(color: Color(0xFF856404)),
                     ),
                   ),
                 ],
@@ -46,14 +45,14 @@ class AlertsScreen extends StatelessWidget {
             _alertCard(
               context,
               typeColor: const Color(0xFFD93F34),
-              typeLabel: AppLocalizations.of(context)!.appAlert,
+              typeLabel: 'App Alert',
               title: 'SOS Triggered',
               time: '2 min ago',
               subtitle:
                   'John activated the SOS button. Location: Central Park.',
               actions: [
-                _secondaryButton(AppLocalizations.of(context)!.dismiss, onTap: () {}),
-                _primaryButton(AppLocalizations.of(context)!.viewDetails, onTap: () {}),
+                _secondaryButton('Dismiss', onTap: () {}),
+                _primaryButton('View Details', onTap: () {}),
               ],
               leading: const CircleAvatar(
                 backgroundColor: Color(0xFFFEEBEA),
@@ -63,13 +62,13 @@ class AlertsScreen extends StatelessWidget {
             _alertCard(
               context,
               typeColor: const Color(0xFF2563EB),
-              typeLabel: AppLocalizations.of(context)!.governmentAlert,
-              title: AppLocalizations.of(context)!.severeWeatherWarning,
+              typeLabel: 'Government Alert',
+              title: 'Severe Weather Warning',
               time: '10 min ago',
-              subtitle: AppLocalizations.of(context)!.severeWeatherDesc,
+              subtitle: 'Heavy rainfall expected in your area. Stay indoors and avoid travel.',
               actions: [
-                _secondaryButton(AppLocalizations.of(context)!.acknowledge, onTap: () {}),
-                _primaryButton(AppLocalizations.of(context)!.moreInfo, onTap: () {}),
+                _secondaryButton('Acknowledge', onTap: () {}),
+                _primaryButton('More Info', onTap: () {}),
               ],
               borderAccent: const Color(0xFF2563EB),
               leading: const CircleAvatar(
@@ -80,13 +79,13 @@ class AlertsScreen extends StatelessWidget {
             _alertCard(
               context,
               typeColor: const Color(0xFFF59E0B),
-              typeLabel: AppLocalizations.of(context)!.appAlert,
-              title: AppLocalizations.of(context)!.geoFenceWarning,
+              typeLabel: 'App Alert',
+              title: 'Geofence Warning',
               time: '25 min ago',
-              subtitle: AppLocalizations.of(context)!.geoFenceWarningDesc,
+              subtitle: 'You have entered a restricted area. Please return to the safe zone.',
               actions: [
-                _secondaryButton(AppLocalizations.of(context)!.dismiss, onTap: () {}),
-                _primaryButton(AppLocalizations.of(context)!.viewMap, onTap: () => Navigator.pushNamed(context, '/map-fullscreen')),
+                _secondaryButton('Dismiss', onTap: () {}),
+                _primaryButton('View Map', onTap: () => Navigator.pushNamed(context, '/map-fullscreen')),
               ],
               leading: const CircleAvatar(
                 backgroundColor: Color(0xFFFFF7ED),
@@ -96,13 +95,13 @@ class AlertsScreen extends StatelessWidget {
             _alertCard(
               context,
               typeColor: const Color(0xFF06B6D4),
-              typeLabel: AppLocalizations.of(context)!.appAlert,
-              title: AppLocalizations.of(context)!.fallDetected,
+              typeLabel: 'App Alert',
+              title: 'Fall Detected',
               time: '30 min ago',
-              subtitle: AppLocalizations.of(context)!.fallDetectedDesc,
+              subtitle: 'Sudden movement detected. Are you okay? Check your vitals.',
               actions: [
-                _secondaryButton(AppLocalizations.of(context)!.dismiss, onTap: () {}),
-                _primaryButton(AppLocalizations.of(context)!.checkVitals, onTap: () => Navigator.pushNamed(context, '/live-vitals')),
+                _secondaryButton('Dismiss', onTap: () {}),
+                _primaryButton('Check Vitals', onTap: () => Navigator.pushNamed(context, '/live-vitals')),
               ],
               leading: const CircleAvatar(
                 backgroundColor: Color(0xFFE6FBFF),
@@ -112,12 +111,12 @@ class AlertsScreen extends StatelessWidget {
             _alertCard(
               context,
               typeColor: const Color(0xFF6B7280),
-              typeLabel: AppLocalizations.of(context)!.appAlert,
-              title: AppLocalizations.of(context)!.lowBattery,
+              typeLabel: 'App Alert',
+              title: 'Low Battery',
               time: '1 hour ago',
-              subtitle: AppLocalizations.of(context)!.lowBatteryDesc,
+              subtitle: 'Your device battery is critically low. Please charge your device.',
               actions: [
-                _disabledButton(AppLocalizations.of(context)!.dismissed),
+                _disabledButton('Dismissed'),
               ],
               isDimmed: true,
               leading: const CircleAvatar(
@@ -136,11 +135,11 @@ class AlertsScreen extends StatelessWidget {
           if (i == 2) return; // Alerts
           if (i == 3) Navigator.pushReplacementNamed(context, '/profile');
         },
-        destinations: [
-          NavigationDestination(icon: const Icon(Icons.dashboard_outlined), label: AppLocalizations.of(context)!.dashboard),
-          NavigationDestination(icon: const Icon(Icons.event_note_outlined), label: AppLocalizations.of(context)!.tourPlan),
-          NavigationDestination(icon: const Icon(Icons.notifications), label: AppLocalizations.of(context)!.alerts),
-          NavigationDestination(icon: const Icon(Icons.person_outline), label: AppLocalizations.of(context)!.profile),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
+          NavigationDestination(icon: Icon(Icons.event_note_outlined), label: 'Tour Plan'),
+          NavigationDestination(icon: Icon(Icons.notifications), label: 'Alerts'),
+          NavigationDestination(icon: Icon(Icons.person_outline), label: 'Profile'),
         ],
       ),
     );

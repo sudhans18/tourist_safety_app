@@ -21,6 +21,48 @@ class AppLocalizationsHi extends AppLocalizations {
   String get hindi => 'हिंदी';
 
   @override
+  String get assamese => 'অসমীয়া';
+
+  @override
+  String get bengali => 'বাংলা';
+
+  @override
+  String get tamil => 'தமிழ்';
+
+  @override
+  String get telugu => 'తెలుగు';
+
+  @override
+  String get gujarati => 'ગુજરાતી';
+
+  @override
+  String get punjabi => 'ਪੰਜਾਬੀ';
+
+  @override
+  String get kannada => 'ಕನ್ನಡ';
+
+  @override
+  String get malayalam => 'മലയാളം';
+
+  @override
+  String get marathi => 'मराठी';
+
+  @override
+  String get urdu => 'اردو';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get chinese => '中文';
+
+  @override
+  String get nepali => 'नेपाली';
+
+  @override
   String get continueText => 'जारी रखें';
 
   @override
@@ -56,7 +98,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get settings => 'सेटिंग्स';
 
   @override
-  String get alerts => 'अलर्ट';
+  String get alerts => 'सतर्कताएँ';
 
   @override
   String get family => 'परिवार';
@@ -65,13 +107,13 @@ class AppLocalizationsHi extends AppLocalizations {
   String get safetyDashboard => 'सुरक्षा डैशबोर्ड';
 
   @override
-  String get recentAlerts => 'हाल के अलर्ट';
+  String get recentAlerts => 'हाल की সতর্কতাएँ';
 
   @override
-  String get liveVitals => 'लाइव वाइटल्स';
+  String get liveVitals => 'लाइव स्वास्थ्य संकेत';
 
   @override
-  String get locationAndRisk => 'लोकेशन और जोखिम क्षेत्र';
+  String get locationAndRisk => 'स्थान और जोखिम क्षेत्र';
 
   @override
   String get restrictedZone => 'प्रतिबंधित क्षेत्र';
@@ -89,13 +131,13 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get safeCardDesc =>
-      'आपका वर्तमान सुरक्षा स्कोर उत्कृष्ट है। ऐसे ही जारी रखें!';
+      'आपका वर्तमान सुरक्षा स्कोर उत्कृष्ट है। इसे बनाए रखें!';
 
   @override
-  String get tourPlan => 'टूर प्लान';
+  String get tourPlan => 'यात्रा योजना';
 
   @override
-  String get quickActions => 'त्वरित क्रियाएँ';
+  String get quickActions => 'त्वरित कार्रवाइयां';
 
   @override
   String get familyTracking => 'परिवार ट्रैकिंग';
@@ -110,7 +152,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get offlineModeCached => 'ऑफ़लाइन मोड - कैश्ड डेटा दिखाया जा रहा है';
 
   @override
-  String get bandConnected => 'बैंड कनेक्टेड';
+  String get bandConnected => 'बैंड जुड़ा हुआ है';
 
   @override
   String lastUpdatedMins(Object mins) {
@@ -118,7 +160,7 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get heartRate => 'हार्ट रेट';
+  String get heartRate => 'हृदय गति';
 
   @override
   String get spo2 => 'SpO₂';
@@ -133,49 +175,49 @@ class AppLocalizationsHi extends AppLocalizations {
   String get normal => 'सामान्य';
 
   @override
-  String get last1hHeartRate => 'पिछले 1 घंटे का हार्ट रेट';
+  String get last1hHeartRate => 'पिछले 1 घंटे की हृदय गति';
 
   @override
-  String get tourPlanComingSoon => 'टूर प्लान स्क्रीन जल्द उपलब्ध होगी';
+  String get tourPlanComingSoon => 'यात्रा योजना स्क्रीन जल्द ही आ रही है';
 
   @override
   String comingSoon(Object feature) {
-    return '$feature जल्द उपलब्ध होगा';
+    return '$feature जल्द ही आ रहा है';
   }
 
   @override
-  String get shareLocationVitals => 'मेरी लोकेशन और वाइटल्स शेयर करें';
+  String get shareLocationVitals => 'मेरा स्थान और स्वास्थ्य संकेत साझा करें';
 
   @override
   String get enableToShare => 'परिवार के साथ साझा करने के लिए सक्षम करें';
 
   @override
-  String get sosAlerts => 'SOS अलर्ट';
+  String get sosAlerts => 'SOS সতর্কতাएँ';
 
   @override
   String get sosAlertsDesc =>
-      'यदि आप SOS अलर्ट ट्रिगर करते हैं तो परिवार के सदस्यों को तुरंत सूचित किया जाएगा।';
+      'यदि आप SOS अलर्ट शुरू करते हैं तो परिवार के सदस्यों को तुरंत सूचित किया जाएगा।';
 
   @override
-  String get sharingWith => 'साझा किया जा रहा है';
+  String get sharingWith => 'इनके साथ साझा किया जा रहा है';
 
   @override
-  String get revokeAllSharing => 'सभी शेयरिंग रद्द करें';
+  String get revokeAllSharing => 'सभी साझाकरण रद्द करें';
 
   @override
   String get revokeAllSharingDesc =>
-      'यह सभी के साथ आपकी लोकेशन और वाइटल्स साझा करना बंद कर देगा।';
+      'यह सभी के साथ आपका स्थान और स्वास्थ्य संकेत साझा करना बंद कर देगा।';
 
   @override
   String get severeWeatherWarning => 'गंभीर मौसम चेतावनी';
 
   @override
   String get severeWeatherDesc =>
-      'राष्ट्रीय मौसम सेवा ने आपके क्षेत्र के लिए गंभीर तूफान की चेतावनी जारी की है। तुरंत सुरक्षित स्थान पर जाएँ।';
+      'राष्ट्रीय मौसम सेवा ने आपके क्षेत्र के लिए गंभीर तूफान की चेतावनी जारी की है। तुरंत आश्रय लें।';
 
   @override
   String get noInternetCached =>
-      'इंटरनेट कनेक्शन नहीं है। कैश्ड अलर्ट दिखाए जा रहे हैं।';
+      'इंटरनेट कनेक्शन नहीं है। कैश्ड সতর্কতাएँ दिखाई जा रही हैं।';
 
   @override
   String get appAlert => 'ऐप अलर्ट';
@@ -187,7 +229,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get acknowledge => 'स्वीकार करें';
 
   @override
-  String get moreInfo => 'अधिक जानकारी';
+  String get moreInfo => 'और जानकारी';
 
   @override
   String get dismiss => 'खारिज करें';
@@ -199,45 +241,45 @@ class AppLocalizationsHi extends AppLocalizations {
   String get viewMap => 'मानचित्र देखें';
 
   @override
-  String get checkVitals => 'वाइटल्स देखें';
+  String get checkVitals => 'स्वास्थ्य संकेत देखें';
 
   @override
-  String get dismissed => 'खारिज किया गया';
+  String get dismissed => 'खारिज कर दिया गया';
 
   @override
   String get geoFenceWarning => 'जियो-फेंस चेतावनी';
 
   @override
   String get geoFenceWarningDesc =>
-      'एमिली होटल के पास \'सेफ ज़ोन\' से बाहर निकल गई।';
+      'एमिली होटल के पास \'सुरक्षित क्षेत्र\' से बाहर निकल गई।';
 
   @override
-  String get fallDetected => 'गिरावट का पता चला';
+  String get fallDetected => 'गिरने का पता चला';
 
   @override
-  String get fallDetectedDesc => 'डेविड के लिए संभावित गिरावट का पता चला।';
+  String get fallDetectedDesc => 'डेविड के गिरने की संभावना का पता चला।';
 
   @override
-  String get lowBattery => 'कम बैटरी';
+  String get lowBattery => 'बैटरी कम है';
 
   @override
-  String get lowBatteryDesc => 'सारा का सेफ्टी बैंड 20% बैटरी पर है।';
+  String get lowBatteryDesc => 'सारा के सुरक्षा बैंड की बैटरी 20% है।';
 
   @override
   String get geoFenceAlert => 'जियो-फेंस अलर्ट';
 
   @override
   String get geoFenceAlertDesc =>
-      'आप प्रतिबंधित क्षेत्र के पास हैं। कृपया वापस लौटें या सावधानी से आगे बढ़ें।';
+      'आप एक प्रतिबंधित क्षेत्र के पास आ रहे हैं। कृपया वापस लौटें या सावधानी से आगे बढ़ें।';
 
   @override
-  String get returnToSafety => 'सुरक्षा पर लौटें';
+  String get returnToSafety => 'सुरक्षित स्थान पर लौटें';
 
   @override
   String get proceedWithCaution => 'सावधानी से आगे बढ़ें';
 
   @override
-  String get locating => 'स्थान निर्धारित किया जा रहा है...';
+  String get locating => 'पता लगाया जा रहा है...';
 
   @override
   String get weather => 'मौसम';
@@ -246,13 +288,13 @@ class AppLocalizationsHi extends AppLocalizations {
   String get currentWeather => 'वर्तमान मौसम';
 
   @override
-  String get feelsLike => 'महसूस होता है';
+  String get feelsLike => 'ऐसा महसूस होता है';
 
   @override
   String get humidity => 'आर्द्रता';
 
   @override
-  String get wind => 'वायु';
+  String get wind => 'हवा';
 
   @override
   String get today => 'आज';
@@ -266,7 +308,7 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get nextDaysTrend => 'आने वाले दिनों का तापमान रुझान';
+  String get nextDaysTrend => 'अगले कुछ दिनों का तापमान रुझान';
 
   @override
   String get profile => 'प्रोफ़ाइल';
@@ -305,7 +347,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appSettings => 'ऐप सेटिंग्स';
 
   @override
-  String get notifications => 'सूचनाएँ';
+  String get notifications => 'सूचनाएं';
 
   @override
   String get theme => 'थीम';
@@ -314,7 +356,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get language => 'भाषा';
 
   @override
-  String get supportLegal => 'सपोर्ट और कानूनी';
+  String get supportLegal => 'सहायता और कानूनी';
 
   @override
   String get helpCenter => 'सहायता केंद्र';
@@ -326,10 +368,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get logOut => 'लॉग आउट';
 
   @override
-  String get connected => 'कनेक्टेड';
+  String get connected => 'जुड़ा हुआ है';
 
   @override
-  String get disconnected => 'डिस्कनेक्टेड';
+  String get disconnected => 'संपर्क टूट गया';
 
   @override
   String get idLabel => 'आईडी';
@@ -362,7 +404,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get tagFamily => 'परिवार';
 
   @override
-  String get tagOpenAir => 'खुला स्थान';
+  String get tagOpenAir => 'खुली हवा';
 
   @override
   String get tagTickets => 'टिकट';
@@ -371,34 +413,35 @@ class AppLocalizationsHi extends AppLocalizations {
   String get tagHistory => 'इतिहास';
 
   @override
-  String get tagScenic => 'सुंदर';
+  String get tagScenic => 'दर्शनीय';
 
   @override
   String get tagFree => 'निःशुल्क';
 
   @override
-  String get shareLocation => 'लोकेशन शेयर करें';
+  String get shareLocation => 'स्थान साझा करें';
 
   @override
-  String get shareMyLocation => 'मेरी लोकेशन शेयर करें';
+  String get shareMyLocation => 'मेरा स्थान साझा करें';
 
   @override
-  String get shareLocationDesc => 'परिवार के सदस्य आपकी लाइव लोकेशन देख सकें।';
+  String get shareLocationDesc =>
+      'परिवार के सदस्यों को अपना लाइव स्थान देखने की अनुमति दें।';
 
   @override
-  String get sharingOptions => 'शेयरिंग विकल्प';
+  String get sharingOptions => 'साझा करने के विकल्प';
 
   @override
-  String get generateSharingToken => 'शेयरिंग QR / टोकन बनाएं';
+  String get generateSharingToken => 'साझाकरण QR / टोकन बनाएं';
 
   @override
-  String get revokeAccess => 'एक्सेस हटाएं';
+  String get revokeAccess => 'पहुंच रद्द करें';
 
   @override
-  String get generateSharingTokenMsg => 'शेयरिंग टोकन बनाएं (मॉक)';
+  String get generateSharingTokenMsg => 'साझाकरण टोकन बनाएं (मॉक)';
 
   @override
-  String get accessRevokedMsg => 'सभी परिवार के लिए एक्सेस हटा दिया गया (मॉक)';
+  String get accessRevokedMsg => 'सभी परिवार के लिए पहुंच रद्द कर दी गई (मॉक)';
 
   @override
   String get settingsTheme => 'थीम';
@@ -441,7 +484,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get changePhoneNumber => 'फोन नंबर बदलें';
 
   @override
-  String get enterOtpPrompt => 'अपने फोन पर भेजा गया 6-अंकीय कोड दर्ज करें';
+  String get enterOtpPrompt => 'आपके फोन पर भेजा गया 6-अंकीय कोड दर्ज करें';
 
   @override
   String get invalidOtp6 => 'अमान्य OTP. कृपया 6 अंक दर्ज करें।';
@@ -462,14 +505,14 @@ class AppLocalizationsHi extends AppLocalizations {
   String get refresh => 'रीफ्रेश करें';
 
   @override
-  String get addNewTrip => 'नया ट्रिप जोड़ें';
+  String get addNewTrip => 'नई यात्रा जोड़ें';
 
   @override
   String get noUpcomingTrips =>
-      'कोई आगामी ट्रिप नहीं। नया ट्रिप जोड़ने के लिए \"नया ट्रिप जोड़ें\" पर टैप करें!';
+      'कोई आगामी यात्रा नहीं। एक योजना बनाने के लिए \"नई यात्रा जोड़ें\" पर टैप करें!';
 
   @override
-  String get noPastTrips => 'कोई पिछली ट्रिप नहीं';
+  String get noPastTrips => 'कोई पिछली यात्रा नहीं';
 
   @override
   String get activitiesNotes => 'गतिविधियां / नोट्स';

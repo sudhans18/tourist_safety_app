@@ -22,6 +22,48 @@ class AppLocalizationsTa extends AppLocalizations {
   String get hindi => 'हिंदी';
 
   @override
+  String get assamese => 'অসমীয়া';
+
+  @override
+  String get bengali => 'বাংলা';
+
+  @override
+  String get tamil => 'தமிழ்';
+
+  @override
+  String get telugu => 'తెలుగు';
+
+  @override
+  String get gujarati => 'ગુજરાતી';
+
+  @override
+  String get punjabi => 'ਪੰਜਾਬੀ';
+
+  @override
+  String get kannada => 'ಕನ್ನಡ';
+
+  @override
+  String get malayalam => 'മലയാളം';
+
+  @override
+  String get marathi => 'मराठी';
+
+  @override
+  String get urdu => 'اردو';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get chinese => '中文';
+
+  @override
+  String get nepali => 'नेपाली';
+
+  @override
   String get continueText => 'தொடரவும்';
 
   @override

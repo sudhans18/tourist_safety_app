@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tourist_safety_app/utils/theme/colors.dart';
 import 'package:tourist_safety_app/features/zones/widgets/dashboard_mini_map.dart';
-import 'package:tourist_safety_app/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:tourist_safety_app/core/providers/user_provider.dart';
 import 'package:tourist_safety_app/features/common/widgets/state_widgets.dart';
@@ -42,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(AppLocalizations.of(context)!.safetyDashboard),
+        title: const Text('Safety Dashboard'),
         actions: [
           IconButton(
             icon: const Icon(Icons.person_outline),
@@ -64,7 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             // Error state (no cached data)
             if (userProvider.error != null && userProvider.userData == null) {
               return ErrorView(
-                title: AppLocalizations.of(context)!.error,
+                title: 'Error',
                 message: userProvider.error!,
                 onRetry: () => userProvider.retry(),
               );
@@ -73,11 +72,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
             // Empty state
             if (userProvider.userData == null) {
               return EmptyView(
-                title: AppLocalizations.of(context)!.noData,
-                message: AppLocalizations.of(context)!.noDataDesc,
+                title: 'No Data',
+                message: 'Unable to load user information. Please try again.',
                 action: ElevatedButton(
                   onPressed: () => userProvider.refresh(),
-                  child: Text(AppLocalizations.of(context)!.refresh),
+                  child: const Text('Refresh'),
                 ),
               );
             }
@@ -124,33 +123,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
           if (i == 2) Navigator.pushNamed(context, '/alerts');
           if (i == 3) Navigator.pushNamed(context, '/profile');
         },
-        destinations: [
+        destinations: const [
           NavigationDestination(
-              icon: const Icon(Icons.dashboard_outlined),
-              selectedIcon: const Icon(Icons.dashboard),
-              label: AppLocalizations.of(context)!.dashboard),
+              icon: Icon(Icons.dashboard_outlined),
+              selectedIcon: Icon(Icons.dashboard),
+              label: 'Dashboard'),
           NavigationDestination(
-              icon: const Icon(Icons.event_note_outlined),
-              selectedIcon: const Icon(Icons.event_note),
-              label: AppLocalizations.of(context)!.tourPlan),
+              icon: Icon(Icons.event_note_outlined),
+              selectedIcon: Icon(Icons.event_note),
+              label: 'Tour Plan'),
           NavigationDestination(
-              icon: const Icon(Icons.notifications_outlined),
-              selectedIcon: const Icon(Icons.notifications),
-              label: AppLocalizations.of(context)!.alerts),
+              icon: Icon(Icons.notifications_outlined),
+              selectedIcon: Icon(Icons.notifications),
+              label: 'Alerts'),
           NavigationDestination(
-              icon: const Icon(Icons.person_outline),
-              selectedIcon: const Icon(Icons.person),
-              label: AppLocalizations.of(context)!.profile),
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Profile'),
         ],
       ),
     );
   }
 
   Widget _buildTouristCard(ThemeData theme, UserProvider userProvider) {
-    final t = AppLocalizations.of(context)!;
     final statusColor =
         bandConnected ? const Color(0xFF22C55E) : const Color(0xFFEF4444);
-    final statusText = bandConnected ? t.connected : t.disconnected;
+    final statusText = bandConnected ? 'Connected' : 'Disconnected';
     final touristName = userProvider.userName;
     final touristId = userProvider.walletAddress;
 
@@ -185,7 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w700)),
                 const SizedBox(height: 4),
-                Text('${t.idLabel}: $touristId',
+                Text('ID: $touristId',
                     style: const TextStyle(color: Color(0xFF6B7280))),
                 const SizedBox(height: 8),
                 Row(
@@ -196,7 +194,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         decoration: BoxDecoration(
                             color: statusColor, shape: BoxShape.circle)),
                     const SizedBox(width: 6),
-                    Text('${t.band}: $statusText',
+                    Text('Band: $statusText',
                         style: TextStyle(
                             color: statusColor, fontWeight: FontWeight.w600)),
                   ],
@@ -234,23 +232,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       padding: const EdgeInsets.all(20),
-      child: Row(
+      child: const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.verified_user, color: Colors.white, size: 28),
-          const SizedBox(width: 12),
+          Icon(Icons.verified_user, color: Colors.white, size: 28),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppLocalizations.of(context)!.safeCardTitle,
-                    style: const TextStyle(
+                Text('You are safe',
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
                         fontSize: 20)),
-                const SizedBox(height: 6),
-                Text(AppLocalizations.of(context)!.safeCardDesc,
-                    style: const TextStyle(color: Colors.white)),
+                SizedBox(height: 6),
+                Text('All safety systems are operational and monitoring your location.',
+                    style: TextStyle(color: Colors.white)),
               ],
             ),
           )
@@ -263,7 +261,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context)!.quickActions,
+        Text('Quick Actions',
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
@@ -286,13 +284,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               childAspectRatio: 0.95,
             ),
             children: [
-              _actionTile(Icons.monitor_heart_outlined, AppLocalizations.of(context)!.liveVitals,
+              _actionTile(Icons.monitor_heart_outlined, 'Live Vitals',
                   onTap: () => Navigator.pushNamed(context, '/live-vitals')),
-              _actionTile(Icons.family_restroom, AppLocalizations.of(context)!.familyTracking,
+              _actionTile(Icons.family_restroom, 'Family Tracking',
                   onTap: () => Navigator.pushNamed(context, '/family')),
-              _actionTile(Icons.park_outlined, AppLocalizations.of(context)!.nearbyAttractions,
+              _actionTile(Icons.park_outlined, 'Nearby Attractions',
                   onTap: () => Navigator.pushNamed(context, '/nearby-attractions')),
-              _actionTile(Icons.wb_sunny_outlined, AppLocalizations.of(context)!.weather,
+              _actionTile(Icons.wb_sunny_outlined, 'Weather',
                   onTap: () => Navigator.pushNamed(context, '/weather')),
             ],
           ),
@@ -339,7 +337,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context)!.locationAndRisk,
+        Text('Location & Risk',
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
@@ -351,8 +349,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildRiskBanner(ThemeData theme) {
     final color = insideRestrictedZone ? AppColors.warning : AppColors.success;
     final text = insideRestrictedZone
-        ? AppLocalizations.of(context)!.restrictedZone
-        : AppLocalizations.of(context)!.lowRiskZone;
+        ? 'Restricted Zone'
+        : 'Low Risk Zone';
 
     return Container(
       decoration: BoxDecoration(
@@ -374,7 +372,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              AppLocalizations.of(context)!.youAreInZone(text),
+              'You are in $text',
               style: const TextStyle(color: Color(0xFF111827)),
             ),
           ),
@@ -387,12 +385,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context)!.recentAlerts,
+        Text('Recent Alerts',
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700)),
         const SizedBox(height: 12),
         ...[
-          _alertTile(icon: '⚠️', title: AppLocalizations.of(context)!.geofenceAlertShort, timeAgo: AppLocalizations.of(context)!.hoursAgo(2)),
+          _alertTile(icon: '⚠️', title: 'Geofence Alert', timeAgo: '2 hours ago'),
         ],
       ],
     );
@@ -427,21 +425,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          title: Text(AppLocalizations.of(context)!.sendEmergencyAlert),
-          content: Text(AppLocalizations.of(context)!.sosDialogBody),
+          title: const Text('Send Emergency Alert'),
+          content: const Text('Are you in danger? This will send your location and emergency signal to authorities and your emergency contacts.'),
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: Text(AppLocalizations.of(context)!.cancel)),
+                child: const Text('Cancel')),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD93F34)),
               onPressed: () async {
                 // Add strong vibration for SOS button press
                 await _triggerStrongVibration();
-                Navigator.pop(context, true);
+                if (context.mounted) {
+                  Navigator.pop(context, true);
+                }
               },
-              child: Text(AppLocalizations.of(context)!.sendSOS),
+              child: const Text('Send SOS'),
             ),
           ],
         );
@@ -477,6 +477,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Strong vibration pattern for geofencing alerts
     await _triggerStrongVibration();
 
+    if (!mounted) return;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: false,
@@ -509,14 +511,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Icon(Icons.warning_amber_rounded,
                       color: Color(0xFFD93F34), size: 28)),
               const SizedBox(height: 12),
-              Text(AppLocalizations.of(context)!.geoFenceAlert,
+              const Text('Geofence Alert',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 8),
-              Text(
-                  AppLocalizations.of(context)!.geoFenceAlertDesc,
+              const Text(
+                  'You have entered a restricted area. This zone may be unsafe or require special permissions.',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Color(0xFF6B7280))),
+                  style: TextStyle(color: Color(0xFF6B7280))),
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -525,7 +527,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12))),
                 onPressed: () => Navigator.pop(context),
-                child: Text(AppLocalizations.of(context)!.returnToSafety),
+                child: const Text('Return to Safety'),
               ),
               const SizedBox(height: 10),
               OutlinedButton(
@@ -534,7 +536,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12))),
                 onPressed: () => Navigator.pop(context),
-                child: Text(AppLocalizations.of(context)!.proceedWithCaution),
+                child: const Text('Proceed with Caution'),
               ),
             ],
           ),

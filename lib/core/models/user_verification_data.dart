@@ -151,14 +151,55 @@ class UserVerificationData {
     };
   }
 
-  @override
-  String toString() {
-    return 'UserVerificationData('
-        'name: $name, '
-        'nationality: $nationality, '
-        'documentType: $documentType, '
-        'walletAddress: $walletAddress, '
-        'isActive: $isActive, '
-        'registrationStatus: $registrationStatus)';
+  UserVerificationData copyWith({
+    String? address,
+    String? contractAddress,
+    DateTime? createdAt,
+    String? dob,
+    String? documentHash,
+    String? documentNumber,
+    String? documentType,
+    String? eKYCStatus,
+    String? emergencyContact,
+    DateTime? expiryDate,
+    bool? isActive,
+    String? itinerary,
+    String? itineraryHash,
+    String? name,
+    String? nationality,
+    String? nftMintStatus,
+    String? nftTokenId,
+    String? profilePhotoHash,
+    String? registrationStatus,
+    String? transactionHash,
+    DateTime? verificationTimestamp,
+    int? visitDurationDays,
+    String? walletAddress,
+  }) {
+    return UserVerificationData(
+      address: address ?? this.address,
+      contractAddress: contractAddress ?? this.contractAddress,
+      createdAt: createdAt ?? this.createdAt,
+      dob: dob ?? this.dob,
+      documentHash: documentHash ?? this.documentHash,
+      documentNumber: documentNumber ?? this.documentNumber,
+      documentType: documentType ?? this.documentType,
+      eKYCStatus: eKYCStatus ?? this.eKYCStatus,
+      emergencyContact: emergencyContact ?? this.emergencyContact,
+      expiryDate: expiryDate ?? this.expiryDate,
+      isActive: isActive ?? this.isActive,
+      itinerary: itinerary ?? this.itinerary,
+      itineraryHash: itineraryHash ?? this.itineraryHash,
+      name: name ?? this.name,
+      nationality: nationality ?? this.nationality,
+      nftMintStatus: nftMintStatus ?? this.nftMintStatus,
+      nftTokenId: nftTokenId ?? this.nftTokenId,
+      profilePhotoHash: profilePhotoHash ?? this.profilePhotoHash,
+      registrationStatus: registrationStatus ?? this.registrationStatus,
+      transactionHash: transactionHash ?? this.transactionHash,
+      verificationTimestamp: verificationTimestamp ?? this.verificationTimestamp,
+      visitDurationDays: visitDurationDays ?? this.visitDurationDays,
+      walletAddress: walletAddress ?? this.walletAddress,
+    );
   }
 }

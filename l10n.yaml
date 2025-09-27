@@ -4,3 +4,17 @@ output-class: AppLocalizations
 preferred-supported-locales:
   - en
   - hi
+  - bn
+  - ta
+  - te
+  - as
+  - gu
+  - pa
+  - kn
+  - ml
+  - mr
+  - ur
+  - ne
+  - fr
+  - de
+  - zh

@@ -7,9 +7,20 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_as.dart';
 import 'app_localizations_bn.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_gu.dart';
 import 'app_localizations_hi.dart';
+import 'app_localizations_kn.dart';
+import 'app_localizations_ml.dart';
+import 'app_localizations_mr.dart';
+import 'app_localizations_ne.dart';
+import 'app_localizations_pa.dart';
 import 'app_localizations_ta.dart';
+import 'app_localizations_te.dart';
+import 'app_localizations_ur.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -99,9 +110,20 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('hi'),
-    Locale('as'),
     Locale('bn'),
-    Locale('ta')
+    Locale('ta'),
+    Locale('te'),
+    Locale('as'),
+    Locale('gu'),
+    Locale('pa'),
+    Locale('kn'),
+    Locale('ml'),
+    Locale('mr'),
+    Locale('ur'),
+    Locale('ne'),
+    Locale('fr'),
+    Locale('de'),
+    Locale('zh')
   ];
 
   /// No description provided for @appTitle.
@@ -127,6 +149,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'हिंदी'**
   String get hindi;
+
+  /// No description provided for @assamese.
+  ///
+  /// In en, this message translates to:
+  /// **'অসমীয়া'**
+  String get assamese;
+
+  /// No description provided for @bengali.
+  ///
+  /// In en, this message translates to:
+  /// **'বাংলা'**
+  String get bengali;
+
+  /// No description provided for @tamil.
+  ///
+  /// In en, this message translates to:
+  /// **'தமிழ்'**
+  String get tamil;
+
+  /// No description provided for @telugu.
+  ///
+  /// In en, this message translates to:
+  /// **'తెలుగు'**
+  String get telugu;
+
+  /// No description provided for @gujarati.
+  ///
+  /// In en, this message translates to:
+  /// **'ગુજરાતી'**
+  String get gujarati;
+
+  /// No description provided for @punjabi.
+  ///
+  /// In en, this message translates to:
+  /// **'ਪੰਜਾਬੀ'**
+  String get punjabi;
+
+  /// No description provided for @kannada.
+  ///
+  /// In en, this message translates to:
+  /// **'ಕನ್ನಡ'**
+  String get kannada;
+
+  /// No description provided for @malayalam.
+  ///
+  /// In en, this message translates to:
+  /// **'മലയാളം'**
+  String get malayalam;
+
+  /// No description provided for @marathi.
+  ///
+  /// In en, this message translates to:
+  /// **'मराठी'**
+  String get marathi;
+
+  /// No description provided for @urdu.
+  ///
+  /// In en, this message translates to:
+  /// **'اردو'**
+  String get urdu;
+
+  /// No description provided for @french.
+  ///
+  /// In en, this message translates to:
+  /// **'Français'**
+  String get french;
+
+  /// No description provided for @german.
+  ///
+  /// In en, this message translates to:
+  /// **'Deutsch'**
+  String get german;
+
+  /// No description provided for @chinese.
+  ///
+  /// In en, this message translates to:
+  /// **'中文'**
+  String get chinese;
+
+  /// No description provided for @nepali.
+  ///
+  /// In en, this message translates to:
+  /// **'नेपाली'**
+  String get nepali;
 
   /// No description provided for @continueText.
   ///
@@ -1027,8 +1133,24 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['as', 'bn', 'en', 'hi', 'ta'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+        'as',
+        'bn',
+        'de',
+        'en',
+        'fr',
+        'gu',
+        'hi',
+        'kn',
+        'ml',
+        'mr',
+        'ne',
+        'pa',
+        'ta',
+        'te',
+        'ur',
+        'zh'
+      ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1041,12 +1163,34 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsAs();
     case 'bn':
       return AppLocalizationsBn();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'gu':
+      return AppLocalizationsGu();
     case 'hi':
       return AppLocalizationsHi();
+    case 'kn':
+      return AppLocalizationsKn();
+    case 'ml':
+      return AppLocalizationsMl();
+    case 'mr':
+      return AppLocalizationsMr();
+    case 'ne':
+      return AppLocalizationsNe();
+    case 'pa':
+      return AppLocalizationsPa();
     case 'ta':
       return AppLocalizationsTa();
+    case 'te':
+      return AppLocalizationsTe();
+    case 'ur':
+      return AppLocalizationsUr();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

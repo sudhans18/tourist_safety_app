@@ -146,7 +146,7 @@ class _MapFullscreenScreenState extends State<MapFullscreenScreen> {
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -191,7 +191,7 @@ class _MapFullscreenScreenState extends State<MapFullscreenScreen> {
 
     setState(() {
       _searchResults = filtered;
-      print('Search results for "$query": $filtered'); // Debug print
+      // Debug: Search results for "$query": $filtered
     });
   }
 
@@ -217,7 +217,7 @@ class _MapFullscreenScreenState extends State<MapFullscreenScreen> {
         });
       }
     } catch (e) {
-      print('Error moving to location: $e');
+      // Error moving to location: $e
     }
   }
 
