@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tourist_safety_app/features/zones/widgets/dashboard_mini_map.dart';
-import 'package:tourist_safety_app/features/common/screens/placeholder_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:tourist_safety_app/core/providers/user_provider.dart';
 import 'package:tourist_safety_app/features/common/widgets/state_widgets.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:tourist_safety_app/core/design/animated_components.dart';
 import 'package:tourist_safety_app/core/design/modern_theme.dart';
 import 'package:tourist_safety_app/l10n/app_localizations.dart';
+import 'package:tourist_safety_app/core/widgets/app_navigation.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -27,8 +27,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final bool insideRestrictedZone = true; // toggle banner
   bool _shownGeofenceSheet = false;
 
-  int _currentTab = 0;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -44,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      drawer: _buildSideNavDrawer(),
+      drawer: AppNavigation.buildSideDrawer(context),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -154,14 +152,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: const Color(0xFFFF4757),
         heroTag: 'sos_fab',
       ),
-      bottomNavigationBar: _buildModernBottomNav(),
+      bottomNavigationBar: AppNavigation.buildBottomNavigation(context, 0),
     );
   }
 
   Widget _buildHeroSection(UserProvider userProvider) {
     final t = AppLocalizations.of(context)!;
     final touristName = userProvider.userName;
-    final touristId = userProvider.walletAddress;
+    final touristId = userProvider.walletAddress.length > 16
+        ? '${userProvider.walletAddress.substring(0, 8)}...${userProvider.walletAddress.substring(userProvider.walletAddress.length - 8)}'
+        : userProvider.walletAddress;
     final statusColor = bandConnected ? ModernColors.success : ModernColors.error;
     final statusText = bandConnected ? t.connected : t.disconnected;
 
@@ -382,407 +382,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildModernBottomNav() {
-    final t = AppLocalizations.of(context)!;
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-        boxShadow: ModernShadows.large,
-      ),
-      child: NavigationBar(
-        selectedIndex: _currentTab,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        onDestinationSelected: (i) {
-          setState(() => _currentTab = i);
-          if (i == 0) return; // Dashboard
-          if (i == 1) Navigator.pushNamed(context, '/map-fullscreen');
-          if (i == 2) Navigator.pushNamed(context, '/alerts');
-          if (i == 3) Navigator.pushNamed(context, '/tour-plan');
-          if (i == 4) Navigator.pushNamed(context, '/profile');
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.dashboard_outlined),
-            selectedIcon: const Icon(Icons.dashboard),
-            label: t.dashboard,
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.map_outlined),
-            selectedIcon: Icon(Icons.map, color: ModernColors.primaryRed),
-            label: 'Map',
-          ),
-          NavigationDestination(
-            icon: Stack(
-              children: [
-                const Icon(Icons.notifications_outlined),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            selectedIcon: Stack(
-              children: [
-                const Icon(Icons.notifications),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            label: t.alerts,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.event_note_outlined),
-            selectedIcon: const Icon(Icons.event_note),
-            label: t.tourPlan,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.person_outline),
-            selectedIcon: const Icon(Icons.person),
-            label: t.profile,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSideNavDrawer() {
-    final t = AppLocalizations.of(context)!;
-    final userProvider = Provider.of<UserProvider>(context);
-    
-    return Drawer(
-      backgroundColor: Colors.white,
-      child: Column(
-        children: [
-          // Header with user info
-          Container(
-            height: 180,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: const AssetImage('assets/images/onboarding_background.jpg'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Colors.black.withValues(alpha: 0.4),
-                  BlendMode.darken,
-                ),
-              ),
-            ),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    // Avatar and user info
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 56,
-                            height: 56,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: ModernColors.primaryRed,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                userProvider.userName.isNotEmpty 
-                                  ? userProvider.userName[0].toUpperCase() 
-                                  : '?',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            userProvider.userName,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            t.idLabel,
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: Colors.white70,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            margin: const EdgeInsets.only(top: 2),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.3),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              userProvider.walletAddress.length > 16
-                                  ? '${userProvider.walletAddress.substring(0, 8)}...${userProvider.walletAddress.substring(userProvider.walletAddress.length - 8)}'
-                                  : userProvider.walletAddress,
-                              style: const TextStyle(
-                                fontSize: 9,
-                                color: Colors.white,
-                                fontFamily: 'monospace',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    // QR Code
-                    Container(
-                      width: 70,
-                      height: 70,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: QrImageView(
-                        data: userProvider.walletAddress,
-                        version: QrVersions.auto,
-                        size: 54,
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          
-          // Navigation items
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              children: [
-                _buildDrawerItem(
-                  icon: Icons.dashboard_outlined,
-                  title: t.dashboard,
-                  onTap: () => Navigator.pop(context),
-                ),
-                _buildDrawerItem(
-                  icon: Icons.family_restroom,
-                  title: t.family,
-                  subtitle: t.familyTracking,
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/family');
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.park_outlined,
-                  title: t.nearbyAttractions,
-                  subtitle: 'Discover local spots',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/nearby-attractions');
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.wb_sunny_outlined,
-                  title: t.weather,
-                  subtitle: t.currentWeather,
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/weather');
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.monitor_heart_outlined,
-                  title: t.liveVitals,
-                  subtitle: t.checkVitals,
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/live-vitals');
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.warning_amber_rounded,
-                  title: 'Emergency SOS',
-                  subtitle: 'Quick emergency access',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/sos');
-                  },
-                ),
-                const Divider(height: 32),
-                _buildDrawerItem(
-                  icon: Icons.hotel,
-                  title: 'Hotel Bookings',
-                  subtitle: 'Find & book hotels',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Hotel Bookings')));
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.restaurant,
-                  title: 'Local Cuisine',
-                  subtitle: 'Discover local food',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Local Cuisine')));
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.directions_bus,
-                  title: 'Transportation',
-                  subtitle: 'Public transport info',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Transportation')));
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.language,
-                  title: 'Language Guide',
-                  subtitle: 'Local language help',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Language Guide')));
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.local_hospital,
-                  title: 'Medical Help',
-                  subtitle: 'Nearby hospitals & clinics',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Medical Help')));
-                  },
-                ),
-                const Divider(height: 32),
-                _buildDrawerItem(
-                  icon: Icons.settings,
-                  title: 'Settings',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/profile');
-                  },
-                ),
-                _buildDrawerItem(
-                  icon: Icons.help_outline,
-                  title: 'Help & Support',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Help & Support')));
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDrawerItem({
-    required IconData icon,
-    required String title,
-    String? subtitle,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: ModernColors.neutral100,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Icon(icon, color: ModernColors.primaryRed, size: 20),
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: ModernColors.neutral900,
-        ),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle,
-              style: const TextStyle(
-                fontSize: 12,
-                color: ModernColors.neutral600,
-              ),
-            )
-          : null,
-      onTap: onTap,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-    );
-  }
 
   Widget _buildModernQuickActions() {
     final t = AppLocalizations.of(context)!;

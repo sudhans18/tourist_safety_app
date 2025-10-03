@@ -25,6 +25,7 @@ import 'features/alerts/screens/alerts_screen.dart';
 import 'features/profile/screens/profile_screen.dart';
 import 'features/zones/providers/geofence_provider.dart';
 import 'features/zones/screens/map_fullscreen_screen.dart';
+import 'features/common/screens/feature_placeholder_screen.dart';
 import 'core/providers/trip_provider.dart';
 
 void _initializeMapbox() {
@@ -157,6 +158,42 @@ class MyApp extends StatelessWidget {
             '/alerts': (context) => const AlertsScreen(),
             '/profile': (context) => const ProfileScreen(),
             '/map-fullscreen': (context) => const MapFullscreenScreen(),
+            // Tourism and utility features
+            '/hotel-bookings': (context) => const FeaturePlaceholderScreen(
+              featureName: 'Hotel Bookings',
+              description: 'Find and book verified hotels with safety ratings and tourist-friendly amenities.',
+              icon: Icons.hotel,
+            ),
+            '/local-cuisine': (context) => const FeaturePlaceholderScreen(
+              featureName: 'Local Cuisine',
+              description: 'Discover authentic local restaurants and food experiences with safety and hygiene ratings.',
+              icon: Icons.restaurant,
+            ),
+            '/transportation': (context) => const FeaturePlaceholderScreen(
+              featureName: 'Transportation',
+              description: 'Access public transport info, book verified taxis, and get real-time travel updates.',
+              icon: Icons.directions_bus,
+            ),
+            '/language-guide': (context) => const FeaturePlaceholderScreen(
+              featureName: 'Language Guide',
+              description: 'Get instant translation help and learn essential local phrases for better communication.',
+              icon: Icons.language,
+            ),
+            '/medical-help': (context) => const FeaturePlaceholderScreen(
+              featureName: 'Medical Help',
+              description: 'Find nearby hospitals, clinics, and emergency medical services with directions.',
+              icon: Icons.local_hospital,
+            ),
+            '/settings': (context) => const FeaturePlaceholderScreen(
+              featureName: 'Settings',
+              description: 'Customize your app preferences, privacy settings, and notification options.',
+              icon: Icons.settings,
+            ),
+            '/help': (context) => const FeaturePlaceholderScreen(
+              featureName: 'Help & Support',
+              description: 'Get assistance, report issues, and access tourist helpline services 24/7.',
+              icon: Icons.help_outline,
+            )
           },
         ),
       ),

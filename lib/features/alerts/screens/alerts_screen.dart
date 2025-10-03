@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tourist_safety_app/core/design/animated_components.dart';
 import 'package:tourist_safety_app/core/design/modern_theme.dart';
+import 'package:tourist_safety_app/core/widgets/app_navigation.dart';
+import 'package:tourist_safety_app/l10n/app_localizations.dart';
 
 /// Centralized typography for alerts following government app design standards.
 class AlertTypography {
@@ -349,30 +350,13 @@ class _AlertsScreenState extends State<AlertsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: _buildAppBar(),
+      drawer: AppNavigation.buildSideDrawer(context),
+      appBar: AppNavigation.buildAppBar(context, title: t.alerts),
       body: _buildBody(),
-      bottomNavigationBar: _buildBottomNavigationBar(),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      scrolledUnderElevation: 0,
-      centerTitle: true,
-      title: const Text(
-        'Alerts',
-        style: AlertTypography.appBarTitle,
-      ),
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white, size: 24),
-        onPressed: () => Navigator.pushReplacementNamed(context, '/dashboard'),
-        tooltip: 'Back to Dashboard',
-      ),
-      systemOverlayStyle: SystemUiOverlayStyle.light,
+      bottomNavigationBar: AppNavigation.buildBottomNavigation(context, 2),
     );
   }
 
@@ -653,54 +637,4 @@ class _AlertsScreenState extends State<AlertsScreen> {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
-    return NavigationBar(
-      selectedIndex: 3,
-      onDestinationSelected: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushReplacementNamed(context, '/dashboard');
-            break;
-          case 1:
-            Navigator.pushReplacementNamed(context, '/tour-plan');
-            break;
-          case 2:
-            Navigator.pushReplacementNamed(context, '/map-fullscreen');
-            break;
-          case 3:
-            return; // Current screen
-          case 4:
-            Navigator.pushReplacementNamed(context, '/profile');
-            break;
-        }
-      },
-      destinations: const [
-        NavigationDestination(
-          icon: Icon(Icons.dashboard_outlined),
-          selectedIcon: Icon(Icons.dashboard),
-          label: 'Dashboard',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.event_note_outlined),
-          selectedIcon: Icon(Icons.event_note),
-          label: 'Tour Plan',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.map_outlined),
-          selectedIcon: Icon(Icons.map),
-          label: 'Map',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.notifications_outlined),
-          selectedIcon: Icon(Icons.notifications),
-          label: 'Alerts',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.person_outline),
-          selectedIcon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
-    );
-  }
 }

@@ -8,6 +8,7 @@ import 'package:tourist_safety_app/core/services/firestore_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tourist_safety_app/core/design/animated_components.dart';
 import 'package:tourist_safety_app/core/design/modern_theme.dart';
+import 'package:tourist_safety_app/core/widgets/app_navigation.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -147,31 +148,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final t = AppLocalizations.of(context)!;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          t.profile,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
-          ),
-        ),
-        leading: GestureDetector(
-          onTap: () => Navigator.pushReplacementNamed(context, '/dashboard'),
-          child: Container(
-            margin: const EdgeInsets.only(left: 16),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
-            ),
-            child: const Icon(Icons.arrow_back, color: Colors.white),
-          ),
-        ),
-      ),
+      drawer: AppNavigation.buildSideDrawer(context),
+      appBar: AppNavigation.buildAppBar(context, title: t.profile),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -222,13 +200,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildModernBottomNav(t),
+      bottomNavigationBar: AppNavigation.buildBottomNavigation(context, 4),
     );
   }
 
   Widget _buildProfileHeader(AppLocalizations t) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 56, 24, 16),
+      padding: const EdgeInsets.fromLTRB(24, 80, 24, 16),
       child: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           final profilePhotoHash = userProvider.profilePhotoHash ?? '';
@@ -248,82 +226,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         button: true,
                         label: AppLocalizations.of(context)!.profile,
                         child: Container(
-                          width: 84,
-                          height: 84,
+                          width: 88,
+                          height: 88,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: ModernColors.primaryRed,
                             border: Border.all(
-                              color: ModernColors.primaryRedLight,
-                              width: 2,
+                              color: Colors.white,
+                              width: 3,
                             ),
                             boxShadow: const [
                               BoxShadow(
                                 color: Color(0x14000000),
-                                blurRadius: 10,
-                                offset: Offset(0, 4),
+                                blurRadius: 12,
+                                offset: Offset(0, 6),
                               ),
                             ],
                           ),
-                          child: profilePhotoHash.isNotEmpty
-                              ? ClipOval(
-                                  child: Image.network(
-                                    profilePhotoHash,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return const Icon(
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned.fill(
+                                child: profilePhotoHash.isNotEmpty
+                                    ? ClipOval(
+                                        child: Image.network(
+                                          profilePhotoHash,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Icon(
+                                              Icons.person,
+                                              size: 60,
+                                              color: Colors.white,
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    : const Icon(
                                         Icons.person,
                                         size: 60,
                                         color: Colors.white,
-                                      );
-                                    },
+                                      ),
+                              ),
+                              if (isVerified)
+                                Positioned(
+                                  bottom: -2,
+                                  right: -2,
+                                  child: Container(
+                                    width: 26,
+                                    height: 26,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ModernColors.success,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Color(0x33000000),
+                                          blurRadius: 6,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: const Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
                                   ),
-                                )
-                              : const Icon(
-                                  Icons.person,
-                                  size: 60,
-                                  color: Colors.white,
                                 ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   );
                 },
               ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: isVerified
-                      ? ModernColors.success.withValues(alpha: 0.2)
-                      : ModernColors.warning.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: isVerified
-                        ? ModernColors.success.withValues(alpha: 0.4)
-                        : ModernColors.warning.withValues(alpha: 0.4),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      isVerified ? Icons.verified : Icons.warning_amber_rounded,
-                      color: Colors.white,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      t.verifiedMember,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 8),
             ],
           );
         },
@@ -606,57 +588,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildModernBottomNav(AppLocalizations t) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-        boxShadow: ModernShadows.large,
-      ),
-      child: NavigationBar(
-        selectedIndex: 4,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        onDestinationSelected: (i) {
-          if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
-          if (i == 1) Navigator.pushReplacementNamed(context, '/tour-plan');
-          if (i == 2) Navigator.pushReplacementNamed(context, '/map-fullscreen');
-          if (i == 3) Navigator.pushReplacementNamed(context, '/alerts');
-          if (i == 4) return;
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.dashboard_outlined),
-            selectedIcon: const Icon(Icons.dashboard),
-            label: t.dashboard,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.event_note_outlined),
-            selectedIcon: const Icon(Icons.event_note),
-            label: t.tourPlan,
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.map_outlined),
-            selectedIcon: Icon(Icons.map, color: ModernColors.primaryRed),
-            label: 'Map',
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.notifications_outlined),
-            selectedIcon: const Icon(Icons.notifications),
-            label: t.alerts,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.person_outline),
-            selectedIcon: const Icon(Icons.person),
-            label: t.profile,
-          ),
-        ],
-      ),
-    );
-  }
 
   String _getLanguageDisplayName(String languageCode) {
     switch (languageCode) {

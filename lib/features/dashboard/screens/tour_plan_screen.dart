@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart' show ScrollDirection;
 import 'package:tourist_safety_app/features/dashboard/screens/add_new_trip_screen.dart';
 import 'package:tourist_safety_app/core/design/animated_components.dart';
 import 'package:tourist_safety_app/core/design/modern_theme.dart';
+import 'package:tourist_safety_app/core/widgets/app_navigation.dart';
 
 class TourPlanScreen extends StatefulWidget {
   const TourPlanScreen({super.key});
@@ -55,19 +56,8 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          t.tourPlan,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
-          ),
-        ),
-      ),
+      drawer: AppNavigation.buildSideDrawer(context),
+      appBar: AppNavigation.buildAppBar(context, title: t.tourPlan),
       floatingActionButton: AnimatedOpacity(
         opacity: _fabAlpha,
         duration: const Duration(milliseconds: 200),
@@ -152,38 +142,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 1, // Tour Plan is index 1
-        onDestinationSelected: (i) {
-          if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
-          if (i == 1) return; // Already on Tour Plan
-          if (i == 2) Navigator.pushReplacementNamed(context, '/map-fullscreen');
-          if (i == 3) Navigator.pushReplacementNamed(context, '/alerts');
-          if (i == 4) Navigator.pushReplacementNamed(context, '/profile');
-        },
-        destinations: const [
-          NavigationDestination(
-              icon: Icon(Icons.dashboard_outlined),
-              selectedIcon: Icon(Icons.dashboard),
-              label: 'Dashboard'),
-          NavigationDestination(
-              icon: Icon(Icons.event_note_outlined),
-              selectedIcon: Icon(Icons.event_note),
-              label: 'Tour Plan'),
-          NavigationDestination(
-              icon: Icon(Icons.map_outlined),
-              selectedIcon: Icon(Icons.map),
-              label: 'Map'),
-          NavigationDestination(
-              icon: Icon(Icons.notifications_outlined),
-              selectedIcon: Icon(Icons.notifications),
-              label: 'Alerts'),
-          NavigationDestination(
-              icon: Icon(Icons.person_outline),
-              selectedIcon: Icon(Icons.person),
-              label: 'Profile'),
-        ],
-      ),
+      bottomNavigationBar: AppNavigation.buildBottomNavigation(context, 3),
     );
   }
 }
