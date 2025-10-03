@@ -3,6 +3,7 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tourist_safety_app/features/zones/providers/geofence_provider.dart';
 import 'package:tourist_safety_app/l10n/app_localizations.dart';
+import 'package:tourist_safety_app/core/widgets/app_navigation.dart';
 
 class MapFullscreenScreen extends StatefulWidget {
   const MapFullscreenScreen({super.key});
@@ -55,6 +56,7 @@ class _MapFullscreenScreenState extends State<MapFullscreenScreen> {
     final t = AppLocalizations.of(context)!;
 
     return Scaffold(
+      drawer: AppNavigation.buildSideDrawer(context),
       appBar: AppBar(
         title: Container(
           height: 40,
@@ -172,6 +174,7 @@ class _MapFullscreenScreenState extends State<MapFullscreenScreen> {
             ),
         ],
       ),
+      bottomNavigationBar: AppNavigation.buildBottomNavigation(context, 1),
     );
   }
 
