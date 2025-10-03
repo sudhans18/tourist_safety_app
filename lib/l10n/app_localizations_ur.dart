@@ -468,6 +468,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get mobileVerification => 'موبائل کی تصدیق';
 
   @override
+  String get emailVerification => 'Email Verification';
+
+  @override
   String get phoneNumber => 'فون نمبر';
 
   @override
@@ -484,10 +487,33 @@ class AppLocalizationsUr extends AppLocalizations {
   String get changePhoneNumber => 'فون نمبر تبدیل کریں';
 
   @override
+  String get useDifferentEmail => 'Use a different email';
+
+  @override
+  String get emailAddress => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'We will send a verification code to this email.';
+
+  @override
   String get enterOtpPrompt => 'اپنے فون پر بھیجا گیا 6 ہندسوں کا کوڈ درج کریں';
 
   @override
   String get invalidOtp6 => 'غلط OTP۔ براہ کرم 6 ہندسے درج کریں۔';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'By continuing, you agree to the Terms and Privacy Policy.';
+
+  @override
+  String get terms => 'Terms';
 
   @override
   String get sendVerificationCode => 'تصدیقی کوڈ بھیجیں';

@@ -470,6 +470,9 @@ class AppLocalizationsGu extends AppLocalizations {
   String get mobileVerification => 'મોબાઇલ ચકાસણી';
 
   @override
+  String get emailVerification => 'Email Verification';
+
+  @override
   String get phoneNumber => 'ફોન નંબર';
 
   @override
@@ -486,10 +489,33 @@ class AppLocalizationsGu extends AppLocalizations {
   String get changePhoneNumber => 'ફોન નંબર બદલો';
 
   @override
+  String get useDifferentEmail => 'Use a different email';
+
+  @override
+  String get emailAddress => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'We will send a verification code to this email.';
+
+  @override
   String get enterOtpPrompt => 'તમારા ફોન પર મોકલેલો 6-અંકનો કોડ દાખલ કરો';
 
   @override
   String get invalidOtp6 => 'અમાન્ય OTP. કૃપા કરીને 6 અંકો દાખલ કરો.';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'By continuing, you agree to the Terms and Privacy Policy.';
+
+  @override
+  String get terms => 'Terms';
 
   @override
   String get sendVerificationCode => 'ચકાસણી કોડ મોકલો';

@@ -472,6 +472,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mobileVerification => 'Mobile Verifizierung';
 
   @override
+  String get emailVerification => 'E-Mail-Verifizierung';
+
+  @override
   String get phoneNumber => 'Telefonnummer';
 
   @override
@@ -488,11 +491,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get changePhoneNumber => 'Telefonnummer ändern';
 
   @override
+  String get useDifferentEmail => 'Andere E-Mail verwenden';
+
+  @override
+  String get emailAddress => 'E-Mail-Adresse';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'Wir senden einen Bestätigungscode an diese E-Mail.';
+
+  @override
   String get enterOtpPrompt =>
       'Geben Sie den 6-stelligen Code ein, der an Ihr Telefon gesendet wurde';
 
   @override
   String get invalidOtp6 => 'Ungültiger Code. Bitte geben Sie 6 Ziffern ein.';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'Mit dem Fortfahren stimmen Sie den Bedingungen und der Datenschutzrichtlinie zu.';
+
+  @override
+  String get terms => 'Bedingungen';
 
   @override
   String get sendVerificationCode => 'Bestätigungscode senden';

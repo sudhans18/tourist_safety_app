@@ -6,6 +6,8 @@ import 'package:tourist_safety_app/core/providers/trip_provider.dart';
 import 'package:tourist_safety_app/core/models/trip.dart';
 import 'package:flutter/rendering.dart' show ScrollDirection;
 import 'package:tourist_safety_app/features/dashboard/screens/add_new_trip_screen.dart';
+import 'package:tourist_safety_app/core/design/animated_components.dart';
+import 'package:tourist_safety_app/core/design/modern_theme.dart';
 
 class TourPlanScreen extends StatefulWidget {
   const TourPlanScreen({super.key});
@@ -52,7 +54,20 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
     final past = tripProvider.pastTrips;
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.tourPlan)),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          t.tourPlan,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
+        ),
+      ),
       floatingActionButton: AnimatedOpacity(
         opacity: _fabAlpha,
         duration: const Duration(milliseconds: 200),
@@ -92,10 +107,22 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
           ),
         ),
       ),
-      body: ListView(
-        controller: _scrollController,
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 96),
-        children: [
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: const AssetImage('assets/images/onboarding_background.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withValues(alpha: 0.35),
+              BlendMode.darken,
+            ),
+          ),
+        ),
+        child: SafeArea(
+          child: ListView(
+            controller: _scrollController,
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 96),
+            children: [
           const _AnimatedHeader(title: 'Upcoming'),
           const SizedBox(height: 8),
           if (upcoming.isEmpty)
@@ -121,15 +148,18 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                 child: _TripCard(trip: past[i]),
               ),
             ),
-        ],
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: 1, // Tour Plan is index 1
         onDestinationSelected: (i) {
           if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
           if (i == 1) return; // Already on Tour Plan
-          if (i == 2) Navigator.pushReplacementNamed(context, '/alerts');
-          if (i == 3) Navigator.pushReplacementNamed(context, '/profile');
+          if (i == 2) Navigator.pushReplacementNamed(context, '/map-fullscreen');
+          if (i == 3) Navigator.pushReplacementNamed(context, '/alerts');
+          if (i == 4) Navigator.pushReplacementNamed(context, '/profile');
         },
         destinations: const [
           NavigationDestination(
@@ -140,6 +170,10 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
               icon: Icon(Icons.event_note_outlined),
               selectedIcon: Icon(Icons.event_note),
               label: 'Tour Plan'),
+          NavigationDestination(
+              icon: Icon(Icons.map_outlined),
+              selectedIcon: Icon(Icons.map),
+              label: 'Map'),
           NavigationDestination(
               icon: Icon(Icons.notifications_outlined),
               selectedIcon: Icon(Icons.notifications),
@@ -196,7 +230,7 @@ class _AnimatedHeaderState extends State<_AnimatedHeader>
           style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF111827)),
+              color: Colors.white),
         ),
       ),
     );
@@ -286,57 +320,52 @@ class _TripCardState extends State<_TripCard> {
             _openDetails();
           },
           onTapCancel: _onTapCancel,
-          child: Material(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            elevation: 2,
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  Hero(
-                    tag: 'trip-img-${trip.id}',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: SizedBox(
-                        width: 72,
-                        height: 72,
-                        child: trip.imageUrl != null
-                            ? Image.network(trip.imageUrl!, fit: BoxFit.cover)
-                            : Container(
-                                color: const Color(0xFFE5E7EB),
-                                child: const Icon(Icons.image,
-                                    color: Color(0xFF9CA3AF))),
+          child: SurfaceCard(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Hero(
+                  tag: 'trip-img-${trip.id}',
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: SizedBox(
+                      width: 72,
+                      height: 72,
+                      child: trip.imageUrl != null
+                          ? Image.network(trip.imageUrl!, fit: BoxFit.cover)
+                          : Container(
+                              color: ModernColors.neutral200,
+                              child: const Icon(Icons.image,
+                                  color: ModernColors.neutral400)),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        trip.destination,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: ModernColors.neutral900),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${dateFormat.format(trip.startDate)} - ${dateFormat.format(trip.endDate)}',
+                        style: const TextStyle(
+                            fontSize: 13, color: ModernColors.neutral600),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          trip.destination,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF111827)),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${dateFormat.format(trip.startDate)} - ${dateFormat.format(trip.endDate)}',
-                          style: const TextStyle(
-                              fontSize: 13, color: Color(0xFF6B7280)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.chevron_right, color: Color(0xFF9CA3AF)),
-                ],
-              ),
+                ),
+                const SizedBox(width: 8),
+                const Icon(Icons.chevron_right, color: ModernColors.neutral400),
+              ],
             ),
           ),
         ),
@@ -352,23 +381,20 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.info_outline, color: Color(0xFF6B7280)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              message,
-              style: const TextStyle(color: Color(0xFF6B7280)),
+      padding: EdgeInsets.zero,
+      child: SurfaceCard(
+        child: Row(
+          children: [
+            const Icon(Icons.info_outline, color: ModernColors.neutral600),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(color: ModernColors.neutral600),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

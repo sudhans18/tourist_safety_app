@@ -347,7 +347,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appSettings => 'ऐप सेटिंग्स';
 
   @override
-  String get notifications => 'सूचनाएं';
+  String get notifications => 'सूचनाएँ';
 
   @override
   String get theme => 'थीम';
@@ -450,7 +450,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get settingsLanguage => 'भाषा';
 
   @override
-  String get settingsNotifications => 'सूचनाएं';
+  String get settingsNotifications => 'सूचनाएँ';
 
   @override
   String get settingsPrivacy => 'गोपनीयता और सुरक्षा';
@@ -466,6 +466,9 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get mobileVerification => 'मोबाइल सत्यापन';
+
+  @override
+  String get emailVerification => 'ईमेल सत्यापन';
 
   @override
   String get phoneNumber => 'फोन नंबर';
@@ -484,10 +487,32 @@ class AppLocalizationsHi extends AppLocalizations {
   String get changePhoneNumber => 'फोन नंबर बदलें';
 
   @override
+  String get useDifferentEmail => 'किसी अन्य ईमेल का उपयोग करें';
+
+  @override
+  String get emailAddress => 'ईमेल पता';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail => 'हम इस ईमेल पर एक सत्यापन कोड भेजेंगे।';
+
+  @override
   String get enterOtpPrompt => 'आपके फोन पर भेजा गया 6-अंकीय कोड दर्ज करें';
 
   @override
   String get invalidOtp6 => 'अमान्य OTP. कृपया 6 अंक दर्ज करें।';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'जारी रखते हुए, आप शर्तों और गोपनीयता नीति से सहमत होते हैं।';
+
+  @override
+  String get terms => 'शर्तें';
 
   @override
   String get sendVerificationCode => 'सत्यापन कोड भेजें';

@@ -1,8 +1,11 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:tourist_safety_app/core/providers/settings_provider.dart';
+import 'package:tourist_safety_app/l10n/app_localizations.dart';
 
 // Custom formatter for Indian phone numbers with spaces
 class _IndianPhoneNumberFormatter extends TextInputFormatter {
@@ -89,11 +92,15 @@ class _OnboardingVerificationScreenState
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: const [SystemUiOverlay.top, SystemUiOverlay.bottom],
+    );
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
       ),
     );
   }
@@ -258,7 +265,7 @@ class _OnboardingVerificationScreenState
                 }).toList();
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
                 decoration: BoxDecoration(
                   border: Border(
                     right: BorderSide(color: Colors.grey[300]!),
@@ -290,19 +297,19 @@ class _OnboardingVerificationScreenState
                   ),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: Color(0xFFE14B4B), width: 1.4),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    hintText: 'Phone number',
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                    hintText: AppLocalizations.of(context)!.phoneNumber,
                     hintStyle: TextStyle(
                       color: Colors.grey[500],
                       fontSize: 14,
@@ -337,8 +344,16 @@ class _OnboardingVerificationScreenState
                 ),
               ),
             ),
-
           ],
+        ),
+      ),
+      const SizedBox(height: 8),
+      Text(
+        AppLocalizations.of(context)!.enterOtp,
+        style: TextStyle(
+          fontSize: 12,
+          color: Colors.grey[600],
+          fontWeight: FontWeight.w400,
         ),
       ),
     ];
@@ -348,46 +363,61 @@ class _OnboardingVerificationScreenState
     final isValid = _isValidEmail(_emailController.text);
 
     return [
-      TextField(
-        controller: _emailController,
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-        autocorrect: false,
-        enableSuggestions: false,
-        textAlign: TextAlign.start,
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-        ),
-        decoration: InputDecoration(
-          labelText: 'Email address',
-          hintText: 'name@example.com',
-          filled: true,
-          fillColor: Colors.white.withValues(alpha: 0.96),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: Colors.grey[300]!),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: Colors.grey[300]!),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: Color(0xFFE14B4B), width: 1.4),
-          ),
-          suffixIcon: Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: Icon(
-              isValid ? Icons.check_circle : Icons.alternate_email,
-              size: 20,
-              color: isValid ? Colors.green : Colors.grey[500],
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey[300]!),
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withAlpha(26),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
             ),
-          ),
-          suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+          ],
         ),
-        onChanged: (_) => setState(() {}),
+        child: TextField(
+          controller: _emailController,
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+          autocorrect: false,
+          enableSuggestions: false,
+          textAlign: TextAlign.start,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
+          decoration: InputDecoration(
+            labelText: 'Email address',
+            hintText: 'name@example.com',
+            filled: true,
+            fillColor: Colors.white.withValues(alpha: 0.96),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFE14B4B), width: 1.4),
+            ),
+            suffixIcon: Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Icon(
+                isValid ? Icons.check_circle : Icons.alternate_email,
+                size: 20,
+                color: isValid ? Colors.green : Colors.grey[500],
+              ),
+            ),
+            suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+          ),
+          onChanged: (_) => setState(() {}),
+        ),
       ),
       const SizedBox(height: 8),
       Text(
@@ -404,7 +434,7 @@ class _OnboardingVerificationScreenState
   List<Widget> _buildOtpInput(BuildContext context) {
     return [
       Text(
-        'Enter the 6-digit code sent to your ${_isPhoneMode ? 'phone' : 'email'}',
+        AppLocalizations.of(context)!.enterOtpPrompt,
         style: const TextStyle(color: Color(0xFF6B7280)),
       ),
       const SizedBox(height: 12),
@@ -517,7 +547,7 @@ class _OnboardingVerificationScreenState
     if (_selectedLanguage == null) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select a language')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectLanguage)),
         );
       }
       return;
@@ -539,11 +569,7 @@ class _OnboardingVerificationScreenState
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(
-                  _selectedCountryCode == 'IN'
-                      ? 'Please enter a valid 10-digit Indian phone number'
-                      : 'Please enter a valid phone number',
-                ),
+                content: Text(AppLocalizations.of(context)!.pleaseEnterPhone),
               ),
             );
           }
@@ -553,7 +579,7 @@ class _OnboardingVerificationScreenState
         if (_phoneController.text.isEmpty) {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Please enter a phone number')),
+              SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterPhone)),
             );
           }
           return;
@@ -573,13 +599,7 @@ class _OnboardingVerificationScreenState
       setState(() => _codeSent = true);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              _isPhoneMode
-                  ? 'Verification code sent to your phone (mocked). Enter any 6 digits.'
-                  : 'Verification code sent to your email (mocked). Enter any 6 digits.',
-            ),
-          ),
+          SnackBar(content: Text(AppLocalizations.of(context)!.verificationCodeSentMock)),
         );
       }
       return;
@@ -592,7 +612,7 @@ class _OnboardingVerificationScreenState
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid code. Please enter 6 digits.')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.invalidOtp6)),
         );
       }
     }
@@ -601,12 +621,12 @@ class _OnboardingVerificationScreenState
   @override
   Widget build(BuildContext context) {
     Widget buildMainContent() {
+      final t = AppLocalizations.of(context)!;
       final verificationTitle =
-          _isPhoneMode ? 'Mobile Verification' : 'Email Verification';
-      final sendActionLabel =
-          _isPhoneMode ? 'Send Verification Code' : 'Send Verification Email';
+          _isPhoneMode ? t.mobileVerification : 'Email Verification';
+      final sendActionLabel = t.sendVerificationCode;
       final changeActionLabel =
-          _isPhoneMode ? 'Change phone number' : 'Use a different email';
+          _isPhoneMode ? t.changePhoneNumber : 'Use a different email';
 
       return Center(
         child: ConstrainedBox(
@@ -617,7 +637,7 @@ class _OnboardingVerificationScreenState
             children: [
               const SizedBox(height: 48),
               Text(
-                'SafeTourist',
+                AppLocalizations.of(context)!.appTitle,
                 style: TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.w800,
@@ -746,7 +766,7 @@ class _OnboardingVerificationScreenState
                                           children: [
                                             Text(
                                               _selectedLanguage == null
-                                                  ? 'Choose your preferred language'
+                                                  ? AppLocalizations.of(context)!.selectLanguage
                                                   : _getLanguageDisplayName(_selectedLanguage!),
                                               style: TextStyle(
                                                 color: _selectedLanguage == null ? Colors.grey[600] : Colors.black,
@@ -798,7 +818,7 @@ class _OnboardingVerificationScreenState
                               .titleMedium
                               ?.copyWith(fontWeight: FontWeight.w700, color: const Color(0xFF1F2937)),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
                         if (!_codeSent)
                           ..._buildVerificationFields(context)
                         else
@@ -817,7 +837,7 @@ class _OnboardingVerificationScreenState
                             shadowColor: const Color(0xFFE14B4B).withValues(alpha: 0.28),
                           ),
                           child: Text(
-                            _codeSent ? 'Verify Code' : sendActionLabel,
+                            _codeSent ? AppLocalizations.of(context)!.verifyOtp : sendActionLabel,
                             style: const TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.2),
                           ),
                         ),
@@ -894,60 +914,92 @@ class _OnboardingVerificationScreenState
       );
     }
 
+    final bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
-      extendBodyBehindAppBar: false,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage('assets/images/onboarding_background.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withValues(alpha: 0.4),
-              BlendMode.darken,
-            ),
-          ),
-        ),
-        child: SafeArea(
-          child: Stack(
-            children: [
-              if (Navigator.of(context).canPop())
-                Positioned(
-                  top: 16,
-                  left: 16,
-                  child: Material(
-                    color: Colors.black.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(20),
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.of(context).maybePop(),
-                    ),
+      backgroundColor: Colors.black,
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          AnimatedScale(
+            scale: isKeyboardVisible ? 1.08 : 1.0,
+            duration: const Duration(milliseconds: 320),
+            curve: Curves.easeInOut,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage('assets/images/onboarding_background.jpg'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withValues(alpha: 0.4),
+                    BlendMode.darken,
                   ),
                 ),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final content = buildMainContent();
-
-                  final shouldEnableScroll = constraints.maxHeight < 760;
-                  final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-
-                  return SingleChildScrollView(
-                    physics: shouldEnableScroll
-                        ? const BouncingScrollPhysics()
-                        : const AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      left: 24,
-                      right: 24,
-                      top: 32,
-                      bottom: bottomInset > 0 ? bottomInset + 24 : 48,
-                    ),
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                    child: content,
-                  );
-                },
               ),
-            ],
+            ),
           ),
-        ),
+          SafeArea(
+            bottom: false,
+            child: Stack(
+              children: [
+                if (Navigator.of(context).canPop())
+                  Positioned(
+                    top: 16,
+                    left: 16,
+                    child: Material(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(20),
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () => Navigator.of(context).maybePop(),
+                      ),
+                    ),
+                  ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final content = buildMainContent();
+
+                    final shouldEnableScroll = constraints.maxHeight < 760;
+                    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+                    final hasKeyboard = bottomInset > 0;
+                    final double targetShift = hasKeyboard
+                        ? math.min(
+                            math.max(0.0, bottomInset - 72.0),
+                            constraints.maxHeight * 0.55,
+                          )
+                        : 0.0;
+
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 320),
+                      curve: Curves.easeInOut,
+                      transform: Matrix4.translationValues(
+                        0,
+                        -targetShift,
+                        0,
+                      ),
+                      child: SingleChildScrollView(
+                        physics: shouldEnableScroll || hasKeyboard
+                            ? const BouncingScrollPhysics()
+                            : const AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: hasKeyboard ? 12 : 32,
+                          bottom: hasKeyboard ? bottomInset + 40 : 24,
+                        ),
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
+                        child: content,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

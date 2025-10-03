@@ -469,6 +469,9 @@ class AppLocalizationsAs extends AppLocalizations {
   String get mobileVerification => 'মোবাইল সত্যাপন';
 
   @override
+  String get emailVerification => 'ইমেইল সত্যাপন';
+
+  @override
   String get phoneNumber => 'ফোন নম্বৰ';
 
   @override
@@ -485,10 +488,32 @@ class AppLocalizationsAs extends AppLocalizations {
   String get changePhoneNumber => 'ফোন নম্বৰ সলনি কৰক';
 
   @override
+  String get useDifferentEmail => 'আন এটা ইমেইল ব্যৱহাৰ কৰক';
+
+  @override
+  String get emailAddress => 'ইমেইল ঠিকনা';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail => 'আমি এই ইমেইলত এটা সত্যাপন কোড পঠিয়াম।';
+
+  @override
   String get enterOtpPrompt => 'আপোনাৰ ফোনলৈ পঠিওৱা ৬-অংকৰ কোডটো দিয়ক';
 
   @override
   String get invalidOtp6 => 'অমান্য OTP। অনুগ্ৰহ কৰি ৬টা অংক দিয়ক।';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'আগলৈ বাঢ়ি, আপুনি চৰ্তাৱলী আৰু গোপনীয়তা নীতিৰ সৈতে সন্মত হৈছে।';
+
+  @override
+  String get terms => 'চৰ্তাৱলী';
 
   @override
   String get sendVerificationCode => 'সত্যাপন কোড পঠিয়াওক';

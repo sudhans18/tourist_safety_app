@@ -471,6 +471,9 @@ class AppLocalizationsKn extends AppLocalizations {
   String get mobileVerification => 'ಮೊಬೈಲ್ ಪರಿಶೀಲನೆ';
 
   @override
+  String get emailVerification => 'Email Verification';
+
+  @override
   String get phoneNumber => 'ಫೋನ್ ಸಂಖ್ಯೆ';
 
   @override
@@ -487,11 +490,34 @@ class AppLocalizationsKn extends AppLocalizations {
   String get changePhoneNumber => 'ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ಬದಲಾಯಿಸಿ';
 
   @override
+  String get useDifferentEmail => 'Use a different email';
+
+  @override
+  String get emailAddress => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'We will send a verification code to this email.';
+
+  @override
   String get enterOtpPrompt =>
       'ನಿಮ್ಮ ಫೋನ್‌ಗೆ ಕಳುಹಿಸಲಾದ 6-ಅಂಕಿಯ ಕೋಡ್ ಅನ್ನು ನಮೂದಿಸಿ';
 
   @override
   String get invalidOtp6 => 'ಅಮಾನ್ಯ OTP. ದಯವಿಟ್ಟು 6 ಅಂಕೆಗಳನ್ನು ನಮೂದಿಸಿ.';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'By continuing, you agree to the Terms and Privacy Policy.';
+
+  @override
+  String get terms => 'Terms';
 
   @override
   String get sendVerificationCode => 'ಪರಿಶೀಲನಾ ಕೋಡ್ ಕಳುಹಿಸಿ';

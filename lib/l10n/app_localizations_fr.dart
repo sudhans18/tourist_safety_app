@@ -453,7 +453,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsTheme => 'Thème';
 
   @override
-  String get settingsLanguage => 'Langue';
+  String get settingsLanguage => 'Language';
 
   @override
   String get settingsNotifications => 'Notifications';
@@ -474,6 +474,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mobileVerification => 'Vérification du mobile';
 
   @override
+  String get emailVerification => 'Vérification de l\'e-mail';
+
+  @override
   String get phoneNumber => 'Numéro de téléphone';
 
   @override
@@ -490,11 +493,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get changePhoneNumber => 'Changer de numéro de téléphone';
 
   @override
+  String get useDifferentEmail => 'Utiliser une autre adresse e-mail';
+
+  @override
+  String get emailAddress => 'Adresse e-mail';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'Nous enverrons un code de vérification à cet e-mail.';
+
+  @override
   String get enterOtpPrompt =>
       'Entrez le code à 6 chiffres envoyé sur votre téléphone';
 
   @override
   String get invalidOtp6 => 'Code invalide. Veuillez entrer 6 chiffres.';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'En continuant, vous acceptez les Conditions et la Politique de confidentialité.';
+
+  @override
+  String get terms => 'Conditions';
 
   @override
   String get sendVerificationCode => 'Envoyer le code de vérification';
@@ -516,7 +542,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noUpcomingTrips =>
-      'Aucun voyage à venir. Appuyez sur \"Ajouter un nouveau voyage\" pour en planifier un !';
+      'No upcoming trips. Tap \"Add new trip\" to plan one!';
 
   @override
   String get noPastTrips => 'Aucun voyage passé';

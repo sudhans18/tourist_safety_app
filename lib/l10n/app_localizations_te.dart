@@ -469,6 +469,9 @@ class AppLocalizationsTe extends AppLocalizations {
   String get mobileVerification => 'మొబైల్ ధృవీకరణ';
 
   @override
+  String get emailVerification => 'Email Verification';
+
+  @override
   String get phoneNumber => 'ఫోను నంబరు';
 
   @override
@@ -485,10 +488,33 @@ class AppLocalizationsTe extends AppLocalizations {
   String get changePhoneNumber => 'ఫోన్ నంబర్‌ను మార్చండి';
 
   @override
+  String get useDifferentEmail => 'Use a different email';
+
+  @override
+  String get emailAddress => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'We will send a verification code to this email.';
+
+  @override
   String get enterOtpPrompt => 'మీ ఫోన్‌కు పంపిన 6-అంకెల కోడ్‌ను నమోదు చేయండి';
 
   @override
   String get invalidOtp6 => 'చెల్లని OTP. దయచేసి 6 అంకెలను నమోదు చేయండి.';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'By continuing, you agree to the Terms and Privacy Policy.';
+
+  @override
+  String get terms => 'Terms';
 
   @override
   String get sendVerificationCode => 'ధృవీకరణ కోడ్ పంపండి';

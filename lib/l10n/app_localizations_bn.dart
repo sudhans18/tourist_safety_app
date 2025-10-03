@@ -470,6 +470,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get mobileVerification => 'মোবাইল ভেরিফিকেশন';
 
   @override
+  String get emailVerification => 'Email Verification';
+
+  @override
   String get phoneNumber => 'ফোন নম্বর';
 
   @override
@@ -486,10 +489,33 @@ class AppLocalizationsBn extends AppLocalizations {
   String get changePhoneNumber => 'ফোন নম্বর পরিবর্তন করুন';
 
   @override
+  String get useDifferentEmail => 'Use a different email';
+
+  @override
+  String get emailAddress => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'We will send a verification code to this email.';
+
+  @override
   String get enterOtpPrompt => 'আপনার ফোনে পাঠানো ৬-সংখ্যার কোডটি লিখুন';
 
   @override
   String get invalidOtp6 => 'অবৈধ OTP। অনুগ্রহ করে ৬টি সংখ্যা লিখুন।';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'By continuing, you agree to the Terms and Privacy Policy.';
+
+  @override
+  String get terms => 'Terms';
 
   @override
   String get sendVerificationCode => 'ভেরিফিকেশন কোড পাঠান';

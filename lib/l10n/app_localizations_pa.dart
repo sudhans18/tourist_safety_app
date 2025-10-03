@@ -469,6 +469,9 @@ class AppLocalizationsPa extends AppLocalizations {
   String get mobileVerification => 'ਮੋਬਾਈਲ ਤਸਦੀਕ';
 
   @override
+  String get emailVerification => 'Email Verification';
+
+  @override
   String get phoneNumber => 'ਫ਼ੋਨ ਨੰਬਰ';
 
   @override
@@ -485,11 +488,34 @@ class AppLocalizationsPa extends AppLocalizations {
   String get changePhoneNumber => 'ਫ਼ੋਨ ਨੰਬਰ ਬਦਲੋ';
 
   @override
+  String get useDifferentEmail => 'Use a different email';
+
+  @override
+  String get emailAddress => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'We will send a verification code to this email.';
+
+  @override
   String get enterOtpPrompt =>
       'ਆਪਣੇ ਫ਼ੋਨ \'ਤੇ ਭੇਜਿਆ ਗਿਆ 6-ਅੰਕਾਂ ਵਾਲਾ ਕੋਡ ਦਾਖਲ ਕਰੋ';
 
   @override
   String get invalidOtp6 => 'ਅਵੈਧ OTP। ਕਿਰਪਾ ਕਰਕੇ 6 ਅੰਕ ਦਾਖਲ ਕਰੋ।';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'By continuing, you agree to the Terms and Privacy Policy.';
+
+  @override
+  String get terms => 'Terms';
 
   @override
   String get sendVerificationCode => 'ਤਸਦੀਕ ਕੋਡ ਭੇਜੋ';

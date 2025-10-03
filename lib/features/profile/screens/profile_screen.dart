@@ -6,6 +6,8 @@ import 'package:tourist_safety_app/core/providers/user_provider.dart';
 import 'package:tourist_safety_app/core/providers/settings_provider.dart';
 import 'package:tourist_safety_app/core/services/firestore_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tourist_safety_app/core/design/animated_components.dart';
+import 'package:tourist_safety_app/core/design/modern_theme.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -33,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 'Choose Profile Picture',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -144,256 +146,517 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(t.profile),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.pushReplacementNamed(context, '/dashboard'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          t.profile,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () => Navigator.pushReplacementNamed(context, '/dashboard'),
+          child: Container(
+            margin: const EdgeInsets.only(left: 16),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+            ),
+            child: const Icon(Icons.arrow_back, color: Colors.white),
+          ),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          // Header avatar and name
-          Center(
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: _showImagePickerOptions,
-                  child: Consumer<UserProvider>(
-                    builder: (context, userProvider, child) {
-                      final profilePhotoHash = userProvider.profilePhotoHash ?? '';
-                      return CircleAvatar(
-                        radius: 40,
-                        backgroundColor: const Color(0xFFF3F4F6),
-                        backgroundImage: profilePhotoHash.isNotEmpty
-                            ? NetworkImage(profilePhotoHash) // In a real app, this would be a proper image URL
-                            : null,
-                        child: profilePhotoHash.isEmpty
-                            ? const Icon(Icons.person, size: 40, color: Color(0xFF6B7280))
-                            : null,
-                      );
-                    },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: const AssetImage('assets/images/onboarding_background.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withValues(alpha: 0.35),
+              BlendMode.darken,
+            ),
+          ),
+        ),
+        child: Column(
+          children: [
+            _buildProfileHeader(t),
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: ModernColors.neutral50,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
                   ),
                 ),
-                const SizedBox(height: 10),
-                Consumer<UserProvider>(
-                  builder: (context, userProvider, _) => Text(
-                    userProvider.userName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w800, fontSize: 18),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildPersonalDetails(t),
+                      const SizedBox(height: 32),
+                      _buildEmergencyContacts(t),
+                      const SizedBox(height: 32),
+                      _buildAppSettings(t),
+                      const SizedBox(height: 32),
+                      _buildSupportSection(t),
+                      if (kDebugMode) ...[
+                        const SizedBox(height: 32),
+                        _buildDebugSection(),
+                      ],
+                      const SizedBox(height: 32),
+                      _buildLogoutButton(t),
+                      const SizedBox(height: 100), // Space for bottom nav
+                    ],
                   ),
                 ),
-                const SizedBox(height: 4),
-                Consumer<UserProvider>(
-                  builder: (context, userProvider, child) {
-                    final isVerified = userProvider.isUserVerified;
-                    return Text(
-                      '${t.verifiedMember} ${isVerified ? '✅' : '❌'}',
-                      style: TextStyle(
-                          color: isVerified
-                              ? const Color(0xFF22C55E)
-                              : const Color(0xFFE74C3C)),
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
-          ),
-          const SizedBox(height: 18),
-
-          _sectionTitle(t.personalTravelDetails),
-          Consumer<UserProvider>(
-            builder: (context, userProvider, child) {
-              return _cardList([
-                _valueRowTile(Icons.flag_outlined, t.nationality,
-                    userProvider.userNationality),
-                _valueRowTile(Icons.cake_outlined, t.dateOfBirth,
-                    userProvider.userData?.dob ?? 'Not available'),
-                _valueRowTileWithChevron(Icons.event_note_outlined, t.itinerary,
-                    userProvider.userItinerary),
-              ]);
-            },
-          ),
-
-          _sectionTitle(t.emergencyContacts),
-          Consumer<UserProvider>(
-            builder: (context, userProvider, child) {
-              return _cardList([
-                if (userProvider.emergencyContact != 'Not set')
-                  _contactTile(
-                      'Emergency Contact', userProvider.emergencyContact),
-                _rowTile(Icons.person_add_alt_1_outlined, t.addContact),
-              ]);
-            },
-          ),
-
-          _sectionTitle(t.appSettings),
-          _cardList([
-            _rowTile(Icons.notifications_none_outlined, t.notifications),
-            Consumer<SettingsProvider>(
-              builder: (context, settings, child) {
-                return _themeToggleTile(t.theme, settings);
-              },
-            ),
-            Consumer<SettingsProvider>(
-              builder: (context, settings, child) {
-                return _languageRowTile(context, t.language, settings);
-              },
-            ),
-          ]),
-
-          _sectionTitle(t.supportLegal),
-          _cardList([
-            _rowTile(Icons.help_center_outlined, t.helpCenter),
-            _rowTile(Icons.privacy_tip_outlined, t.privacyPolicy),
-          ]),
-
-          if (kDebugMode) ...[
-            _sectionTitle('Debug Tools'),
-            _debugCard(context),
           ],
+        ),
+      ),
+      bottomNavigationBar: _buildModernBottomNav(t),
+    );
+  }
 
-          // Full width logout button
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.only(top: 20),
-            child: ElevatedButton(
-              onPressed: () => _showLogoutDialog(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFD93F34),
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+  Widget _buildProfileHeader(AppLocalizations t) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(24, 56, 24, 16),
+      child: Consumer<UserProvider>(
+        builder: (context, userProvider, _) {
+          final profilePhotoHash = userProvider.profilePhotoHash ?? '';
+          final isVerified = userProvider.isUserVerified;
+
+          return Column(
+            children: [
+              TweenAnimationBuilder<double>(
+                duration: const Duration(milliseconds: 800),
+                tween: Tween(begin: 0.0, end: 1.0),
+                builder: (context, value, child) {
+                  return Transform.scale(
+                    scale: value,
+                    child: GestureDetector(
+                      onTap: _showImagePickerOptions,
+                      child: Semantics(
+                        button: true,
+                        label: AppLocalizations.of(context)!.profile,
+                        child: Container(
+                          width: 84,
+                          height: 84,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ModernColors.primaryRed,
+                            border: Border.all(
+                              color: ModernColors.primaryRedLight,
+                              width: 2,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x14000000),
+                                blurRadius: 10,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: profilePhotoHash.isNotEmpty
+                              ? ClipOval(
+                                  child: Image.network(
+                                    profilePhotoHash,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Icon(
+                                        Icons.person,
+                                        size: 60,
+                                        color: Colors.white,
+                                      );
+                                    },
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.person,
+                                  size: 60,
+                                  color: Colors.white,
+                                ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: isVerified
+                      ? ModernColors.success.withValues(alpha: 0.2)
+                      : ModernColors.warning.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isVerified
+                        ? ModernColors.success.withValues(alpha: 0.4)
+                        : ModernColors.warning.withValues(alpha: 0.4),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isVerified ? Icons.verified : Icons.warning_amber_rounded,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      t.verifiedMember,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Text(
-                t.logOut,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 3,
-        onDestinationSelected: (i) {
-          if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
-          if (i == 1) Navigator.pushReplacementNamed(context, '/tour-plan');
-          if (i == 2) Navigator.pushReplacementNamed(context, '/alerts');
-          if (i == 3) return;
+            ],
+          );
         },
-        destinations: [
-          NavigationDestination(
-              icon: const Icon(Icons.dashboard_outlined), label: t.dashboard),
-          NavigationDestination(
-              icon: const Icon(Icons.event_note_outlined), label: t.tourPlan),
-          NavigationDestination(
-              icon: const Icon(Icons.notifications_outlined), label: t.alerts),
-          NavigationDestination(
-              icon: const Icon(Icons.person), label: t.profile),
-        ],
+      ),
+    );
+  }
+  
+  Widget _buildPersonalDetails(AppLocalizations t) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.personalTravelDetails,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: ModernColors.neutral900,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            return SurfaceCard(
+              child: Column(
+                children: [
+                  _modernListTile(
+                    icon: Icons.flag_outlined,
+                    title: t.nationality,
+                    value: userProvider.userNationality,
+                    gradient: ModernColors.infoGradient,
+                  ),
+                  const Divider(height: 1, color: ModernColors.neutral200),
+                  _modernListTile(
+                    icon: Icons.badge_outlined,
+                    title: t.passport,
+                    value: userProvider.userDocumentType,
+                    gradient: ModernColors.successGradient,
+                  ),
+                  const Divider(height: 1, color: ModernColors.neutral200),
+                  _modernListTile(
+                    icon: Icons.route_outlined,
+                    title: t.itinerary,
+                    value: userProvider.userItinerary,
+                    gradient: ModernColors.warningGradient,
+                    hasChevron: false,
+                  ),
+                  const Divider(height: 1, color: ModernColors.neutral200),
+                  _modernListTile(
+                    icon: Icons.perm_identity,
+                    title: t.idLabel,
+                    value: userProvider.walletAddress,
+                    gradient: ModernColors.primaryGradient,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmergencyContacts(AppLocalizations t) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.emergencyContacts,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: ModernColors.neutral900,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            return GlassCard(
+              child: Column(
+                children: [
+                  if (userProvider.emergencyContact != 'Not set')
+                    _modernContactTile(
+                      'Emergency Contact',
+                      userProvider.emergencyContact,
+                    ),
+                  if (userProvider.emergencyContact != 'Not set')
+                    const Divider(height: 1, color: ModernColors.neutral200),
+                  _modernListTile(
+                    icon: Icons.person_add_alt_1_outlined,
+                    title: t.addContact,
+                    gradient: ModernColors.primaryGradient,
+                    hasChevron: true,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAppSettings(AppLocalizations t) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.appSettings,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: ModernColors.neutral900,
+          ),
+        ),
+        const SizedBox(height: 16),
+        SurfaceCard(
+          child: Column(
+            children: [
+              _modernListTile(
+                icon: Icons.notifications_none_outlined,
+                title: t.notifications,
+                gradient: ModernColors.infoGradient,
+                hasChevron: true,
+              ),
+              const Divider(height: 1, color: ModernColors.neutral200),
+              Consumer<SettingsProvider>(
+                builder: (context, settings, child) {
+                  return _modernThemeToggleTile(t.theme, settings);
+                },
+              ),
+              const Divider(height: 1, color: ModernColors.neutral200),
+              Consumer<SettingsProvider>(
+                builder: (context, settings, child) {
+                  return _modernLanguageRowTile(context, t.language, settings);
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSupportSection(AppLocalizations t) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          t.supportLegal,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: ModernColors.neutral900,
+          ),
+        ),
+        const SizedBox(height: 16),
+        GlassCard(
+          child: Column(
+            children: [
+              _modernListTile(
+                icon: Icons.help_center_outlined,
+                title: t.helpCenter,
+                gradient: ModernColors.successGradient,
+                hasChevron: true,
+              ),
+              const Divider(height: 1, color: ModernColors.neutral200),
+              _modernListTile(
+                icon: Icons.privacy_tip_outlined,
+                title: t.privacyPolicy,
+                gradient: ModernColors.warningGradient,
+                hasChevron: true,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDebugSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Debug Tools',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: ModernColors.neutral900,
+          ),
+        ),
+        const SizedBox(height: 16),
+        SurfaceCard(
+          child: Column(
+            children: [
+              _modernListTile(
+                icon: Icons.bug_report,
+                title: 'Add Test Data',
+                gradient: ModernColors.primaryGradient,
+                hasChevron: true,
+                onTap: () async {
+                  try {
+                    final firestoreHelper = FirestoreHelper();
+                    await firestoreHelper.addSampleUserData();
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Sample data added to Firestore')),
+                    );
+                  } catch (e) {
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error adding sample data: $e')),
+                    );
+                  }
+                },
+              ),
+              const Divider(height: 1, color: ModernColors.neutral200),
+              _modernListTile(
+                icon: Icons.delete,
+                title: 'Delete All Users',
+                gradient: ModernColors.primaryGradient,
+                hasChevron: true,
+                onTap: () async {
+                  try {
+                    final firestoreHelper = FirestoreHelper();
+                    await firestoreHelper.deleteAllUsers();
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('All users deleted from Firestore')),
+                    );
+                  } catch (e) {
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error deleting users: $e')),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLogoutButton(AppLocalizations t) {
+    return SurfaceCard(
+      color: ModernColors.primaryRed.withValues(alpha: 0.06),
+      child: InkWell(
+        onTap: () => _showLogoutDialog(context),
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: ModernColors.neutral100,
+                  border: Border.all(color: ModernColors.neutral200),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(Icons.logout, color: ModernColors.primaryRed, size: 20),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                t.logOut,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: ModernColors.primaryRed,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget _sectionTitle(String title) => Padding(
-        padding: const EdgeInsets.fromLTRB(4, 14, 4, 10),
-        child: Text(title,
-            style: const TextStyle(
-                color: Color(0xFF6B7280), fontWeight: FontWeight.w700)),
-      );
-
-  Widget _cardList(List<Widget> children) => Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
-            BoxShadow(
-                color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4))
-          ],
+  Widget _buildModernBottomNav(AppLocalizations t) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
         ),
-        child: Column(children: children),
-      );
-
-  static Widget _rowTile(IconData icon, String title, {VoidCallback? onTap}) =>
-      ListTile(
-        leading: Icon(icon),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap ?? () {},
-      );
-
-  static Widget _valueRowTile(IconData icon, String title, String value) =>
-      ListTile(
-        leading: Icon(icon),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: Text(value, style: const TextStyle(color: Color(0xFF6B7280))),
-      );
-
-  static Widget _valueRowTileWithChevron(
-          IconData icon, String title, String value) =>
-      ListTile(
-        leading: Icon(icon),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(value, style: const TextStyle(color: Color(0xFF6B7280))),
-            const SizedBox(width: 8),
-            const Icon(Icons.chevron_right, color: Color(0xFF6B7280)),
-          ],
-        ),
-        onTap: () {},
-      );
-
-  static Widget _contactTile(String name, String phone) => ListTile(
-        leading: const CircleAvatar(child: Icon(Icons.person_outline)),
-        title: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text(phone),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () {},
-      );
-
-  Widget _themeToggleTile(String title, SettingsProvider settingsProvider) =>
-      ListTile(
-        leading: const Icon(Icons.palette_outlined),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: Switch(
-          value: settingsProvider.themeMode == ThemeMode.dark,
-          onChanged: (value) {
-            settingsProvider
-                .setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
-          },
-        ),
-        onTap: () {
-          final currentMode = settingsProvider.themeMode;
-          final newMode = currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-          settingsProvider.setThemeMode(newMode);
+        boxShadow: ModernShadows.large,
+      ),
+      child: NavigationBar(
+        selectedIndex: 4,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        onDestinationSelected: (i) {
+          if (i == 0) Navigator.pushReplacementNamed(context, '/dashboard');
+          if (i == 1) Navigator.pushReplacementNamed(context, '/tour-plan');
+          if (i == 2) Navigator.pushReplacementNamed(context, '/map-fullscreen');
+          if (i == 3) Navigator.pushReplacementNamed(context, '/alerts');
+          if (i == 4) return;
         },
-      );
-
-  Widget _languageRowTile(
-          BuildContext context, String title, SettingsProvider settingsProvider) =>
-      ListTile(
-        leading: const Icon(Icons.language_outlined),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              _getLanguageDisplayName(settingsProvider.locale.languageCode),
-              style: const TextStyle(color: Color(0xFF6B7280)),
-            ),
-            const SizedBox(width: 8),
-            const Icon(Icons.chevron_right, color: Color(0xFF6B7280)),
-          ],
-        ),
-        onTap: () => _showLanguageDialog(context, settingsProvider),
-      );
+        destinations: [
+          NavigationDestination(
+            icon: const Icon(Icons.dashboard_outlined),
+            selectedIcon: const Icon(Icons.dashboard),
+            label: t.dashboard,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.event_note_outlined),
+            selectedIcon: const Icon(Icons.event_note),
+            label: t.tourPlan,
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.map_outlined),
+            selectedIcon: Icon(Icons.map, color: ModernColors.primaryRed),
+            label: 'Map',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.notifications_outlined),
+            selectedIcon: const Icon(Icons.notifications),
+            label: t.alerts,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: const Icon(Icons.person),
+            label: t.profile,
+          ),
+        ],
+      ),
+    );
+  }
 
   String _getLanguageDisplayName(String languageCode) {
     switch (languageCode) {
@@ -540,39 +803,144 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Debug methods - remove in production
-  Widget _debugCard(BuildContext context) => _cardList([
-        _rowTile(Icons.bug_report, 'Add Test Data', onTap: () async {
-          try {
-            final firestoreHelper = FirestoreHelper();
-            await firestoreHelper.addSampleUserData();
 
-            if (!context.mounted) return;
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Sample data added to Firestore')),
-            );
-          } catch (e) {
-            if (!context.mounted) return;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error adding sample data: $e')),
-            );
-          }
-        }),
-        _rowTile(Icons.delete, 'Delete All Users', onTap: () async {
-          try {
-            final firestoreHelper = FirestoreHelper();
-            await firestoreHelper.deleteAllUsers();
+  // Modern UI Components
+  Widget _modernListTile({
+    required IconData icon,
+    required String title,
+    String? value,
+    required List<Color> gradient,
+    bool hasChevron = false,
+    VoidCallback? onTap,
+  }) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      leading: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: ModernColors.neutral100,
+          border: Border.all(color: ModernColors.neutral200),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(icon, color: ModernColors.primaryRed, size: 20),
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          color: ModernColors.neutral900,
+        ),
+      ),
+      subtitle: value != null
+          ? Text(
+              value,
+              style: const TextStyle(
+                color: ModernColors.neutral600,
+                fontSize: 14,
+              ),
+            )
+          : null,
+      trailing: hasChevron
+          ? const Icon(Icons.chevron_right, color: ModernColors.neutral400)
+          : null,
+      onTap: onTap,
+    );
+  }
 
-            if (!context.mounted) return;
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('All users deleted from Firestore')),
-            );
-          } catch (e) {
-            if (!context.mounted) return;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error deleting users: $e')),
-            );
-          }
-        }),
-      ]);
+  Widget _modernContactTile(String name, String phone) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      leading: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: ModernColors.neutral100,
+          border: Border.all(color: ModernColors.neutral200),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Icon(Icons.person_outline, color: ModernColors.primaryRed, size: 20),
+      ),
+      title: Text(
+        name,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          color: ModernColors.neutral900,
+        ),
+      ),
+      subtitle: Text(
+        phone,
+        style: const TextStyle(
+          color: ModernColors.neutral600,
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(Icons.chevron_right, color: ModernColors.neutral400),
+      onTap: () {},
+    );
+  }
+
+  Widget _modernThemeToggleTile(String title, SettingsProvider settingsProvider) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      leading: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: ModernColors.neutral100,
+          border: Border.all(color: ModernColors.neutral200),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Icon(Icons.palette_outlined, color: ModernColors.primaryRed, size: 20),
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          color: ModernColors.neutral900,
+        ),
+      ),
+      trailing: Switch(
+        value: settingsProvider.themeMode == ThemeMode.dark,
+        onChanged: (value) {
+          settingsProvider.setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
+        },
+        activeThumbColor: ModernColors.primaryRed,
+      ),
+      onTap: () {
+        final currentMode = settingsProvider.themeMode;
+        final newMode = currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+        settingsProvider.setThemeMode(newMode);
+      },
+    );
+  }
+
+  Widget _modernLanguageRowTile(
+      BuildContext context, String title, SettingsProvider settingsProvider) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      leading: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: ModernColors.neutral100,
+          border: Border.all(color: ModernColors.neutral200),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Icon(Icons.language_outlined, color: ModernColors.primaryRed, size: 20),
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          color: ModernColors.neutral900,
+        ),
+      ),
+      subtitle: Text(
+        _getLanguageDisplayName(settingsProvider.locale.languageCode),
+        style: const TextStyle(
+          color: ModernColors.neutral600,
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Icon(Icons.chevron_right, color: ModernColors.neutral400),
+      onTap: () => _showLanguageDialog(context, settingsProvider),
+    );
+  }
 }

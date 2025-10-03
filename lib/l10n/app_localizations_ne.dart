@@ -438,7 +438,7 @@ class AppLocalizationsNe extends AppLocalizations {
   String get revokeAccess => 'पहुँच रद्द गर्नुहोस्';
 
   @override
-  String get generateSharingTokenMsg => 'साझा गर्ने टोकन बनाउनुहोस् (नक्कली)';
+  String get generateSharingTokenMsg => 'Generate sharing token (mock)';
 
   @override
   String get accessRevokedMsg => 'सबै परिवारका लागि पहुँच रद्द गरियो (नक्कली)';
@@ -468,6 +468,9 @@ class AppLocalizationsNe extends AppLocalizations {
   String get mobileVerification => 'मोबाइल प्रमाणीकरण';
 
   @override
+  String get emailVerification => 'इमेल प्रमाणीकरण';
+
+  @override
   String get phoneNumber => 'फोन नम्बर';
 
   @override
@@ -484,10 +487,32 @@ class AppLocalizationsNe extends AppLocalizations {
   String get changePhoneNumber => 'फोन नम्बर परिवर्तन गर्नुहोस्';
 
   @override
+  String get useDifferentEmail => 'अर्को इमेल प्रयोग गर्नुहोस्';
+
+  @override
+  String get emailAddress => 'इमेल ठेगाना';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail => 'हामी यो इमेलमा प्रमाणीकरण कोड पठाउँछौं।';
+
+  @override
   String get enterOtpPrompt => 'आफ्नो फोनमा पठाइएको ६-अङ्कको कोड हाल्नुहोस्';
 
   @override
   String get invalidOtp6 => 'अमान्य OTP। कृपया ६ अंक हाल्नुहोस्।';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'जारी राख्दा, तपाईं नियमावली र गोपनीयता नीतिसँग सहमत हुनुहुन्छ।';
+
+  @override
+  String get terms => 'नियमावली';
 
   @override
   String get sendVerificationCode => 'प्रमाणीकरण कोड पठाउनुहोस्';
@@ -518,7 +543,7 @@ class AppLocalizationsNe extends AppLocalizations {
   String get activitiesNotes => 'गतिविधिहरू / नोटहरू';
 
   @override
-  String get searchLocation => 'स्थान खोज्नुहोस्';
+  String get searchLocation => 'Search location';
 
   @override
   String get search => 'खोज्नुहोस्';

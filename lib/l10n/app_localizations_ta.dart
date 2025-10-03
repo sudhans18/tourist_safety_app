@@ -474,6 +474,9 @@ class AppLocalizationsTa extends AppLocalizations {
   String get mobileVerification => 'மொபைல் சரிபார்ப்பு';
 
   @override
+  String get emailVerification => 'Email Verification';
+
+  @override
   String get phoneNumber => 'தொலைபேசி எண்';
 
   @override
@@ -491,11 +494,34 @@ class AppLocalizationsTa extends AppLocalizations {
   String get changePhoneNumber => 'தொலைபேசி எண்ணை மாற்றவும்';
 
   @override
+  String get useDifferentEmail => 'Use a different email';
+
+  @override
+  String get emailAddress => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail =>
+      'We will send a verification code to this email.';
+
+  @override
   String get enterOtpPrompt =>
       'உங்கள் தொலைபேசிக்கு அனுப்பப்பட்ட 6-இலக்கக் குறியீட்டை உள்ளிடவும்';
 
   @override
   String get invalidOtp6 => 'தவறான OTP. தயவுசெய்து 6 இலக்கங்களை உள்ளிடவும்.';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'By continuing, you agree to the Terms and Privacy Policy.';
+
+  @override
+  String get terms => 'Terms';
 
   @override
   String get sendVerificationCode => 'சரிபார்ப்புக் குறியீட்டை அனுப்பவும்';

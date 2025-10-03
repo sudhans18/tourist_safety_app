@@ -1002,6 +1002,12 @@ abstract class AppLocalizations {
   /// **'Mobile Verification'**
   String get mobileVerification;
 
+  /// No description provided for @emailVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Verification'**
+  String get emailVerification;
+
   /// No description provided for @phoneNumber.
   ///
   /// In en, this message translates to:
@@ -1032,6 +1038,30 @@ abstract class AppLocalizations {
   /// **'Change phone number'**
   String get changePhoneNumber;
 
+  /// No description provided for @useDifferentEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a different email'**
+  String get useDifferentEmail;
+
+  /// No description provided for @emailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email address'**
+  String get emailAddress;
+
+  /// No description provided for @emailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'name@example.com'**
+  String get emailHint;
+
+  /// No description provided for @sendCodeToEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'We will send a verification code to this email.'**
+  String get sendCodeToEmail;
+
   /// No description provided for @enterOtpPrompt.
   ///
   /// In en, this message translates to:
@@ -1043,6 +1073,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid OTP. Please enter 6 digits.'**
   String get invalidOtp6;
+
+  /// No description provided for @otpHint.
+  ///
+  /// In en, this message translates to:
+  /// **'------'**
+  String get otpHint;
+
+  /// No description provided for @agreeToTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing, you agree to the Terms and Privacy Policy.'**
+  String get agreeToTerms;
+
+  /// No description provided for @terms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get terms;
 
   /// No description provided for @sendVerificationCode.
   ///

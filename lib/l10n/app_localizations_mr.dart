@@ -438,7 +438,7 @@ class AppLocalizationsMr extends AppLocalizations {
   String get revokeAccess => 'प्रवेश रद्द करा';
 
   @override
-  String get generateSharingTokenMsg => 'शेअरिंग टोकन तयार करा (मॉक)';
+  String get generateSharingTokenMsg => 'Generate sharing token (mock)';
 
   @override
   String get accessRevokedMsg => 'सर्व कुटुंबासाठी प्रवेश रद्द केला (मॉक)';
@@ -468,6 +468,9 @@ class AppLocalizationsMr extends AppLocalizations {
   String get mobileVerification => 'मोबाइल पडताळणी';
 
   @override
+  String get emailVerification => 'ईमेल पडताळणी';
+
+  @override
   String get phoneNumber => 'फोन नंबर';
 
   @override
@@ -484,10 +487,32 @@ class AppLocalizationsMr extends AppLocalizations {
   String get changePhoneNumber => 'फोन नंबर बदला';
 
   @override
+  String get useDifferentEmail => 'वेगळा ईमेल वापरा';
+
+  @override
+  String get emailAddress => 'ईमेल पत्ता';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail => 'आम्ही या ईमेलवर पडताळणी कोड पाठवू.';
+
+  @override
   String get enterOtpPrompt => 'तुमच्या फोनवर पाठवलेला ६-अंकी कोड टाका';
 
   @override
   String get invalidOtp6 => 'अवैध OTP. कृपया ६ अंक टाका.';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms =>
+      'पुढे चालू ठेवल्यास, आपण अटी आणि गोपनीयता धोरणास सहमती देता.';
+
+  @override
+  String get terms => 'अटी';
 
   @override
   String get sendVerificationCode => 'पडताळणी कोड पाठवा';
@@ -509,7 +534,7 @@ class AppLocalizationsMr extends AppLocalizations {
 
   @override
   String get noUpcomingTrips =>
-      'आगामी प्रवास नाही. योजना आखण्यासाठी \"नवीन प्रवास जोडा\" वर टॅप करा!';
+      'No upcoming trips. Tap \"Add new trip\" to plan one!';
 
   @override
   String get noPastTrips => 'मागील प्रवास नाही';

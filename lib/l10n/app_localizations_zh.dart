@@ -438,7 +438,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsTheme => '主题';
 
   @override
-  String get settingsLanguage => '语言';
+  String get settingsLanguage => 'Language';
 
   @override
   String get settingsNotifications => '通知';
@@ -459,6 +459,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mobileVerification => '手机验证';
 
   @override
+  String get emailVerification => '电子邮件验证';
+
+  @override
   String get phoneNumber => '手机号码';
 
   @override
@@ -474,10 +477,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get changePhoneNumber => '更换手机号码';
 
   @override
+  String get useDifferentEmail => '使用其他电子邮件';
+
+  @override
+  String get emailAddress => '电子邮件地址';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get sendCodeToEmail => '我们将向此电子邮件发送验证码。';
+
+  @override
   String get enterOtpPrompt => '输入发送到您手机的6位数验证码';
 
   @override
   String get invalidOtp6 => '验证码无效。请输入6位数字。';
+
+  @override
+  String get otpHint => '------';
+
+  @override
+  String get agreeToTerms => '继续即表示您同意条款和隐私政策。';
+
+  @override
+  String get terms => '条款';
 
   @override
   String get sendVerificationCode => '发送验证码';
